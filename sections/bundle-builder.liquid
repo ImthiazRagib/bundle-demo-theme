@@ -263,9 +263,9 @@
       <div class="bb-section bb-section--buckle">
         <div class="bb-section-header">
           <div class="bb-section__label">
-            1. Fibbia: <span id="bb-buckle-name-inline" class="bb-selection-inline-name"></span>
+            2. Fibbia: <span id="bb-buckle-name-inline" class="bb-selection-inline-name"></span>
           </div>
-          <span class="bb-section__counter" id="bb-buckle-nav-label"></span>
+          {% comment %} <span class="bb-section__counter" id="bb-buckle-nav-label"></span> {% endcomment %}
         </div>
         <div class="bb-carousel" id="bb-buckle-carousel" role="listbox" aria-label="Stile fibbia">
           {%- comment -%} Rendered by JS {%- endcomment -%}
@@ -276,21 +276,16 @@
         </div>
       </div>
 
-      {%- comment -%} 1. Length selector — label + buttons inline on one row {%- endcomment -%}
-      <div class="bb-section bb-section--inline-length">
-        <div class="bb-section__label">2. Lunghezza cintura</div>
-        <div class="bb-length-selector" id="bb-length-selector">
-          {%- comment -%} Rendered by JS {%- endcomment -%}
-        </div>
-      </div>
-
       {%- comment -%} 3. Strap color — vertical stacked fan {%- endcomment -%}
       <div class="bb-section bb-section--strap">
         <div class="bb-section-header">
           <div class="bb-section__label">
-            3. Cintura: <span id="bb-strap-name-inline" class="bb-selection-inline-name"></span>
+            2. Cintura: <span id="bb-strap-name-inline" class="bb-selection-inline-name"></span>
           </div>
-          <span class="bb-section__counter" id="bb-strap-nav-label"></span>
+          {% comment %} <span class="bb-section__counter" id="bb-strap-nav-label"></span> {% endcomment %}
+          <div class="bb-length-selector" id="bb-length-selector">
+            {%- comment -%} Rendered by JS {%- endcomment -%}
+          </div>
         </div>
         <div class="bb-strap-carousel" id="bb-strap-carousel" role="listbox" aria-label="Colore della cintura">
           {%- comment -%} Rendered by JS as horizontal fan items {%- endcomment -%}
