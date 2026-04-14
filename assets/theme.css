@@ -713,7 +713,7 @@ ul, ol { list-style: none; }
 /* Override bundle-builder.css button styles with screenshot-accurate pills */
 .bb-length-selector .bb-length-btn {
   flex: 1;
-  padding: 6px 0;
+  /* padding: 6px 0; */
   border: 2px solid var(--color-border, #e5e0d5);
   border-radius: 24px;
   background: #fff;
@@ -727,7 +727,7 @@ ul, ol { list-style: none; }
 .bb-length-selector .bb-length-btn.is-selected,
 .bb-length-selector .bb-length-btn[aria-selected="true"] {
   border-color: #b8860b;
-  background: #b8860b;
+  /* background: #b8860b; */
   color: #fff;
 }
 .bb-length-selector .bb-length-btn:hover:not(.is-selected) {

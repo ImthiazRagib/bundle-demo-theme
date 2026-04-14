@@ -439,7 +439,7 @@ announcement-bar-section {
 .bb-section-header {
   display: grid;
   grid-template-columns: 1fr auto;
-  align-items: start;
+  align-items: center;
   gap: 0 8px;
   margin-bottom: 0px;    /* 7→0: −7px → meno spazio header→carousel */
 }
