@@ -1,0 +1,76 @@
+{% layout none %}
+
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ 'gift_cards.issued.title' | t: value: gift_card.initial_value | money_without_trailing_zeros, shop: shop.name }}</title>
+
+    {{ content_for_header }}
+
+    {{ 'theme.css' | asset_url | stylesheet_tag }}
+
+    <script src="{{ 'vendor/qrcode.js' | shopify_asset_url }}" defer></script>
+  </head>
+
+  <body>
+    <div class="gift-card-wrapper">
+      <header class="gift-card-header">
+        <a href="{{ shop.url }}" class="gift-card-logo">{{ shop.name }}</a>
+      </header>
+
+      <main class="gift-card-main">
+        <div class="gift-card">
+          <div class="gift-card-amount">
+            {%- if gift_card.enabled == false or gift_card.expired -%}
+              <p class="gift-card-tag">{{ 'gift_cards.issued.expired' | t }}</p>
+            {%- endif -%}
+            {%- assign gift_card_balance = gift_card.balance | money_without_trailing_zeros -%}
+            {%- if gift_card.balance != gift_card.initial_value -%}
+              <p class="gift-card-balance">{{ 'gift_cards.issued.remaining_html' | t: balance: gift_card_balance }}</p>
+            {%- endif -%}
+            <h1 class="gift-card-value">{{ gift_card.initial_value | money_without_trailing_zeros }}</h1>
+          </div>
+
+          <div class="gift-card-qr" id="QrCode" data-identifier="{{ gift_card.qr_identifier }}"></div>
+
+          <div class="gift-card-code">
+            <input
+              type="text"
+              class="gift-card-number"
+              value="{{ gift_card.code | format_code }}"
+              aria-label="{{ 'gift_cards.issued.gift_card_code' | t }}"
+              readonly
+            >
+            <button
+              class="gift-card-copy-btn"
+              data-copy-code="{{ gift_card.code | format_code }}"
+              onclick="copyCode(this)"
+            >
+              {{ 'gift_cards.issued.copy_code' | t }}
+            </button>
+          </div>
+
+          <p class="gift-card-instructions">{{ 'gift_cards.issued.redeem_html' | t: value: gift_card.initial_value | money_without_trailing_zeros }}</p>
+
+          <a href="{{ shop.url }}" class="gift-card-shop-link button">{{ 'gift_cards.issued.shop_link' | t }}</a>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      new QRCode(document.getElementById('QrCode'), {
+        text: document.getElementById('QrCode').dataset.identifier,
+        width: 120,
+        height: 120,
+      });
+
+      function copyCode(btn) {
+        navigator.clipboard.writeText(btn.dataset.copyCode).then(function () {
+          btn.textContent = {{ 'gift_cards.issued.copy_code_success' | t | json }};
+        });
+      }
+    </script>
+  </body>
+</html>
