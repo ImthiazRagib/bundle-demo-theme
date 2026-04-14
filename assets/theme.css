@@ -671,24 +671,68 @@ ul, ol { list-style: none; }
    BUNDLE BUILDER WRAPPER
    ════════════════════════════════════════════════════════════ */
 /* The bundle builder section renders with its own CSS (bundle-builder.css)
-   but we add context-aware container styles here */
+   but we add context-aware container styles here.
+   Matches the screenshot: light grey page bg, white card centered, subtle shadow */
 .bb-wrap-outer {
-  background: var(--color-surface);
-  padding: 32px 0 64px;
+  background: #f4f5f7;
+  padding: 40px 16px 80px;
+  min-height: calc(100vh - var(--header-height));
 }
 
 .bb-wrap-outer .bb-wrap {
-  max-width: 520px;
+  max-width: 480px;    /* matches the mobile-first card width from the screenshot */
   margin: 0 auto;
-  background: var(--color-bg);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,.12);
   overflow: hidden;
 }
 
-@media (max-width: 560px) {
-  .bb-wrap-outer { padding: 0; }
-  .bb-wrap-outer .bb-wrap { border-radius: 0; box-shadow: none; }
+/* On very small screens: full-width card, no border radius, matches app-like feel */
+@media (max-width: 520px) {
+  .bb-wrap-outer {
+    padding: 0;
+    background: #ffffff;
+  }
+  .bb-wrap-outer .bb-wrap {
+    border-radius: 0;
+    box-shadow: none;
+    max-width: 100%;
+  }
+}
+
+/* ── Size selector buttons (130cm / 150cm) ──────────────────
+   bb-length-selector is rendered by JS inside #bb-length-selector.
+   These rules ensure the 2 pill buttons match the screenshot toggle style */
+.bb-length-selector {
+  display: flex;
+  gap: 8px;
+  flex-wrap: nowrap;
+}
+
+/* Override bundle-builder.css button styles with screenshot-accurate pills */
+.bb-length-selector .bb-length-btn {
+  flex: 1;
+  padding: 9px 0;
+  border: 2px solid var(--color-border, #e5e0d5);
+  border-radius: 24px;
+  background: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1c22;
+  cursor: pointer;
+  text-align: center;
+  transition: border-color .15s, background .15s, color .15s;
+}
+.bb-length-selector .bb-length-btn.is-selected,
+.bb-length-selector .bb-length-btn[aria-selected="true"] {
+  border-color: #b8860b;
+  background: #b8860b;
+  color: #fff;
+}
+.bb-length-selector .bb-length-btn:hover:not(.is-selected) {
+  border-color: #b8860b;
+  color: #b8860b;
 }
 
 /* ════════════════════════════════════════════════════════════

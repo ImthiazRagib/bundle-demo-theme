@@ -17,7 +17,6 @@
 
 {{ 'bundle-builder.css' | asset_url | stylesheet_tag }}
 
-<div class="bb-wrap-outer">
 <div class="bb-wrap" id="bb-root" data-media-url="{{ 'bundle-builder-media.json' | asset_url }}">
 
   {%- comment -%} ══ SCREEN 0: BUNDLE SELECTOR ═══════════════════ {%- endcomment -%}
@@ -436,7 +435,6 @@
   </div>
 
 </div>{%- comment -%} /.bb-wrap {%- endcomment -%}
-</div>{%- comment -%} /.bb-wrap-outer {%- endcomment -%}
 
 <script>
   /* ── Carousel configuration (from Shopify Theme Editor) ───── */

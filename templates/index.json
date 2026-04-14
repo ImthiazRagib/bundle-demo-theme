@@ -4,7 +4,7 @@
       "type": "hero-banner",
       "settings": {
         "overlay_opacity": 45,
-        "min_height": 640,
+        "min_height": 600,
         "content_align": "center",
         "subheading": "Artigianato Italiano dal 1982",
         "heading": "La Cintura Perfetta,\nCreata da Te",
