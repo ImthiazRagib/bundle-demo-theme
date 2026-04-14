@@ -1,0 +1,233 @@
+<section class="collection-showcase">
+  <div class="collection-showcase__container">
+
+    {%- if section.settings.badge != blank -%}
+      <span class="collection-showcase__badge">{{ section.settings.badge }}</span>
+    {%- endif -%}
+    <h2 class="collection-showcase__heading">{{ section.settings.heading | default: "Scegli il tuo Bundle" }}</h2>
+    <p class="collection-showcase__sub">{{ section.settings.subtext | default: "Quattro opzioni per ogni esigenza. Più cinture, più risparmio." }}</p>
+
+    <div class="collection-showcase__grid">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'tier' -%}
+          <div class="cs-card{% if block.settings.featured %} cs-card--featured{% endif %}" {{ block.shopify_attributes }}>
+            {%- if block.settings.featured -%}
+              <div class="cs-card__popular">{{ block.settings.popular_label | default: "Più Popolare" }}</div>
+            {%- endif -%}
+
+            <div class="cs-card__icon" aria-hidden="true">
+              {%- if block.settings.icon == 'single' -%}
+                <svg viewBox="0 0 56 56" width="40" height="40" fill="none">
+                  <rect x="10" y="24" width="36" height="8" rx="4" fill="currentColor" opacity=".9"/>
+                  <rect x="24" y="14" width="8" height="28" rx="3" fill="currentColor" opacity=".5"/>
+                </svg>
+              {%- elsif block.settings.icon == 'double' -%}
+                <svg viewBox="0 0 56 56" width="40" height="40" fill="none">
+                  <rect x="8" y="19" width="32" height="7" rx="3.5" fill="currentColor" opacity=".6"/>
+                  <rect x="8" y="30" width="32" height="7" rx="3.5" fill="currentColor" opacity=".9"/>
+                  <rect x="22" y="13" width="7" height="30" rx="3" fill="currentColor" opacity=".35"/>
+                </svg>
+              {%- elsif block.settings.icon == 'triple' -%}
+                <svg viewBox="0 0 56 56" width="40" height="40" fill="none">
+                  <rect x="7" y="16" width="28" height="6" rx="3" fill="currentColor" opacity=".4"/>
+                  <rect x="7" y="25" width="28" height="6" rx="3" fill="currentColor" opacity=".65"/>
+                  <rect x="7" y="34" width="28" height="6" rx="3" fill="currentColor" opacity=".9"/>
+                  <rect x="20" y="12" width="6" height="32" rx="3" fill="currentColor" opacity=".3"/>
+                </svg>
+              {%- else -%}
+                <svg viewBox="0 0 56 56" width="40" height="40" fill="none">
+                  <path d="M10 28c0-5 4-9 9-9s9 4.5 12 9-4 9-9 9-9-4-9-9z" fill="currentColor" opacity=".6"/>
+                  <path d="M28 28c0-4.5 4-9 9-9s9 4 9 9-4 9-9 9-9-4.5-12-9z" fill="currentColor" opacity=".9"/>
+                </svg>
+              {%- endif -%}
+            </div>
+
+            <h3 class="cs-card__name">{{ block.settings.name }}</h3>
+            <p class="cs-card__desc">{{ block.settings.description }}</p>
+
+            {%- if block.settings.price != blank -%}
+              <div class="cs-card__pricing">
+                {%- if block.settings.price_original != blank -%}
+                  <span class="cs-card__price-original">{{ block.settings.price_original }}</span>
+                {%- endif -%}
+                <span class="cs-card__price">{{ block.settings.price }}</span>
+              </div>
+            {%- endif -%}
+
+            <ul class="cs-card__perks">
+              {%- assign perks = block.settings.perks | split: '|' -%}
+              {%- for perk in perks -%}
+                {%- if perk != blank -%}
+                  <li class="cs-card__perk">
+                    <svg class="cs-card__perk-icon" width="14" height="14" viewBox="0 0 16 16" fill="none">
+                      <path d="M3 8l3.5 3.5L13 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    {{ perk | strip }}
+                  </li>
+                {%- endif -%}
+              {%- endfor -%}
+            </ul>
+
+            <a href="{{ block.settings.cta_url | default: '/pages/bundle' }}"
+               class="cs-card__cta{% if block.settings.featured %} cs-card__cta--primary{% endif %}">
+              {{ block.settings.cta_label | default: "Componi ora" }}
+            </a>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection Showcase",
+  "blocks": [
+    {
+      "type": "tier",
+      "name": "Bundle Tier",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon style",
+          "options": [
+            { "value": "single",   "label": "Single" },
+            { "value": "double",   "label": "Double" },
+            { "value": "triple",   "label": "Triple" },
+            { "value": "infinity", "label": "Infinity" }
+          ],
+          "default": "single"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Tier name",
+          "default": "Single"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Short description",
+          "default": "1 cintura personalizzata"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Price (display text)",
+          "default": "€ 79"
+        },
+        {
+          "type": "text",
+          "id": "price_original",
+          "label": "Original/crossed-out price"
+        },
+        {
+          "type": "textarea",
+          "id": "perks",
+          "label": "Perks (one per line, separated by |)",
+          "default": "1 cintura su misura|Scelta colore e fibbia|Consegna 3–5 gg"
+        },
+        {
+          "type": "checkbox",
+          "id": "featured",
+          "label": "Mark as featured (\"Most Popular\")",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "popular_label",
+          "label": "Featured badge label",
+          "default": "Più Popolare"
+        },
+        {
+          "type": "text",
+          "id": "cta_label",
+          "label": "CTA button label",
+          "default": "Componi ora"
+        },
+        {
+          "type": "url",
+          "id": "cta_url",
+          "label": "CTA button URL"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "text",
+      "id": "badge",
+      "label": "Badge label",
+      "default": "I nostri Bundle"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section heading",
+      "default": "Scegli il tuo Bundle"
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "Quattro opzioni per ogni esigenza. Più cinture, più risparmio."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Showcase",
+      "blocks": [
+        {
+          "type": "tier",
+          "settings": {
+            "icon": "single",
+            "name": "Single",
+            "description": "La cintura perfetta, solo tua",
+            "price": "€ 79",
+            "perks": "1 cintura su misura|9 colori disponibili|4 stili di fibbia|Consegna 3–5 gg",
+            "cta_label": "Scegli Single"
+          }
+        },
+        {
+          "type": "tier",
+          "settings": {
+            "icon": "double",
+            "name": "Double",
+            "description": "Due cinture, doppio stile",
+            "price": "€ 139",
+            "price_original": "€ 158",
+            "perks": "2 cinture personalizzate|Risparmia €19|Confezione regalo inclusa|Consegna 3–5 gg",
+            "featured": true,
+            "cta_label": "Scegli Double"
+          }
+        },
+        {
+          "type": "tier",
+          "settings": {
+            "icon": "triple",
+            "name": "Triple",
+            "description": "Tre cinture per ogni occasione",
+            "price": "€ 199",
+            "price_original": "€ 237",
+            "perks": "3 cinture personalizzate|Risparmia €38|Confezione regalo premium|Spedizione prioritaria",
+            "cta_label": "Scegli Triple"
+          }
+        },
+        {
+          "type": "tier",
+          "settings": {
+            "icon": "infinity",
+            "name": "Infinity",
+            "description": "Illimitato, per veri intenditori",
+            "price": "€ 59 / cint.",
+            "perks": "4+ cinture a piacere|Massimo risparmio|Gift box di lusso|Spedizione express gratuita",
+            "cta_label": "Scegli Infinity"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

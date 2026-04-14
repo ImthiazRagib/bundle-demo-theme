@@ -1,0 +1,123 @@
+<section class="cta-banner cta-banner--{{ section.settings.style }}">
+  <div class="cta-banner__container">
+    <div class="cta-banner__content">
+
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="cta-banner__eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+
+      <h2 class="cta-banner__heading">{{ section.settings.heading | default: "Crea il tuo Bundle oggi" }}</h2>
+
+      {%- if section.settings.subtext != blank -%}
+        <p class="cta-banner__sub">{{ section.settings.subtext }}</p>
+      {%- endif -%}
+
+      <div class="cta-banner__actions">
+        {%- if section.settings.btn_primary_label != blank -%}
+          <a href="{{ section.settings.btn_primary_url | default: '/pages/bundle' }}"
+             class="cta-banner__btn cta-banner__btn--primary">
+            {{ section.settings.btn_primary_label }}
+          </a>
+        {%- endif -%}
+        {%- if section.settings.btn_secondary_label != blank -%}
+          <a href="{{ section.settings.btn_secondary_url | default: routes.all_products_collection_url }}"
+             class="cta-banner__btn cta-banner__btn--secondary">
+            {{ section.settings.btn_secondary_label }}
+          </a>
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.footnote != blank -%}
+        <p class="cta-banner__footnote">{{ section.settings.footnote }}</p>
+      {%- endif -%}
+
+    </div>
+
+    <div class="cta-banner__decoration" aria-hidden="true">
+      <div class="cta-banner__ring cta-banner__ring--1"></div>
+      <div class="cta-banner__ring cta-banner__ring--2"></div>
+      <div class="cta-banner__ring cta-banner__ring--3"></div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CTA Banner",
+  "settings": [
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Style",
+      "options": [
+        { "value": "dark",  "label": "Dark (default)" },
+        { "value": "gold",  "label": "Gold" },
+        { "value": "light", "label": "Light" }
+      ],
+      "default": "dark"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Offerta Limitata"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Crea il tuo Bundle oggi"
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "Scegli tra Single, Double, Triple o Infinity. Ogni cintura è realizzata a mano con cuoio italiano selezionato."
+    },
+    {
+      "type": "header",
+      "content": "Primary button"
+    },
+    {
+      "type": "text",
+      "id": "btn_primary_label",
+      "label": "Primary button label",
+      "default": "Inizia a comporre →"
+    },
+    {
+      "type": "url",
+      "id": "btn_primary_url",
+      "label": "Primary button URL"
+    },
+    {
+      "type": "header",
+      "content": "Secondary button"
+    },
+    {
+      "type": "text",
+      "id": "btn_secondary_label",
+      "label": "Secondary button label",
+      "default": "Scopri le collezioni"
+    },
+    {
+      "type": "url",
+      "id": "btn_secondary_url",
+      "label": "Secondary button URL"
+    },
+    {
+      "type": "text",
+      "id": "footnote",
+      "label": "Footnote (below buttons)",
+      "default": "Spedizione gratuita sopra €150 · Reso gratuito entro 30 giorni"
+    }
+  ],
+  "presets": [
+    {
+      "name": "CTA Banner",
+      "settings": {
+        "style": "dark"
+      }
+    }
+  ]
+}
+{% endschema %}

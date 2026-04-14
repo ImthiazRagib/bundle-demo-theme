@@ -1,0 +1,253 @@
+<section class="brand-story">
+  <div class="brand-story__container">
+
+    <div class="brand-story__visual">
+      {%- if section.settings.image -%}
+        <img
+          src="{{ section.settings.image | img_url: '800x' }}"
+          alt="{{ section.settings.image_alt | default: 'Artigiani al lavoro' }}"
+          width="800"
+          height="640"
+          loading="lazy"
+          class="brand-story__image">
+      {%- else -%}
+        <div class="brand-story__placeholder" aria-hidden="true">
+          <div class="bsp__inner">
+            <div class="bsp__tools">
+              <svg class="bsp__tool" width="48" height="48" viewBox="0 0 48 48" fill="none">
+                <rect x="6" y="20" width="36" height="10" rx="5" fill="#b8860b" opacity=".7"/>
+                <rect x="20" y="8" width="8" height="32" rx="4" fill="#b8860b" opacity=".4"/>
+                <circle cx="24" cy="24" r="4" fill="#b8860b"/>
+              </svg>
+              <svg class="bsp__tool bsp__tool--rotate" width="36" height="36" viewBox="0 0 48 48" fill="none">
+                <path d="M8 40 L40 8" stroke="#b8860b" stroke-width="6" stroke-linecap="round" opacity=".5"/>
+                <circle cx="10" cy="38" r="5" fill="#b8860b" opacity=".7"/>
+                <circle cx="38" cy="10" r="5" fill="#b8860b" opacity=".7"/>
+              </svg>
+            </div>
+            <div class="bsp__label">Dal 1982</div>
+            <div class="bsp__subtitle">Cuoio Italiano Artigianale</div>
+          </div>
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.stat_1_value != blank -%}
+        <div class="brand-story__stats">
+          {%- if section.settings.stat_1_value != blank -%}
+            <div class="bs-stat">
+              <strong class="bs-stat__value">{{ section.settings.stat_1_value }}</strong>
+              <span class="bs-stat__label">{{ section.settings.stat_1_label }}</span>
+            </div>
+          {%- endif -%}
+          {%- if section.settings.stat_2_value != blank -%}
+            <div class="bs-stat">
+              <strong class="bs-stat__value">{{ section.settings.stat_2_value }}</strong>
+              <span class="bs-stat__label">{{ section.settings.stat_2_label }}</span>
+            </div>
+          {%- endif -%}
+          {%- if section.settings.stat_3_value != blank -%}
+            <div class="bs-stat">
+              <strong class="bs-stat__value">{{ section.settings.stat_3_value }}</strong>
+              <span class="bs-stat__label">{{ section.settings.stat_3_label }}</span>
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="brand-story__text">
+      {%- if section.settings.badge != blank -%}
+        <span class="brand-story__badge">{{ section.settings.badge }}</span>
+      {%- endif -%}
+
+      <h2 class="brand-story__heading">{{ section.settings.heading | default: "Una storia lunga 40 anni" }}</h2>
+
+      {%- if section.settings.body != blank -%}
+        <div class="brand-story__body rte">{{ section.settings.body }}</div>
+      {%- endif -%}
+
+      {%- if section.settings.signature != blank -%}
+        <p class="brand-story__signature">{{ section.settings.signature }}</p>
+      {%- endif -%}
+
+      <div class="brand-story__pillars">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'pillar' -%}
+            <div class="bs-pillar" {{ block.shopify_attributes }}>
+              <div class="bs-pillar__icon" aria-hidden="true">{{ block.settings.icon }}</div>
+              <div class="bs-pillar__body">
+                <strong>{{ block.settings.title }}</strong>
+                <span>{{ block.settings.text }}</span>
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      {%- if section.settings.cta_label != blank -%}
+        <a href="{{ section.settings.cta_url | default: '/pages/bundle' }}" class="brand-story__cta">
+          {{ section.settings.cta_label }}
+        </a>
+      {%- endif -%}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Brand Story",
+  "blocks": [
+    {
+      "type": "pillar",
+      "name": "Brand Pillar",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon (emoji)",
+          "default": "✦"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Tradizione"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Description",
+          "default": "Tecniche tramandate di generazione in generazione"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Artisan image"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image alt text",
+      "default": "Artigiani al lavoro"
+    },
+    {
+      "type": "text",
+      "id": "badge",
+      "label": "Badge label",
+      "default": "La nostra storia"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Una storia lunga 40 anni"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body text"
+    },
+    {
+      "type": "text",
+      "id": "signature",
+      "label": "Signature / attribution",
+      "default": "— Famiglia Moretti, fondatori"
+    },
+    {
+      "type": "header",
+      "content": "Stats"
+    },
+    {
+      "type": "text",
+      "id": "stat_1_value",
+      "label": "Stat 1 value",
+      "default": "40+"
+    },
+    {
+      "type": "text",
+      "id": "stat_1_label",
+      "label": "Stat 1 label",
+      "default": "anni di mestiere"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_value",
+      "label": "Stat 2 value",
+      "default": "12.000+"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_label",
+      "label": "Stat 2 label",
+      "default": "cinture create"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_value",
+      "label": "Stat 3 value",
+      "default": "100%"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_label",
+      "label": "Stat 3 label",
+      "default": "cuoio italiano"
+    },
+    {
+      "type": "header",
+      "content": "CTA"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA button label",
+      "default": "Scopri la nostra storia"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "CTA button URL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brand Story",
+      "blocks": [
+        {
+          "type": "pillar",
+          "settings": {
+            "icon": "🤲",
+            "title": "Fatto a mano",
+            "text": "Ogni cintura passa per le mani di artigiani specializzati"
+          }
+        },
+        {
+          "type": "pillar",
+          "settings": {
+            "icon": "🌿",
+            "title": "Cuoio selezionato",
+            "text": "Solo pelli conciatura vegetale da concerie toscane certificate"
+          }
+        },
+        {
+          "type": "pillar",
+          "settings": {
+            "icon": "⏳",
+            "title": "Duratura nel tempo",
+            "text": "Una cintura Moretti dura anni, non stagioni"
+          }
+        }
+      ],
+      "settings": {
+        "body": "<p>Nel 1982, Giovanni Moretti aprì il suo primo laboratorio a Firenze con un obiettivo semplice: creare cinture che durassero una vita. Quarant'anni dopo, la sua famiglia porta avanti quella visione combinando tecniche artigianali tradizionali con un sistema di personalizzazione moderno.</p><p>Ogni cintura nasce da pelli selezionate a mano nelle concerie toscane, lavorate in piccoli lotti per garantire la massima qualità. Il Bundle Builder non è solo uno strumento di acquisto — è il nostro modo di invitarti nel processo creativo.</p>"
+      }
+    }
+  ]
+}
+{% endschema %}

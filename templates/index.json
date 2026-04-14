@@ -4,7 +4,7 @@
       "type": "hero-banner",
       "settings": {
         "overlay_opacity": 45,
-        "min_height": 620,
+        "min_height": 640,
         "content_align": "center",
         "subheading": "Artigianato Italiano dal 1982",
         "heading": "La Cintura Perfetta,\nCreata da Te",
@@ -86,7 +86,185 @@
         "cta_label": "Inizia a comporre →",
         "cta_url": "/pages/bundle"
       }
+    },
+    "collection_showcase": {
+      "type": "collection-showcase",
+      "block_order": ["t1", "t2", "t3", "t4"],
+      "blocks": {
+        "t1": {
+          "type": "tier",
+          "settings": {
+            "icon": "single",
+            "name": "Single",
+            "description": "La cintura perfetta, solo tua",
+            "price": "€ 79",
+            "perks": "1 cintura su misura|9 colori disponibili|4 stili di fibbia|Consegna 3–5 gg",
+            "featured": false,
+            "cta_label": "Scegli Single",
+            "cta_url": "/pages/bundle"
+          }
+        },
+        "t2": {
+          "type": "tier",
+          "settings": {
+            "icon": "double",
+            "name": "Double",
+            "description": "Due cinture, doppio stile",
+            "price": "€ 139",
+            "price_original": "€ 158",
+            "perks": "2 cinture personalizzate|Risparmia €19|Confezione regalo inclusa|Consegna 3–5 gg",
+            "featured": true,
+            "popular_label": "Più Popolare",
+            "cta_label": "Scegli Double",
+            "cta_url": "/pages/bundle"
+          }
+        },
+        "t3": {
+          "type": "tier",
+          "settings": {
+            "icon": "triple",
+            "name": "Triple",
+            "description": "Tre cinture per ogni occasione",
+            "price": "€ 199",
+            "price_original": "€ 237",
+            "perks": "3 cinture personalizzate|Risparmia €38|Confezione regalo premium|Spedizione prioritaria",
+            "featured": false,
+            "cta_label": "Scegli Triple",
+            "cta_url": "/pages/bundle"
+          }
+        },
+        "t4": {
+          "type": "tier",
+          "settings": {
+            "icon": "infinity",
+            "name": "Infinity",
+            "description": "Illimitato, per veri intenditori",
+            "price": "€ 59 / cint.",
+            "perks": "4+ cinture a piacere|Massimo risparmio|Gift box di lusso|Spedizione express gratuita",
+            "featured": false,
+            "cta_label": "Scegli Infinity",
+            "cta_url": "/pages/bundle"
+          }
+        }
+      },
+      "settings": {
+        "badge": "I nostri Bundle",
+        "heading": "Scegli il tuo Bundle",
+        "subtext": "Quattro opzioni per ogni esigenza. Più cinture, più risparmio."
+      }
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "block_order": ["r1", "r2", "r3"],
+      "blocks": {
+        "r1": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "Cintura perfetta, finalmente",
+            "quote": "Ho il Double Bundle da tre mesi e non potrei essere più soddisfatto. La qualità del cuoio è eccezionale e le fibbie sono robustissime. Il processo di personalizzazione è stato divertente e intuitivo.",
+            "name": "Luca M.",
+            "location": "Milano",
+            "verified": true,
+            "featured": true
+          }
+        },
+        "r2": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "Regalo perfetto",
+            "quote": "Ho regalato il Triple Bundle a mio padre per il suo compleanno. Era commosso dalla qualità e dall'eleganza della confezione. Sicuramente riacquisterò.",
+            "name": "Sofia B.",
+            "location": "Roma",
+            "verified": true,
+            "featured": false
+          }
+        },
+        "r3": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "Artigianalità vera",
+            "quote": "Si vede subito che non è produzione industriale. Le cuciture, il cuoio, il profumo — tutto racconta di mani esperte. Con l'Infinity Bundle ho scelto 5 cinture diverse per ogni outfit.",
+            "name": "Davide C.",
+            "location": "Firenze",
+            "verified": true,
+            "featured": false
+          }
+        }
+      },
+      "settings": {
+        "badge": "Recensioni",
+        "heading": "Cosa dicono i nostri clienti",
+        "rating_summary": "4.9 su 5 — basato su 340+ recensioni"
+      }
+    },
+    "cta_banner": {
+      "type": "cta-banner",
+      "settings": {
+        "style": "dark",
+        "eyebrow": "Inizia oggi",
+        "heading": "La tua cintura ideale ti aspetta",
+        "subtext": "Scegli tra Single, Double, Triple o Infinity. Ogni cintura è realizzata a mano con cuoio italiano selezionato.",
+        "btn_primary_label": "Crea il tuo Bundle →",
+        "btn_primary_url": "/pages/bundle",
+        "btn_secondary_label": "Scopri le collezioni",
+        "footnote": "Spedizione gratuita sopra €150 · Reso gratuito entro 30 giorni"
+      }
+    },
+    "brand_story": {
+      "type": "brand-story",
+      "block_order": ["p1", "p2", "p3"],
+      "blocks": {
+        "p1": {
+          "type": "pillar",
+          "settings": {
+            "icon": "🤲",
+            "title": "Fatto a mano",
+            "text": "Ogni cintura passa per le mani di artigiani specializzati"
+          }
+        },
+        "p2": {
+          "type": "pillar",
+          "settings": {
+            "icon": "🌿",
+            "title": "Cuoio selezionato",
+            "text": "Solo pelli conciatura vegetale da concerie toscane certificate"
+          }
+        },
+        "p3": {
+          "type": "pillar",
+          "settings": {
+            "icon": "⏳",
+            "title": "Duratura nel tempo",
+            "text": "Una cintura Moretti dura anni, non stagioni"
+          }
+        }
+      },
+      "settings": {
+        "badge": "La nostra storia",
+        "heading": "Una storia lunga 40 anni",
+        "body": "<p>Nel 1982, Giovanni Moretti aprì il suo primo laboratorio a Firenze con un obiettivo semplice: creare cinture che durassero una vita. Quarant'anni dopo, la sua famiglia porta avanti quella visione combinando tecniche artigianali tradizionali con un sistema di personalizzazione moderno.</p><p>Ogni cintura nasce da pelli selezionate a mano nelle concerie toscane, lavorate in piccoli lotti per garantire la massima qualità. Il Bundle Builder non è solo uno strumento di acquisto — è il nostro modo di invitarti nel processo creativo.</p>",
+        "signature": "— Famiglia Moretti, fondatori",
+        "stat_1_value": "40+",
+        "stat_1_label": "anni di mestiere",
+        "stat_2_value": "12.000+",
+        "stat_2_label": "cinture create",
+        "stat_3_value": "100%",
+        "stat_3_label": "cuoio italiano",
+        "cta_label": "Scopri la nostra storia",
+        "cta_url": "/pages/about"
+      }
     }
   },
-  "order": ["hero", "features", "bundle_intro"]
+  "order": [
+    "hero",
+    "features",
+    "bundle_intro",
+    "collection_showcase",
+    "testimonials",
+    "cta_banner",
+    "brand_story"
+  ]
 }
