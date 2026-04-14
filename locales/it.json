@@ -34,5 +34,17 @@
     "cart": {
       "title": "Il tuo carrello"
     }
+  },
+  "gift_cards": {
+    "issued": {
+      "title": "Il tuo buono regalo da {{ value }} per {{ shop_name }}",
+      "expired": "Scaduto",
+      "remaining_html": "Saldo rimanente: <strong>{{ balance }}</strong>",
+      "gift_card_code": "Codice buono regalo",
+      "copy_code": "Copia codice",
+      "copy_code_success": "Copiato!",
+      "redeem_html": "Usa questo codice al checkout per riscattare il tuo buono regalo da {{ value }}",
+      "shop_link": "Acquista ora"
+    }
   }
 }

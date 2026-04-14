@@ -1,0 +1,55 @@
+{
+  "_info": "Catalogo prodotti bundle. Mappa i variant ID di Shopify ai tipi di bundle. Aggiorna con i tuoi veri variant ID dall'admin Shopify (Products → [prodotto] → Variants).",
+  "bundles": {
+    "single": {
+      "label": "Single Set Belt",
+      "belt_count": 1,
+      "variant_id": 0,
+      "price": "€ 49,99"
+    },
+    "double": {
+      "label": "Double Set Belt",
+      "belt_count": 2,
+      "variant_id": 0,
+      "price": "€ 79,99",
+      "savings": "€ 19,99"
+    },
+    "triple": {
+      "label": "Triple Set Belt",
+      "belt_count": 3,
+      "variant_id": 0,
+      "price": "€ 99,99",
+      "savings": "€ 49,98"
+    },
+    "infinity": {
+      "label": "Infinity Set Belt",
+      "belt_count": 4,
+      "variant_id": 0,
+      "price_per_belt": "€ 19,99",
+      "base_price": "€ 119,99"
+    }
+  },
+  "options": {
+    "straps": [
+      { "id": "strap-nero",     "label": "Nero" },
+      { "id": "strap-marrone",  "label": "Marrone" },
+      { "id": "strap-cognac",   "label": "Cognac" },
+      { "id": "strap-cuoio",    "label": "Cuoio" },
+      { "id": "strap-beige",    "label": "Beige" },
+      { "id": "strap-rosso",    "label": "Rosso" },
+      { "id": "strap-verde",    "label": "Verde" },
+      { "id": "strap-blu",      "label": "Blu" },
+      { "id": "strap-grigio",   "label": "Grigio" }
+    ],
+    "buckles": [
+      { "id": "buckle-1", "label": "Classic" },
+      { "id": "buckle-2", "label": "Silver" },
+      { "id": "buckle-3", "label": "Gold" },
+      { "id": "buckle-4", "label": "Luxury" }
+    ],
+    "lengths": [
+      { "id": "105", "label": "105 cm" },
+      { "id": "115", "label": "115 cm" }
+    ]
+  }
+}

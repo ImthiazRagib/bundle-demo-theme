@@ -1,5 +1,5 @@
 <section class="hero-banner{% if section.settings.image %} hero-banner--has-image{% endif %}"
-  style="{% if section.settings.image %}background-image: url('{{ section.settings.image | img_url: '1600x900' }}');{% endif %}
+  style="{% if section.settings.image %}background-image: url('{{ section.settings.image | image_url: width: 1600, height: 900 }}');{% endif %}
          {% if section.settings.overlay_opacity > 0 %}--hero-overlay: {{ section.settings.overlay_opacity | divided_by: 100.0 }};{% endif %}
          min-height: {{ section.settings.min_height }}px;">
 

@@ -35,7 +35,7 @@
                role="button" tabindex="0" aria-label="Single Set Belt">
         <div class="bb-bundle-card__icon">
           {%- if section.settings.img_single -%}
-            <img src="{{ section.settings.img_single | img_url: '200x200' }}" alt="Single Set Belt" loading="lazy">
+            <img src="{{ section.settings.img_single | image_url: width: 200, height: 200 }}" alt="Single Set Belt" width="200" height="200" loading="lazy">
           {%- else -%}
             <svg viewBox="0 0 40 40" width="36" height="36" fill="none"><rect x="8" y="17" width="24" height="6" rx="3" fill="#b8860b" opacity=".85"/><rect x="17" y="12" width="6" height="16" rx="2" fill="#b8860b"/></svg>
           {%- endif -%}
@@ -53,7 +53,7 @@
                role="button" tabindex="0" aria-label="Double Set Belt">
         <div class="bb-bundle-card__icon">
           {%- if section.settings.img_double -%}
-            <img src="{{ section.settings.img_double | img_url: '200x200' }}" alt="Double Set Belt" loading="lazy">
+            <img src="{{ section.settings.img_double | image_url: width: 200, height: 200 }}" alt="Double Set Belt" width="200" height="200" loading="lazy">
           {%- else -%}
             <svg viewBox="0 0 40 40" width="36" height="36" fill="none"><rect x="6" y="14" width="22" height="5" rx="2.5" fill="#b8860b" opacity=".7"/><rect x="6" y="21" width="22" height="5" rx="2.5" fill="#b8860b"/><rect x="16" y="10" width="5" height="20" rx="2" fill="#b8860b" opacity=".5"/></svg>
           {%- endif -%}
@@ -71,7 +71,7 @@
                role="button" tabindex="0" aria-label="Triple Set Belt">
         <div class="bb-bundle-card__icon">
           {%- if section.settings.img_triple -%}
-            <img src="{{ section.settings.img_triple | img_url: '200x200' }}" alt="Triple Set Belt" loading="lazy">
+            <img src="{{ section.settings.img_triple | image_url: width: 200, height: 200 }}" alt="Triple Set Belt" width="200" height="200" loading="lazy">
           {%- else -%}
             <svg viewBox="0 0 40 40" width="36" height="36" fill="none"><rect x="5" y="12" width="20" height="4" rx="2" fill="#b8860b" opacity=".5"/><rect x="5" y="18" width="20" height="4" rx="2" fill="#b8860b" opacity=".75"/><rect x="5" y="24" width="20" height="4" rx="2" fill="#b8860b"/><rect x="15" y="9" width="4" height="22" rx="2" fill="#b8860b" opacity=".4"/></svg>
           {%- endif -%}
@@ -89,7 +89,7 @@
                role="button" tabindex="0" aria-label="Infinity Set Belt">
         <div class="bb-bundle-card__icon">
           {%- if section.settings.img_infinity -%}
-            <img src="{{ section.settings.img_infinity | img_url: '200x200' }}" alt="Infinity Set Belt" loading="lazy">
+            <img src="{{ section.settings.img_infinity | image_url: width: 200, height: 200 }}" alt="Infinity Set Belt" width="200" height="200" loading="lazy">
           {%- else -%}
             <svg viewBox="0 0 40 40" width="36" height="36" fill="none">
               <path d="M8 20c0-3.3 2.7-6 6-6s6 3 8 6-2.7 6-8 6-6-2.7-6-6z" fill="#b8860b" opacity=".6"/>
@@ -125,6 +125,7 @@
       {%- comment -%} Background: belt combo photo fills entire hero area {%- endcomment -%}
       <canvas id="bb-belt-canvas" width="340" height="100" style="display:none;max-width:100%;"></canvas>
       <img id="bb-belt-preview-img" src="" alt="Anteprima cintura"
+           width="800" height="400"
            class="bb-composer-hero__bg" style="display:none;">
       <div class="bb-belt-preview__placeholder" id="bb-belt-preview-placeholder">
         Seleziona le opzioni per vedere l'anteprima
@@ -394,9 +395,10 @@
     <button class="bb-modal__close" data-close-modal="bb-modal-indossata" aria-label="Chiudi">✕</button>
     <div class="bb-modal__content">
       <img id="bb-worn-img" class="bb-modal__img"
-           src="{{ section.settings.model_photo | img_url: '600x800' }}"
-           data-fallback="{{ section.settings.model_photo | img_url: '600x800' }}"
+           src="{{ section.settings.model_photo | image_url: width: 600, height: 800 }}"
+           data-fallback="{{ section.settings.model_photo | image_url: width: 600, height: 800 }}"
            alt="Cintura indossata"
+           width="600" height="800"
            {% unless section.settings.model_photo %}style="display:none"{% endunless %}>
       <div id="bb-worn-placeholder" class="bb-modal__placeholder"
            {% if section.settings.model_photo %}style="display:none"{% endif %}>
@@ -444,10 +446,10 @@
   /* ── Carousel configuration (from Shopify Theme Editor) ───── */
   /* URL delle immagini prodotto bundle (da Shopify CDN) — usate in riepilogo e carrello */
   window.BB_BUNDLE_IMAGES = {
-    single:    {{ section.settings.img_single    | img_url: '240x240' | json | default: '""' }},
-    double:    {{ section.settings.img_double    | img_url: '240x240' | json | default: '""' }},
-    triple:    {{ section.settings.img_triple    | img_url: '240x240' | json | default: '""' }},
-    infinity:  {{ section.settings.img_infinity  | img_url: '240x240' | json | default: '""' }},
+    single:    {{ section.settings.img_single    | image_url: width: 240, height: 240 | json | default: '""' }},
+    double:    {{ section.settings.img_double    | image_url: width: 240, height: 240 | json | default: '""' }},
+    triple:    {{ section.settings.img_triple    | image_url: width: 240, height: 240 | json | default: '""' }},
+    infinity:  {{ section.settings.img_infinity  | image_url: width: 240, height: 240 | json | default: '""' }},
   };
   window.BB_CAROUSEL_CONFIG = {
     buckleOrder:   {{ section.settings.buckle_order   | default: "buckle-2,buckle-1,buckle-3,buckle-4" | json }},
@@ -502,7 +504,7 @@
   {%- endif -%}
 </script>
 
-{{ 'bundle-builder.js' | asset_url | script_tag }}
+<script src="{{ 'bundle-builder.js' | asset_url }}" defer></script>
 
 {% schema %}
 {

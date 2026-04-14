@@ -11,7 +11,7 @@
     <!-- Logo -->
     <a href="{{ routes.root_url }}" class="site-header__logo">
       {%- if section.settings.logo -%}
-        <img src="{{ section.settings.logo | img_url: '200x' }}"
+        <img src="{{ section.settings.logo | image_url: width: 200 }}"
              alt="{{ section.settings.logo_alt | default: shop.name }}"
              width="140" height="auto" loading="eager">
       {%- else -%}

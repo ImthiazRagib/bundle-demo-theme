@@ -20,7 +20,7 @@
 
     <!-- Favicon -->
     {% if settings.favicon %}
-      <link rel="icon" type="image/png" href="{{ settings.favicon | img_url: '32x32' }}">
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
     {% endif %}
 
     <!-- Google Fonts: Inter for clean modern look -->

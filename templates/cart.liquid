@@ -22,7 +22,7 @@
               <tr style="border-bottom:1px solid var(--color-border);">
                 <td style="padding:16px 0; display:flex; gap:16px; align-items:center;">
                   {% if item.image %}
-                    <img src="{{ item.image | img_url: '80x80' }}" alt="{{ item.title | escape }}" width="60" height="60" style="border-radius:8px; border:1px solid var(--color-border); object-fit:cover;">
+                    <img src="{{ item.image | image_url: width: 80, height: 80 }}" alt="{{ item.title | escape }}" width="60" height="60" style="border-radius:8px; border:1px solid var(--color-border); object-fit:cover;">
                   {% endif %}
                   <div>
                     <a href="{{ item.url }}" style="font-weight:600; font-size:14px;">{{ item.product.title }}</a>

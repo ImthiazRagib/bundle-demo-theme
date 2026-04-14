@@ -7,7 +7,7 @@
       <div class="site-footer__col site-footer__col--brand">
         <a href="{{ routes.root_url }}" class="site-footer__logo">
           {%- if section.settings.logo -%}
-            <img src="{{ section.settings.logo | img_url: '160x' }}" alt="{{ shop.name }}" width="120" height="auto" loading="lazy">
+            <img src="{{ section.settings.logo | image_url: width: 160 }}" alt="{{ shop.name }}" width="120" height="auto" loading="lazy">
           {%- else -%}
             <span class="site-footer__logo-text">{{ shop.name }}</span>
           {%- endif -%}

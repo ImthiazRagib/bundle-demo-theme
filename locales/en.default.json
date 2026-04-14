@@ -34,5 +34,17 @@
     "cart": {
       "title": "Your cart"
     }
+  },
+  "gift_cards": {
+    "issued": {
+      "title": "Your {{ value }} gift card for {{ shop_name }}",
+      "expired": "Expired",
+      "remaining_html": "Remaining balance: <strong>{{ balance }}</strong>",
+      "gift_card_code": "Gift card code",
+      "copy_code": "Copy code",
+      "copy_code_success": "Copied!",
+      "redeem_html": "Use this code at checkout to redeem your {{ value }} gift card",
+      "shop_link": "Shop now"
+    }
   }
 }

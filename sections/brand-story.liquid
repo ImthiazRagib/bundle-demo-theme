@@ -4,7 +4,7 @@
     <div class="brand-story__visual">
       {%- if section.settings.image -%}
         <img
-          src="{{ section.settings.image | img_url: '800x' }}"
+          src="{{ section.settings.image | image_url: width: 800 }}"
           alt="{{ section.settings.image_alt | default: 'Artigiani al lavoro' }}"
           width="800"
           height="640"

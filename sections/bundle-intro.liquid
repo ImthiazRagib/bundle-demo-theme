@@ -31,14 +31,15 @@
 
     <div class="bundle-intro__preview">
       {%- if section.settings.preview_image -%}
-        <img src="{{ section.settings.preview_image | img_url: '600x' }}"
+        <img src="{{ section.settings.preview_image | image_url: width: 600 }}"
              alt="{{ section.settings.preview_image_alt | default: 'Bundle preview' }}"
              width="600" height="auto" loading="lazy" class="bundle-intro__preview-img">
       {%- else -%}
         <!-- Placeholder: belt bundle visual -->
         <div class="bundle-intro__preview-placeholder" aria-hidden="true">
           <div class="bip__cards">
-            {%- for tier in "Single,Double,Triple,Infinity" | split: "," -%}
+            {%- assign tier_list = "Single,Double,Triple,Infinity" | split: "," -%}
+            {%- for tier in tier_list -%}
               <div class="bip__card bip__card--{{ tier | downcase }}">
                 <div class="bip__card-icon">
                   {%- case tier -%}
