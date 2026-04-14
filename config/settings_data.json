@@ -1,0 +1,14 @@
+{
+  "current": {
+    "color_primary": "#b8860b",
+    "color_primary_dark": "#8a6200",
+    "color_text": "#1a1c22",
+    "color_text_muted": "#6b7280",
+    "color_background": "#ffffff",
+    "color_surface": "#f8f6f1",
+    "color_border": "#e5e0d5",
+    "type_body_size": 15,
+    "page_width": 1200,
+    "grid_gap": 24
+  }
+}

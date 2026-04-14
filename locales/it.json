@@ -1,0 +1,38 @@
+{
+  "general": {
+    "skip_content": "Vai al contenuto principale",
+    "search": "Cerca",
+    "loading": "Caricamento...",
+    "close": "Chiudi"
+  },
+  "layout": {
+    "cart": {
+      "title": "Carrello",
+      "items_count": {
+        "one": "1 articolo",
+        "other": "{{ count }} articoli"
+      }
+    }
+  },
+  "sections": {
+    "header": {
+      "navigation": "Navigazione principale",
+      "open_menu": "Apri menu",
+      "close_menu": "Chiudi menu"
+    },
+    "footer": {
+      "payment_methods": "Metodi di pagamento accettati"
+    },
+    "bundle_builder": {
+      "title": "Bundle Builder"
+    }
+  },
+  "templates": {
+    "page": {
+      "title": "Pagina"
+    },
+    "cart": {
+      "title": "Il tuo carrello"
+    }
+  }
+}

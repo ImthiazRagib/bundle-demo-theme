@@ -1,0 +1,704 @@
+{% comment %}
+  ============================================================
+  SHOPIFY BUNDLE BUILDER — sections/bundle-builder.liquid
+  Last deploy: 2026-04-01T20:08 — fix preview fade + ghost-click guard
+  ============================================================
+  Installation:
+    1. Copy this file into your theme's sections/ folder.
+    2. Copy bundle-builder.css and bundle-builder.js into assets/.
+    3. Add  {% section 'bundle-builder' %}  to your desired template
+       (e.g. templates/page.bundle.liquid or templates/index.liquid).
+    4. In the Shopify Theme Editor, set your product variant IDs
+       and any image URLs via the section schema settings below.
+    5. Update BB_VARIANTS in the <script> block at the bottom
+       with your real Shopify product variant IDs.
+  ============================================================
+{% endcomment %}
+
+{{ 'bundle-builder.css' | asset_url | stylesheet_tag }}
+
+<div class="bb-wrap-outer">
+<div class="bb-wrap" id="bb-root"
+  data-media-url="{{ 'bundle-builder-media.json' | asset_url }}"
+  data-catalog-url="{{ 'bundle-builder-catalog.json' | asset_url }}">
+
+  {%- comment -%} ══ SCREEN 0: BUNDLE SELECTOR ═══════════════════ {%- endcomment -%}
+  <section id="bb-screen-selector" class="bb-screen is-active" aria-label="Scegli il pacchetto">
+    <div class="bb-selector">
+      <h1 class="bb-selector__title">Scegli il pacchetto</h1>
+      <p class="bb-selector__sub">
+        Crea la tua combinazione personalizzata di cinture.<br>
+        Scegli il set che fa per te e componi ogni cintura.
+      </p>
+
+      <article class="bb-bundle-card" data-type="single" data-select-bundle="single"
+               role="button" tabindex="0" aria-label="Single Set Belt">
+        <div class="bb-bundle-card__icon">
+          {%- if section.settings.img_single -%}
+            <img src="{{ section.settings.img_single | img_url: '200x200' }}" alt="Single Set Belt" loading="lazy">
+          {%- else -%}
+            <svg viewBox="0 0 40 40" width="36" height="36" fill="none"><rect x="8" y="17" width="24" height="6" rx="3" fill="#b8860b" opacity=".85"/><rect x="17" y="12" width="6" height="16" rx="2" fill="#b8860b"/></svg>
+          {%- endif -%}
+        </div>
+        <div class="bb-bundle-card__body">
+          <div class="bb-bundle-card__name">Single Set Belt</div>
+          <div class="bb-bundle-card__includes">Include 1 cintura — La cintura perfetta composta su misura.</div>
+          <div><span class="bb-bundle-card__price">{{ section.settings.price_single | default: "€ 49,99" }}</span></div>
+          <button class="bb-bundle-card__cta" data-action="start" data-select-bundle="single"
+                  onclick="BundleBuilder.selectBundleType('single')">Inizia a comporre →</button>
+        </div>
+      </article>
+
+      <article class="bb-bundle-card" data-type="double" data-select-bundle="double"
+               role="button" tabindex="0" aria-label="Double Set Belt">
+        <div class="bb-bundle-card__icon">
+          {%- if section.settings.img_double -%}
+            <img src="{{ section.settings.img_double | img_url: '200x200' }}" alt="Double Set Belt" loading="lazy">
+          {%- else -%}
+            <svg viewBox="0 0 40 40" width="36" height="36" fill="none"><rect x="6" y="14" width="22" height="5" rx="2.5" fill="#b8860b" opacity=".7"/><rect x="6" y="21" width="22" height="5" rx="2.5" fill="#b8860b"/><rect x="16" y="10" width="5" height="20" rx="2" fill="#b8860b" opacity=".5"/></svg>
+          {%- endif -%}
+        </div>
+        <div class="bb-bundle-card__body">
+          <div class="bb-bundle-card__name">Double Set Belt</div>
+          <div class="bb-bundle-card__includes">Include 2 cinture — Due cinture personalizzate, una per ogni look.</div>
+          <div><span class="bb-bundle-card__price">{{ section.settings.price_double | default: "€ 79,99" }}</span><span class="bb-bundle-card__badge">Risparmi €19,99</span></div>
+          <button class="bb-bundle-card__cta" data-action="start" data-select-bundle="double"
+                  onclick="BundleBuilder.selectBundleType('double')">Inizia a comporre →</button>
+        </div>
+      </article>
+
+      <article class="bb-bundle-card" data-type="triple" data-select-bundle="triple"
+               role="button" tabindex="0" aria-label="Triple Set Belt">
+        <div class="bb-bundle-card__icon">
+          {%- if section.settings.img_triple -%}
+            <img src="{{ section.settings.img_triple | img_url: '200x200' }}" alt="Triple Set Belt" loading="lazy">
+          {%- else -%}
+            <svg viewBox="0 0 40 40" width="36" height="36" fill="none"><rect x="5" y="12" width="20" height="4" rx="2" fill="#b8860b" opacity=".5"/><rect x="5" y="18" width="20" height="4" rx="2" fill="#b8860b" opacity=".75"/><rect x="5" y="24" width="20" height="4" rx="2" fill="#b8860b"/><rect x="15" y="9" width="4" height="22" rx="2" fill="#b8860b" opacity=".4"/></svg>
+          {%- endif -%}
+        </div>
+        <div class="bb-bundle-card__body">
+          <div class="bb-bundle-card__name">Triple Set Belt</div>
+          <div class="bb-bundle-card__includes">Include 3 cinture — Il set completo per ogni occasione.</div>
+          <div><span class="bb-bundle-card__price">{{ section.settings.price_triple | default: "€ 99,99" }}</span><span class="bb-bundle-card__badge">Risparmi €49,98</span></div>
+          <button class="bb-bundle-card__cta" data-action="start" data-select-bundle="triple"
+                  onclick="BundleBuilder.selectBundleType('triple')">Inizia a comporre →</button>
+        </div>
+      </article>
+
+      <article class="bb-bundle-card bb-bundle-card--infinity" data-type="infinity" data-select-bundle="infinity"
+               role="button" tabindex="0" aria-label="Infinity Set Belt">
+        <div class="bb-bundle-card__icon">
+          {%- if section.settings.img_infinity -%}
+            <img src="{{ section.settings.img_infinity | img_url: '200x200' }}" alt="Infinity Set Belt" loading="lazy">
+          {%- else -%}
+            <svg viewBox="0 0 40 40" width="36" height="36" fill="none">
+              <path d="M8 20c0-3.3 2.7-6 6-6s6 3 8 6-2.7 6-8 6-6-2.7-6-6z" fill="#b8860b" opacity=".6"/>
+              <path d="M20 20c0-3 2.7-6 6-6s6 2.7 6 6-2.7 6-6 6-6-3-8-6z" fill="#b8860b" opacity=".9"/>
+            </svg>
+          {%- endif -%}
+        </div>
+        <div class="bb-bundle-card__body">
+          <div class="bb-bundle-card__name">Infinity Set Belt</div>
+          <div class="bb-bundle-card__includes">Cinture illimitate — 4 incluse, poi €19,99 a cintura aggiuntiva.</div>
+          <div><span class="bb-bundle-card__price">da {{ section.settings.price_infinity | default: "€ 119,99" }}</span><span class="bb-bundle-card__badge bb-badge--infinity">∞ Illimitato</span></div>
+          <button class="bb-bundle-card__cta" data-action="start" data-select-bundle="infinity"
+                  onclick="BundleBuilder.selectBundleType('infinity')">Inizia a comporre →</button>
+        </div>
+      </article>
+
+      <p style="font-size:11px;color:#999;text-align:center;margin-top:8px;">
+        ✦ Fai a intervalli (interrompibili) · Reso gratuito · Consegna 3–5 gg
+      </p>
+    </div>
+  </section>
+
+  {%- comment -%} ══ SCREEN 1: BELT COMPOSER ════════════════════== {%- endcomment -%}
+  <section id="bb-screen-composer" class="bb-screen" aria-label="Componi la cintura">
+
+    {%- comment -%} ── Hero: full-width preview photo + wizard overlay + quick actions ── {%- endcomment -%}
+    <div class="bb-composer-hero" id="bb-composer-hero"
+         data-belt-preview-base="{{ section.settings.belt_preview_base_url }}">
+
+      {%- comment -%} Belt wizard tab bar overlaid at TOP of the hero photo {%- endcomment -%}
+      <div id="bb-belt-wizard"></div>
+
+      {%- comment -%} Background: belt combo photo fills entire hero area {%- endcomment -%}
+      <canvas id="bb-belt-canvas" width="340" height="100" style="display:none;max-width:100%;"></canvas>
+      <img id="bb-belt-preview-img" src="" alt="Anteprima cintura"
+           class="bb-composer-hero__bg" style="display:none;">
+      <div class="bb-belt-preview__placeholder" id="bb-belt-preview-placeholder">
+        Seleziona le opzioni per vedere l'anteprima
+      </div>
+
+      {%- comment -%} Bottom foot: quick action buttons stacked on right, Riepilogo hidden {%- endcomment -%}
+      <div class="bb-composer-hero__foot">
+        <div class="bb-quick-actions">
+          <button class="bb-quick-btn" data-action="vedi-indossata">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="gi1" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#e8b923"/>
+                  <stop offset="100%" stop-color="#b8800b"/>
+                </linearGradient>
+              </defs>
+              <circle cx="12" cy="8" r="4" stroke="url(#gi1)"/>
+              <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="url(#gi1)"/>
+            </svg>
+            Vedi indossata
+          </button>
+          <button class="bb-quick-btn" data-action="vedi-360">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="gi2" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#e8b923"/>
+                  <stop offset="100%" stop-color="#b8800b"/>
+                </linearGradient>
+              </defs>
+              <polyline points="1 4 1 10 7 10" stroke="url(#gi2)"/>
+              <polyline points="23 20 23 14 17 14" stroke="url(#gi2)"/>
+              <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 0 1 3.51 15" stroke="url(#gi2)"/>
+            </svg>
+            Vedi 360°
+          </button>
+          <button class="bb-quick-btn" data-action="vedi-riepilogo" style="display:none">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/>
+              <rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/>
+            </svg>
+            Riepilogo
+          </button>
+        </div>
+      </div>
+    </div>
+
+    {%- comment -%} 1. Length selector — label + buttons inline on one row {%- endcomment -%}
+    <div class="bb-section bb-section--inline-length">
+      <div class="bb-section__label">1. Lunghezza cintura</div>
+      <div class="bb-length-selector" id="bb-length-selector">
+        {%- comment -%} Rendered by JS {%- endcomment -%}
+      </div>
+    </div>
+
+    {%- comment -%} 2. Buckle carousel {%- endcomment -%}
+    <div class="bb-section bb-section--buckle">
+      <div class="bb-section-header">
+        <div class="bb-section__label">2. Fibbia: <span id="bb-buckle-name-inline" class="bb-selection-inline-name"></span></div>
+        <span class="bb-section__counter" id="bb-buckle-nav-label"></span>
+      </div>
+      <div class="bb-carousel" id="bb-buckle-carousel" role="listbox" aria-label="Stile fibbia">
+        {%- comment -%} Rendered by JS {%- endcomment -%}
+      </div>
+      <div class="bb-strap-nav">
+        <button class="bb-strap-nav__btn" id="bb-buckle-prev" aria-label="Fibbia precedente">&#8592;</button>
+        <button class="bb-strap-nav__btn" id="bb-buckle-next" aria-label="Fibbia successiva">&#8594;</button>
+      </div>
+    </div>
+
+    {%- comment -%} 3. Strap color — vertical stacked fan {%- endcomment -%}
+    <div class="bb-section bb-section--strap">
+      <div class="bb-section-header">
+        <div class="bb-section__label">3. Cintura: <span id="bb-strap-name-inline" class="bb-selection-inline-name"></span></div>
+        <span class="bb-section__counter" id="bb-strap-nav-label"></span>
+      </div>
+      <div class="bb-strap-carousel" id="bb-strap-carousel" role="listbox" aria-label="Colore della cintura">
+        {%- comment -%} Rendered by JS as horizontal fan items {%- endcomment -%}
+      </div>
+      <div class="bb-strap-selected-name" id="bb-strap-color-name"></div>
+      <div class="bb-strap-nav">
+        <button class="bb-strap-nav__btn" id="bb-strap-prev" aria-label="Colore precedente">&#8592;</button>
+        <button class="bb-strap-nav__btn" id="bb-strap-next" aria-label="Colore successivo">&#8594;</button>
+      </div>
+    </div>
+
+    {%- comment -%} Bottom CTA — two buttons: back + aggiungi al set {%- endcomment -%}
+    <div class="bb-cta-bar bb-cta-bar--double">
+      <button class="bb-btn-composer-back" data-action="composer-back">
+        ← Indietro
+      </button>
+      <button class="bb-btn-primary is-accent" data-action="add-to-set" id="bb-composer-cta">
+        Aggiungi Cintura al Set →
+      </button>
+    </div>
+
+    {%- comment -%} Infinity — extra belt controls (shown only for infinity bundle type) {%- endcomment -%}
+    <div id="bb-infinity-controls" style="display:none;" class="bb-infinity-bar">
+      <div class="bb-infinity-bar__total" id="bb-infinity-total">Totale: € 119,99 · 4 cinture</div>
+      <button class="bb-infinity-bar__add" data-action="infinity-add-belt">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Aggiungi cintura — € 19,99
+      </button>
+    </div>
+  </section>
+
+  {%- comment -%} ══ SCREEN 2: BUNDLE REVIEW ════════════════════== {%- endcomment -%}
+  <section id="bb-screen-review" class="bb-screen" aria-label="Riepilogo bundle">
+
+    <div class="bb-header">
+      <button class="bb-btn-icon" data-action="review-back" aria-label="Indietro">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+      </button>
+      <div class="bb-header__title" id="bb-review-title">Riepilogo Set Doppio</div>
+      <div style="width:36px;"></div>
+    </div>
+
+    <div class="bb-progress" id="bb-progress-review" style="padding-top:14px;display:flex;align-items:center;justify-content:center;gap:6px;padding-left:16px;padding-right:16px;">
+      {%- comment -%} Could also be rendered by JS if desired {%- endcomment -%}
+    </div>
+
+    <div class="bb-review bb-mt-16" id="bb-review-belts">
+      {%- comment -%} Rendered by JS {%- endcomment -%}
+    </div>
+
+    <div class="bb-divider" style="margin:0 16px;"></div>
+
+    <div style="display:flex;justify-content:space-between;padding:14px 16px 0;font-size:15px;font-weight:700;">
+      <span>Totale pacchetto</span>
+      <span id="bb-review-total">€ —</span>
+    </div>
+
+    <div class="bb-cta-bar">
+      <button class="bb-btn-primary is-accent" data-action="add-to-cart">
+        🛒 Aggiungi al Carrello
+      </button>
+      <button class="bb-btn-secondary" data-action="review-back">
+        Continua a modificare
+      </button>
+    </div>
+  </section>
+
+  {%- comment -%} ══ SCREEN 3: CART ═════════════════════════════== {%- endcomment -%}
+  <section id="bb-screen-cart" class="bb-screen" aria-label="Carrello">
+
+    <div class="bb-header">
+      <button class="bb-btn-icon" data-action="cart-back" aria-label="Indietro">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+      </button>
+      <div class="bb-header__title">Carrello</div>
+      <div style="width:36px;"></div>
+    </div>
+
+    <div class="bb-cart bb-mt-16" id="bb-cart-bundles">
+      {%- comment -%} Rendered by JS {%- endcomment -%}
+    </div>
+
+    <div style="display:flex;justify-content:space-between;padding:14px 16px 0;font-size:16px;font-weight:700;border-top:2px solid #1a1a1a;margin:0 16px;">
+      <span>Totale Carrello</span>
+      <span id="bb-cart-total">€ 0,00</span>
+    </div>
+
+    <p class="bb-cart__notes">
+      Spedizione gratuita sopra €50 · Reso gratuito entro 30 giorni<br>
+      Pagamento sicuro: Visa, Mastercard, PayPal, Apple Pay
+    </p>
+
+    <div class="bb-cta-bar">
+      <button class="bb-btn-primary is-accent" data-action="go-confirm">
+        Procedi al Checkout →
+      </button>
+      <button class="bb-btn-secondary" onclick="BundleBuilder.showScreen('selector');BundleBuilder.selectBundleType(null)">
+        Continua lo shopping
+      </button>
+    </div>
+  </section>
+
+  {%- comment -%} ══ SCREEN 4: CONFIRM ORDER ════════════════════== {%- endcomment -%}
+  <section id="bb-screen-confirm" class="bb-screen" aria-label="Conferma ordine">
+
+    <div class="bb-header">
+      <button class="bb-btn-icon" data-action="cart-back" aria-label="Indietro">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+      </button>
+      <div class="bb-header__title">Conferma Ordine</div>
+      <div style="width:36px;"></div>
+    </div>
+
+    <div class="bb-confirm">
+      <div id="bb-confirm-bundles">
+        {%- comment -%} Rendered by JS {%- endcomment -%}
+      </div>
+
+      <div class="bb-divider"></div>
+
+      <div style="display:flex;justify-content:space-between;font-size:16px;font-weight:700;margin-bottom:16px;">
+        <span>Totale da pagare</span>
+        <span id="bb-confirm-total">€ —</span>
+      </div>
+
+      <div class="bb-confirm__trust">
+        <div class="bb-confirm__trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+          Pagamento sicuro
+        </div>
+        <div class="bb-confirm__trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M4 12V4h16v8M4 20h16M12 12v8"/>
+          </svg>
+          Reso gratuito
+        </div>
+        <div class="bb-confirm__trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+          </svg>
+          3–5 giorni
+        </div>
+      </div>
+
+      <a href="#" class="bb-confirm__shipping">Calcola le spese di spedizione →</a>
+
+      <button class="bb-btn-primary is-accent" data-action="checkout" style="margin-bottom:12px;">
+        🔒 Vai al Pagamento
+      </button>
+      <button class="bb-btn-secondary" onclick="BundleBuilder.showScreen('cart')">
+        ← Continue Shopping
+      </button>
+    </div>
+  </section>
+
+  {%- comment -%} ══ SCREEN 5: ORDER CONFIRMED ══════════════════== {%- endcomment -%}
+  <section id="bb-screen-confirmed" class="bb-screen" aria-label="Ordine confermato">
+    <div class="bb-confirmed">
+      <div class="bb-confirmed__icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </div>
+      <h2 class="bb-confirmed__title">Grazie per l'ordine!</h2>
+      <p class="bb-confirmed__sub">
+        Il tuo bundle personalizzato è stato aggiunto al carrello.<br>
+        Riceverai una conferma via email a breve.
+      </p>
+
+      <div class="bb-confirmed__order">
+        <div class="bb-confirmed__order-title">
+          Riepilogo Set Doppio — Ordine <span id="bb-order-number"></span>
+        </div>
+        <div id="bb-confirmed-summary"></div>
+      </div>
+
+      <button class="bb-btn-primary" data-action="continue">
+        ← Continue Shopping
+      </button>
+    </div>
+  </section>
+
+  {%- comment -%} ══ MODAL: Vedi indossata ══════════════════════== {%- endcomment -%}
+  <div class="bb-modal" id="bb-modal-indossata" role="dialog" aria-modal="true" aria-label="Vedi indossata">
+    <button class="bb-modal__close" data-close-modal="bb-modal-indossata" aria-label="Chiudi">✕</button>
+    <div class="bb-modal__content">
+      <img id="bb-worn-img" class="bb-modal__img"
+           src="{{ section.settings.model_photo | img_url: '600x800' }}"
+           data-fallback="{{ section.settings.model_photo | img_url: '600x800' }}"
+           alt="Cintura indossata"
+           {% unless section.settings.model_photo %}style="display:none"{% endunless %}>
+      <div id="bb-worn-placeholder" class="bb-modal__placeholder"
+           {% if section.settings.model_photo %}style="display:none"{% endif %}>
+        <svg viewBox="0 0 24 24" width="64" height="64" fill="none" stroke="#555" stroke-width="1.5">
+          <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
+          <polyline points="21 15 16 10 5 21"/>
+        </svg>
+        <span>Nessuna foto disponibile per questa combinazione</span>
+      </div>
+      <div class="bb-modal__caption">
+        <strong>COMBINAZIONE ATTUALE</strong>
+        <span id="bb-modal-caption-text">130cm · Fibbia Classica · Nero</span>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} ══ MODAL: Vedi 360° ═══════════════════════════== {%- endcomment -%}
+  <div class="bb-modal bb-modal--video" id="bb-modal-360" role="dialog" aria-modal="true" aria-label="Vedi 360°">
+    <button class="bb-modal__close" data-close-modal="bb-modal-360" aria-label="Chiudi">✕</button>
+    <div class="bb-modal__content">
+      <video id="bb-video-360" autoplay loop muted playsinline
+             src="{{ section.settings.video_360 | default: '' }}"
+             data-fallback="{{ section.settings.video_360 | default: '' }}"
+             {% unless section.settings.video_360 %}style="display:none"{% endunless %}></video>
+      <div id="bb-video-placeholder" class="bb-modal__placeholder"
+           {% if section.settings.video_360 %}style="display:none"{% endif %}>
+        <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="#555" stroke-width="1.5">
+          <path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.66 0 3-4.03 3-9s-1.34-9-3-9m0 18c-1.66 0-3-4.03-3-9s1.34-9 3-9"/>
+        </svg>
+        <span>Nessun video disponibile per questa combinazione</span>
+      </div>
+      <div class="bb-modal__video-info">
+        <div class="bb-modal__video-title">Cintura — Vista 360°</div>
+        <div class="bb-modal__video-sub" id="bb-modal-video-caption">
+          Cintura selezionata in rotazione completa
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>{%- comment -%} /.bb-wrap {%- endcomment -%}
+</div>{%- comment -%} /.bb-wrap-outer {%- endcomment -%}
+
+<script>
+  /* ── Carousel configuration (from Shopify Theme Editor) ───── */
+  /* URL delle immagini prodotto bundle (da Shopify CDN) — usate in riepilogo e carrello */
+  window.BB_BUNDLE_IMAGES = {
+    single:    {{ section.settings.img_single    | img_url: '240x240' | json | default: '""' }},
+    double:    {{ section.settings.img_double    | img_url: '240x240' | json | default: '""' }},
+    triple:    {{ section.settings.img_triple    | img_url: '240x240' | json | default: '""' }},
+    infinity:  {{ section.settings.img_infinity  | img_url: '240x240' | json | default: '""' }},
+  };
+  window.BB_CAROUSEL_CONFIG = {
+    buckleOrder:   {{ section.settings.buckle_order   | default: "buckle-2,buckle-1,buckle-3,buckle-4" | json }},
+    strapOrder:    {{ section.settings.strap_order    | default: "strap-nero,strap-marrone,strap-cognac,strap-cuoio,strap-beige,strap-rosso,strap-verde,strap-blu,strap-grigio" | json }},
+    defaultBuckle: {{ section.settings.default_buckle | default: "buckle-2" | json }},
+    defaultStrap:  {{ section.settings.default_strap  | default: "strap-nero" | json }},
+  };
+</script>
+
+<script>
+  /*
+   * Bundle variant IDs — injected from Shopify Theme Editor settings.
+   * These are the MAIN BUNDLE products (Single/Double/Triple/Infinity)
+   * that carry the price and are visible to the customer.
+   *
+   * Component SKUs (straps, buckles, passanti, logistics) are resolved
+   * automatically from bundle-builder-catalog.json — synced via the admin
+   * dashboard. No manual entry needed here.
+   */
+  window.BB_VARIANTS = {
+    belt_preview_base_url: {{ section.settings.belt_preview_base_url | default: "" | json }},
+    bundles: {
+      single:         {{ section.settings.variant_bundle_single         | default: 0 }},
+      double:         {{ section.settings.variant_bundle_double         | default: 0 }},
+      triple:         {{ section.settings.variant_bundle_triple         | default: 0 }},
+      infinity_base:  {{ section.settings.variant_bundle_infinity_base  | default: 0 }},
+      infinity_extra: {{ section.settings.variant_bundle_infinity_extra | default: 0 }},
+    },
+  };
+  window.BB_AVAIL_MODE = {{ section.settings.unavailability_mode | default: 'grey' | json }};
+
+  {%- comment -%}
+    BB_SKU_IMAGES: mappa SKU variante → URL immagine per le foto preview delle combinazioni.
+    Richiede l'handle del prodotto Shopify che contiene le 72 varianti (lunghezza+fibbia+colore).
+    Ogni variante deve avere: un campo SKU compilato e un'immagine della variante assegnata.
+  {%- endcomment -%}
+  {%- if section.settings.belt_combo_product_handle != blank -%}
+    {%- assign _bcp = all_products[section.settings.belt_combo_product_handle] -%}
+    {%- if _bcp.id -%}
+  window.BB_SKU_IMAGES = {
+      {%- for _v in _bcp.variants -%}
+        {%- if _v.sku != blank -%}
+          {%- if _v.featured_image -%}
+    {{ _v.sku | json }}: {{ _v.featured_image | image_url: width: 900 | prepend: 'https:' | json }},
+          {%- elsif _bcp.featured_image -%}
+    {{ _v.sku | json }}: {{ _bcp.featured_image | image_url: width: 900 | prepend: 'https:' | json }},
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+  };
+    {%- endif -%}
+  {%- endif -%}
+</script>
+
+{{ 'bundle-builder.js' | asset_url | script_tag }}
+
+{% schema %}
+{
+  "name": "Bundle Builder",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Prezzi bundle"
+    },
+    {
+      "type": "text",
+      "id": "price_single",
+      "label": "Prezzo Single Set Belt",
+      "default": "€ 49,99"
+    },
+    {
+      "type": "text",
+      "id": "price_double",
+      "label": "Prezzo Double Set Belt",
+      "default": "€ 79,99"
+    },
+    {
+      "type": "text",
+      "id": "price_triple",
+      "label": "Prezzo Triple Set Belt",
+      "default": "€ 99,99"
+    },
+    {
+      "type": "text",
+      "id": "price_infinity",
+      "label": "Prezzo Infinity Set Belt (4 cinture base)",
+      "default": "€ 119,99"
+    },
+    {
+      "type": "text",
+      "id": "price_infinity_extra",
+      "label": "Prezzo cintura extra Infinity (oltre le 4)",
+      "default": "€ 19,99"
+    },
+    {
+      "type": "header",
+      "content": "Immagini bundle (card selettore)"
+    },
+    {
+      "type": "image_picker",
+      "id": "img_single",
+      "label": "Immagine Single Set"
+    },
+    {
+      "type": "image_picker",
+      "id": "img_double",
+      "label": "Immagine Double Set"
+    },
+    {
+      "type": "image_picker",
+      "id": "img_triple",
+      "label": "Immagine Triple Set"
+    },
+    {
+      "type": "image_picker",
+      "id": "img_infinity",
+      "label": "Immagine Infinity Set"
+    },
+    {
+      "type": "header",
+      "content": "Variant ID Prodotti Bundle"
+    },
+    {
+      "type": "number",
+      "id": "variant_bundle_single",
+      "label": "Single Set Belt — variant ID",
+      "info": "Prodotto Shopify prezzato a €49,99"
+    },
+    {
+      "type": "number",
+      "id": "variant_bundle_double",
+      "label": "Double Set Belt — variant ID",
+      "info": "Prodotto Shopify prezzato a €79,99"
+    },
+    {
+      "type": "number",
+      "id": "variant_bundle_triple",
+      "label": "Triple Set Belt — variant ID",
+      "info": "Prodotto Shopify prezzato a €99,99"
+    },
+    {
+      "type": "number",
+      "id": "variant_bundle_infinity_base",
+      "label": "Infinity Set Belt Base — variant ID",
+      "info": "Prodotto Shopify prezzato a €119,99 (copre 4 cinture base)"
+    },
+    {
+      "type": "number",
+      "id": "variant_bundle_infinity_extra",
+      "label": "Infinity Set Belt Extra Cintura — variant ID",
+      "info": "Prodotto Shopify prezzato a €19,99 (cintura aggiuntiva oltre le 4)"
+    },
+    {
+      "type": "header",
+      "content": "Carousel fibbie — ordine e partenza"
+    },
+    {
+      "type": "select",
+      "id": "default_buckle",
+      "label": "Fibbia predefinita (centro al caricamento)",
+      "options": [
+        { "value": "buckle-1", "label": "1 — Classic" },
+        { "value": "buckle-2", "label": "2 — Silver" },
+        { "value": "buckle-3", "label": "3 — Gold" },
+        { "value": "buckle-4", "label": "4 — Luxury" }
+      ],
+      "default": "buckle-2"
+    },
+    {
+      "type": "text",
+      "id": "buckle_order",
+      "label": "Ordine fibbie nel carousel",
+      "default": "buckle-2,buckle-1,buckle-3,buckle-4",
+      "info": "Chiavi separate da virgola. La prima è la posizione di default. Valori validi: buckle-1, buckle-2, buckle-3, buckle-4. Es: buckle-3,buckle-1,buckle-4,buckle-2"
+    },
+    {
+      "type": "header",
+      "content": "Carousel cinturini — ordine e partenza"
+    },
+    {
+      "type": "select",
+      "id": "default_strap",
+      "label": "Cinturino predefinito (centro al caricamento)",
+      "options": [
+        { "value": "strap-nero",    "label": "Nero" },
+        { "value": "strap-marrone", "label": "Marrone" },
+        { "value": "strap-cognac",  "label": "Cammello" },
+        { "value": "strap-cuoio",   "label": "Bianco" },
+        { "value": "strap-beige",   "label": "Beige" },
+        { "value": "strap-rosso",   "label": "Coccodrillo Marrone" },
+        { "value": "strap-verde",   "label": "Coccodrillo Nera" },
+        { "value": "strap-blu",     "label": "Blu" },
+        { "value": "strap-grigio",  "label": "Grigio" }
+      ],
+      "default": "strap-nero"
+    },
+    {
+      "type": "text",
+      "id": "strap_order",
+      "label": "Ordine cinturini nel carousel",
+      "default": "strap-nero,strap-marrone,strap-cognac,strap-cuoio,strap-beige,strap-rosso,strap-verde,strap-blu,strap-grigio",
+      "info": "Chiavi separate da virgola. La prima definisce la sequenza. Valori validi: strap-nero, strap-marrone, strap-cognac, strap-cuoio, strap-beige, strap-rosso, strap-verde, strap-blu, strap-grigio"
+    },
+    {
+      "type": "header",
+      "content": "Anteprima cintura e modal"
+    },
+    {
+      "type": "text",
+      "id": "belt_combo_product_handle",
+      "label": "Handle prodotto combinazioni cintura",
+      "info": "Inserisci l'handle del prodotto Shopify che contiene le varianti combinazione (es. cintura-bundle-preview). Il sistema usa lo SKU e la foto di ogni variante per la preview."
+    },
+    {
+      "type": "image_picker",
+      "id": "model_photo",
+      "label": "Foto modello (modal Vedi indossata)"
+    },
+    {
+      "type": "text",
+      "id": "video_360",
+      "label": "URL video 360° (.mp4)",
+      "info": "URL diretto del file video. Caricalo con Shopify Files o un CDN esterno."
+    },
+    {
+      "type": "text",
+      "id": "belt_preview_base_url",
+      "label": "URL base immagini cintura",
+      "info": "Facoltativo. Se fornito, il sistema cerca immagini come: [base-url]-[buckle]-[strap].jpg"
+    },
+    {
+      "type": "header",
+      "content": "Gestione disponibilità prodotti"
+    },
+    {
+      "type": "select",
+      "id": "unavailability_mode",
+      "label": "Prodotti esauriti nel carousel",
+      "options": [
+        { "value": "grey", "label": "Mostra in grigio con badge 'Non Disponibile'" },
+        { "value": "hide", "label": "Nascondi dal carousel" }
+      ],
+      "default": "grey",
+      "info": "Controlla l'inventario Shopify in tempo reale ad ogni caricamento pagina. Nessuna azione manuale richiesta."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bundle Builder"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,17 @@
+{
+  "name": "bundle-demo-theme",
+  "version": "1.0.0",
+  "description": "Shopify theme demo for bundle builder functionality",
+  "private": true,
+  "scripts": {
+    "dev": "shopify theme dev",
+    "preview": "shopify theme dev --open",
+    "push": "shopify theme push",
+    "pull": "shopify theme pull",
+    "check": "shopify theme check",
+    "package": "shopify theme package"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

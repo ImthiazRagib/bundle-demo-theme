@@ -1,0 +1,92 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-banner",
+      "settings": {
+        "overlay_opacity": 45,
+        "min_height": 620,
+        "content_align": "center",
+        "subheading": "Artigianato Italiano dal 1982",
+        "heading": "La Cintura Perfetta,\nCreata da Te",
+        "text": "Scegli fibbia, colore e lunghezza. Componi il tuo bundle unico — Single, Double, Triple o Infinity.",
+        "btn_primary_label": "Crea il tuo Bundle →",
+        "btn_primary_url": "/pages/bundle",
+        "btn_secondary_label": "Scopri le Collezioni",
+        "trust_badges": true
+      }
+    },
+    "features": {
+      "type": "features-strip",
+      "block_order": ["f1", "f2", "f3", "f4"],
+      "blocks": {
+        "f1": {
+          "type": "feature",
+          "settings": {
+            "icon": "🔨",
+            "title": "Artigianato Italiano",
+            "text": "Ogni cintura è lavorata a mano"
+          }
+        },
+        "f2": {
+          "type": "feature",
+          "settings": {
+            "icon": "🎨",
+            "title": "Personalizzazione Totale",
+            "text": "9 colori · 4 fibbie · 2 lunghezze"
+          }
+        },
+        "f3": {
+          "type": "feature",
+          "settings": {
+            "icon": "🚚",
+            "title": "Spedizione 3–5 Giorni",
+            "text": "Consegna rapida in tutta Italia"
+          }
+        },
+        "f4": {
+          "type": "feature",
+          "settings": {
+            "icon": "↩️",
+            "title": "Reso Gratuito 30 gg",
+            "text": "Soddisfatti o rimborsati"
+          }
+        }
+      }
+    },
+    "bundle_intro": {
+      "type": "bundle-intro",
+      "block_order": ["s1", "s2", "s3"],
+      "blocks": {
+        "s1": {
+          "type": "step",
+          "settings": {
+            "title": "Scegli il pacchetto",
+            "text": "Single (1 cintura), Double (2), Triple (3) o Infinity (illimitato a partire da 4)."
+          }
+        },
+        "s2": {
+          "type": "step",
+          "settings": {
+            "title": "Componi ogni cintura",
+            "text": "Seleziona lunghezza, stile fibbia e colore del cinturino per ciascuna cintura."
+          }
+        },
+        "s3": {
+          "type": "step",
+          "settings": {
+            "title": "Aggiungi al carrello",
+            "text": "Rivedi il riepilogo del bundle e procedi al checkout in tutta sicurezza."
+          }
+        }
+      },
+      "settings": {
+        "badge": "Come funziona",
+        "heading": "Tre passi per il tuo Bundle perfetto",
+        "subtext": "Scegli il set, personalizza ogni cintura e aggiungi al carrello.",
+        "cta_label": "Inizia a comporre →",
+        "cta_url": "/pages/bundle"
+      }
+    }
+  },
+  "order": ["hero", "features", "bundle_intro"]
+}

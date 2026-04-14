@@ -1,0 +1,88 @@
+<section class="features-strip">
+  <div class="features-strip__container">
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'feature' -%}
+          <div class="features-strip__item" {{ block.shopify_attributes }}>
+            <div class="features-strip__icon" aria-hidden="true">{{ block.settings.icon }}</div>
+            <div class="features-strip__body">
+              <strong class="features-strip__title">{{ block.settings.title }}</strong>
+              {%- if block.settings.text != blank -%}
+                <span class="features-strip__text">{{ block.settings.text }}</span>
+              {%- endif -%}
+            </div>
+          </div>
+      {%- endcase -%}
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Features Strip",
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon (emoji or unicode)",
+          "default": "✦"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Feature title"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Description"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Features Strip",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "🔨",
+            "title": "Artigianato Italiano",
+            "text": "Ogni cintura è lavorata a mano"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "🎨",
+            "title": "Personalizzazione Totale",
+            "text": "9 colori, 4 fibbie, 2 lunghezze"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "🚚",
+            "title": "Spedizione 3–5 Giorni",
+            "text": "Consegna rapida in tutta Italia"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "↩️",
+            "title": "Reso Gratuito 30 gg",
+            "text": "Soddisfatti o rimborsati"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

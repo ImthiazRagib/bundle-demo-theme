@@ -1,0 +1,38 @@
+{
+  "general": {
+    "skip_content": "Skip to content",
+    "search": "Search",
+    "loading": "Loading...",
+    "close": "Close"
+  },
+  "layout": {
+    "cart": {
+      "title": "Cart",
+      "items_count": {
+        "one": "1 item",
+        "other": "{{ count }} items"
+      }
+    }
+  },
+  "sections": {
+    "header": {
+      "navigation": "Main navigation",
+      "open_menu": "Open menu",
+      "close_menu": "Close menu"
+    },
+    "footer": {
+      "payment_methods": "Accepted payment methods"
+    },
+    "bundle_builder": {
+      "title": "Bundle Builder"
+    }
+  },
+  "templates": {
+    "page": {
+      "title": "Page"
+    },
+    "cart": {
+      "title": "Your cart"
+    }
+  }
+}

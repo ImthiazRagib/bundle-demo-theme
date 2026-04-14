@@ -1,0 +1,137 @@
+<footer class="site-footer" role="contentinfo">
+  <div class="site-footer__container">
+
+    <div class="site-footer__grid">
+
+      <!-- Brand column -->
+      <div class="site-footer__col site-footer__col--brand">
+        <a href="{{ routes.root_url }}" class="site-footer__logo">
+          {%- if section.settings.logo -%}
+            <img src="{{ section.settings.logo | img_url: '160x' }}" alt="{{ shop.name }}" width="120" height="auto" loading="lazy">
+          {%- else -%}
+            <span class="site-footer__logo-text">{{ shop.name }}</span>
+          {%- endif -%}
+        </a>
+        <p class="site-footer__tagline">
+          {{ section.settings.tagline | default: "Cinture artigianali italiane — composte su misura, consegnate in 3–5 giorni." }}
+        </p>
+        <div class="site-footer__trust">
+          <span class="site-footer__trust-item">🔒 Pagamento sicuro</span>
+          <span class="site-footer__trust-item">🚚 Spedizione gratuita sopra €50</span>
+          <span class="site-footer__trust-item">↩️ Reso gratuito 30 gg</span>
+        </div>
+      </div>
+
+      <!-- Links columns -->
+      {%- for i in (1..2) -%}
+        {%- assign col_menu = 'footer_menu_' | append: i -%}
+        {%- assign col_title = 'footer_title_' | append: i -%}
+        {%- if section.settings[col_menu] != blank -%}
+          <div class="site-footer__col">
+            <h3 class="site-footer__col-title">{{ section.settings[col_title] }}</h3>
+            <ul class="site-footer__links" role="list">
+              {%- for link in linklists[section.settings[col_menu]].links -%}
+                <li><a href="{{ link.url }}" class="site-footer__link">{{ link.title }}</a></li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+
+      <!-- Newsletter column -->
+      <div class="site-footer__col site-footer__col--newsletter">
+        <h3 class="site-footer__col-title">{{ section.settings.newsletter_title | default: "Newsletter" }}</h3>
+        <p class="site-footer__newsletter-sub">
+          {{ section.settings.newsletter_text | default: "Iscriviti e ottieni il 10% di sconto sul primo ordine." }}
+        </p>
+        {% form 'customer' %}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <div class="site-footer__newsletter-form">
+            <input type="email" name="contact[email]" placeholder="La tua email" class="site-footer__newsletter-input" required autocomplete="email">
+            <button type="submit" class="site-footer__newsletter-btn">Iscriviti</button>
+          </div>
+        {% endform %}
+      </div>
+
+    </div>
+
+    <div class="site-footer__bottom">
+      <p class="site-footer__copyright">
+        &copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. Tutti i diritti riservati.
+      </p>
+      <div class="site-footer__payment-icons" aria-label="Accepted payment methods">
+        <span class="site-footer__payment-icon">Visa</span>
+        <span class="site-footer__payment-icon">Mastercard</span>
+        <span class="site-footer__payment-icon">PayPal</span>
+        <span class="site-footer__payment-icon">Apple Pay</span>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Footer logo"
+    },
+    {
+      "type": "textarea",
+      "id": "tagline",
+      "label": "Brand tagline",
+      "default": "Cinture artigianali italiane — composte su misura, consegnate in 3–5 giorni."
+    },
+    {
+      "type": "header",
+      "content": "Link column 1"
+    },
+    {
+      "type": "text",
+      "id": "footer_title_1",
+      "label": "Column 1 title",
+      "default": "Prodotti"
+    },
+    {
+      "type": "link_list",
+      "id": "footer_menu_1",
+      "label": "Column 1 menu",
+      "default": "footer"
+    },
+    {
+      "type": "header",
+      "content": "Link column 2"
+    },
+    {
+      "type": "text",
+      "id": "footer_title_2",
+      "label": "Column 2 title",
+      "default": "Informazioni"
+    },
+    {
+      "type": "link_list",
+      "id": "footer_menu_2",
+      "label": "Column 2 menu"
+    },
+    {
+      "type": "header",
+      "content": "Newsletter"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_title",
+      "label": "Newsletter heading",
+      "default": "Newsletter"
+    },
+    {
+      "type": "textarea",
+      "id": "newsletter_text",
+      "label": "Newsletter subtext",
+      "default": "Iscriviti e ottieni il 10% di sconto sul primo ordine."
+    }
+  ]
+}
+{% endschema %}
