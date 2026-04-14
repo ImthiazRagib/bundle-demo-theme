@@ -662,7 +662,7 @@ announcement-bar-section {
 }
 
 .bb-strap-item.is-selected {
-  border-color: #c9970a;
+  /* border-color: #c9970a; */
   box-shadow: none;   /* solo outline, niente ombra 3D */
 }
 
