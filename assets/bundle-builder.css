@@ -130,7 +130,6 @@ announcement-bar-section {
 
 /* ── Primary / secondary buttons ─────────────────────────── */
 .bb-cta-bar {
-  border-top: 1px solid #e0e0e0;   /* divider ripristinato */
   padding: 18px 16px 14px;          /* 13→18: +5px = 13+1+18=32px gap totale */
   display: flex;
   flex-direction: column;
