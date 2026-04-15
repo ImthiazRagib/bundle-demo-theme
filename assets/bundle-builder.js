@@ -1125,13 +1125,11 @@
 
   /* Ritorna il markup dell'immagine/mockup cintura (img tag oppure SVG) */
   function beltVisualHTML(belt, alt) {
-    const strap  = STRAPS[belt.strap] || {};
-    const photo  = getBeltPhotoURL(belt);
-    const svgFbk = beltMockupSVG(strap.hex).replace(/'/g, '&#39;');
+    const strap = STRAPS[belt.strap] || {};
+    const photo = getBeltPhotoURL(belt);
     if (photo) {
       return '<img src="' + photo + '" alt="' + (alt || 'Cintura') + '"'
-           + ' style="width:100%;height:100%;object-fit:cover;border-radius:6px;"'
-           + ' onerror="this.parentNode.innerHTML=\'' + svgFbk + '\'">';
+           + ' style="width:100%;height:100%;object-fit:cover;border-radius:6px;">';
     }
     return beltMockupSVG(strap.hex);
   }
