@@ -121,6 +121,14 @@
   /* ── Composer rendering ─────────────────────────────────── */
   function renderComposer() {
     const belt = state.belts[state.currentBelt - 1];
+    if (!belt) return;   /* guard: belt not yet created (e.g. async availability re-render before type selected) */
+
+    /* Pre-apply defaults so the belt is never partially initialised when
+     * renderBuckle/StrapCarousel run — both carousels also set these, but
+     * doing it here first prevents any edge-case null slipping through. */
+    if (!belt.length) belt.length = LENGTHS[0];
+    if (!belt.buckle) belt.buckle = getDefaultBuckle();
+    if (!belt.strap)  belt.strap  = getDefaultStrap();
 
     /* --- Progress --- */
     renderProgress();
@@ -934,9 +942,11 @@
   /* ── Validate current belt ──────────────────────────────── */
   function validateCurrentBelt() {
     const belt = state.belts[state.currentBelt - 1];
-    if (!belt.length) { showToast('Seleziona la lunghezza della cintura.'); return false; }
-    if (!belt.buckle) { showToast('Seleziona uno stile di fibbia.'); return false; }
-    if (!belt.strap) { showToast('Seleziona il colore della cintura.'); return false; }
+    if (!belt) { showToast('Errore: nessuna cintura configurata.'); return false; }
+    /* Auto-apply defaults instead of blocking the user if values are somehow still null */
+    if (!belt.length) belt.length = LENGTHS[0];
+    if (!belt.buckle) belt.buckle = getDefaultBuckle();
+    if (!belt.strap)  belt.strap  = getDefaultStrap();
     return true;
   }
 

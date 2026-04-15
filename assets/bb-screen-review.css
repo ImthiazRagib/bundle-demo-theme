@@ -112,7 +112,7 @@
   width: 100%;
   background: var(--bb-light);
   overflow: hidden;
-  height: 72px;
+  height: 160px;
   display: flex;
   align-items: center;
   border-bottom: 1px solid var(--bb-border);

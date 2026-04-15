@@ -371,7 +371,6 @@
 
 /* ── Selected: gold outline ── */
 .bb-carousel__item.is-selected .bb-carousel__thumb {
-  border-color: #c9970a;
   background: #fff;
   box-shadow: none;
 }
