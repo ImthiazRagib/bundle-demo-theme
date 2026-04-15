@@ -69,12 +69,12 @@
 }
 .bb-composer-hero__bg {
   position: absolute;
-  top: -65px;
+  top: -32px;
   left: 0;
   width: 100%;
   height: calc(100% + 65px);
   object-fit: cover;
-  object-position: center top;
+  object-position: center;
   display: block;
   transition: opacity .35s;
 }
