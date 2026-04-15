@@ -81,12 +81,10 @@
           </div>
           <div class="bb-bundle-card__body">
             <div class="bb-bundle-card__name">Double Set Belt</div>
-            <div class="bb-bundle-card__includes">
-              Include 2 cinture — Due cinture personalizzate, una per ogni look.
-            </div>
+            <div class="bb-bundle-card__includes">Include 2 cinture — Due cinture personalizzate, una per ogni look.</div>
             <div>
-              <span class="bb-bundle-card__price">{{ section.settings.price_double | default: '€ 79,99' }}</span
-              ><span class="bb-bundle-card__badge">Risparmi €19,99</span>
+              <span class="bb-bundle-card__price">{{ section.settings.price_double | default: '€ 79,99' }}</span>
+              <span class="bb-bundle-card__badge">Risparmi €19,99</span>
             </div>
             <button
               class="bb-bundle-card__cta"
@@ -105,50 +103,11 @@
           data-select-bundle="triple"
           role="button"
           tabindex="0"
-          aria-label="Triple Set Belt"
-        >
-          <div class="bb-bundle-card__icon">
-            {%- if section.settings.img_triple -%}
-              <img src="{{ section.settings.img_triple | img_url: '200x200' }}" alt="Triple Set Belt" loading="lazy">
-            {%- else -%}
-              <svg viewBox="0 0 40 40" width="36" height="36" fill="none">
-                <rect x="5" y="12" width="20" height="4" rx="2" fill="#b8860b" opacity=".5"/><rect x="5" y="18" width="20" height="4" rx="2" fill="#b8860b" opacity=".75"/><rect x="5" y="24" width="20" height="4" rx="2" fill="#b8860b"/><rect x="15" y="9" width="4" height="22" rx="2" fill="#b8860b" opacity=".4"/>
-              </svg>
-            {%- endif -%}
-          </div>
-          <div class="bb-bundle-card__body">
-            <div class="bb-bundle-card__name">Triple Set Belt</div>
-            <div class="bb-bundle-card__includes">Include 3 cinture — Il set completo per ogni occasione.</div>
-            <div>
-              <span class="bb-bundle-card__price">{{ section.settings.price_triple | default: '€ 99,99' }}</span
-              ><span class="bb-bundle-card__badge">Risparmi €49,98</span>
-            </div>
-            <button
-              class="bb-bundle-card__cta"
-              data-action="start"
-              data-select-bundle="triple"
-              onclick="BundleBuilder.selectBundleType('triple')"
-            >
-              Inizia a comporre →
-            </button>
-          </div>
-        </article>
-
-        <article
-          class="bb-bundle-card bb-bundle-card--infinity"
-          data-type="infinity"
-          data-select-bundle="infinity"
-          role="button"
-          tabindex="0"
           aria-label="Infinity Set Belt"
         >
           <div class="bb-bundle-card__icon">
-            {%- if section.settings.img_infinity -%}
-              <img
-                src="{{ section.settings.img_infinity | img_url: '200x200' }}"
-                alt="Infinity Set Belt"
-                loading="lazy"
-              >
+            {%- if section.settings.img_triple -%}
+              <img src="{{ section.settings.img_triple | img_url: '200x200' }}" alt="Infinity Set Belt" loading="lazy">
             {%- else -%}
               <svg viewBox="0 0 40 40" width="36" height="36" fill="none">
                 <path d="M8 20c0-3.3 2.7-6 6-6s6 3 8 6-2.7 6-8 6-6-2.7-6-6z" fill="#b8860b" opacity=".6"/>
@@ -158,16 +117,16 @@
           </div>
           <div class="bb-bundle-card__body">
             <div class="bb-bundle-card__name">Infinity Set Belt</div>
-            <div class="bb-bundle-card__includes">Cinture illimitate — 4 incluse, poi €19,99 a cintura aggiuntiva.</div>
+            <div class="bb-bundle-card__includes">Include 3 cinture — Il set completo per ogni occasione.</div>
             <div>
-              <span class="bb-bundle-card__price">da {{ section.settings.price_infinity | default: '€ 119,99' }}</span
-              ><span class="bb-bundle-card__badge bb-badge--infinity">∞ Illimitato</span>
+              <span class="bb-bundle-card__price">{{ section.settings.price_triple | default: '€ 99,99' }}</span>
+              <span class="bb-bundle-card__badge">Risparmi €49,98</span>
             </div>
             <button
               class="bb-bundle-card__cta"
               data-action="start"
-              data-select-bundle="infinity"
-              onclick="BundleBuilder.selectBundleType('infinity')"
+              data-select-bundle="triple"
+              onclick="BundleBuilder.selectBundleType('triple')"
             >
               Inizia a comporre →
             </button>

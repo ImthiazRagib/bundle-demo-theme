@@ -51,10 +51,9 @@
 
   /* ── Bundle config ──────────────────────────────────────── */
   const BUNDLES = {
-    single:   { name: 'Single Set Belt',   belts: 1, price: 49.99,  extra: null  },
-    double:   { name: 'Double Set Belt',   belts: 2, price: 79.99,  extra: null  },
-    triple:   { name: 'Triple Set Belt',   belts: 3, price: 99.99,  extra: null  },
-    infinity: { name: 'Infinity Set Belt', belts: 4, price: 119.99, extra: 19.99 },
+    single:   { name: 'Single Set Belt',   belts: 1, price: 49.99, extra: null },
+    double:   { name: 'Double Set Belt',   belts: 2, price: 79.99, extra: null },
+    triple:   { name: 'Infinity Set Belt', belts: 3, price: 99.99, extra: null },
   };
 
   /* ── Bundle type selection ──────────────────────────────── */
@@ -68,26 +67,6 @@
     document.querySelectorAll('.bb-bundle-card').forEach(c => {
       c.classList.toggle('is-selected', c.dataset.type === type);
     });
-  }
-
-  function calcInfinityPrice() {
-    const extra = Math.max(0, state.totalBelts - 4);
-    return (119.99 + extra * 19.99).toFixed(2).replace('.', ',');
-  }
-
-  function updateInfinityControls() {
-    const bar = document.getElementById('bb-infinity-controls');
-    if (!bar) return;
-    if (state.bundleType === 'infinity') {
-      bar.style.display = '';
-      const totalEl = document.getElementById('bb-infinity-total');
-      if (totalEl) {
-        const extra = Math.max(0, state.totalBelts - 4);
-        totalEl.textContent = `Totale: € ${calcInfinityPrice()} · ${state.totalBelts} cinture${extra > 0 ? ` (+${extra} extra)` : ''}`;
-      }
-    } else {
-      bar.style.display = 'none';
-    }
   }
 
   function startComposing() {
@@ -150,7 +129,6 @@
 
     /* --- Belt preview image --- */
     updateBeltPreview();
-    updateInfinityControls();
 
     /* --- Preload all combo photos for this strap + buckle so swipe is instant --- */
     preloadComboPhotos(belt.strap, belt.length);
@@ -200,11 +178,6 @@
       }
     }
 
-    /* Infinity: + button after last item */
-    if (state.bundleType === 'infinity') {
-      html += `<div class="bb-wizard__line is-pending"></div>`;
-      html += `<button class="bb-wizard__add" aria-label="Aggiungi cintura">+</button>`;
-    }
     html += '</div>';
     el.innerHTML = html;
 
@@ -420,7 +393,7 @@
   async function fetchBundleImages() {
     if (typeof BB_BUNDLE_IMAGES === 'undefined') window.BB_BUNDLE_IMAGES = {};
     const V = (typeof BB_VARIANTS !== 'undefined') ? BB_VARIANTS : {};
-    const types = ['single', 'double', 'triple', 'infinity'];
+    const types = ['single', 'double', 'triple'];
     await Promise.all(types.map(async function(type) {
       if (BB_BUNDLE_IMAGES[type]) return;           /* già impostata dal Theme Editor */
       const variantId = V.bundles && V.bundles[type];
@@ -1158,8 +1131,7 @@
     if (bundleTitle) bundleTitle.textContent = 'Riepilogo — ' + bundleLabel;
 
     const _basePrice = (BUNDLES[state.bundleType] || BUNDLES.single).price;
-    const _infinityExtra = state.bundleType === 'infinity' ? Math.max(0, state.totalBelts - 4) * 19.99 : 0;
-    const totalPrice = parseFloat((_basePrice + _infinityExtra).toFixed(2));
+    const totalPrice = parseFloat(_basePrice.toFixed(2));
     const beltWord = state.totalBelts === 1 ? 'cintura inclusa' : (state.totalBelts + ' cinture incluse');
 
     let html = '<div class="bb-review__bundle-hero">'
@@ -1170,7 +1142,6 @@
       + '<div class="bb-review__bundle-name">' + bundleLabel + '</div>'
       + '<div class="bb-review__bundle-price">€ ' + totalPrice.toFixed(2).replace('.', ',') + '</div>'
       + '<div class="bb-review__bundle-sub">' + beltWord
-      + (state.bundleType === 'infinity' && state.totalBelts > 4 ? ' · +' + (state.totalBelts - 4) + ' extra' : '')
       + '</div></div></div>';
 
     state.belts.forEach(function(belt, i) {
@@ -1375,7 +1346,7 @@
       const qty = bundle.qty || 1;
 
       /* 1. Bundle product (visible line item, priced) */
-      const bundleVarKey = bundle.type === 'infinity' ? 'infinity_base' : bundle.type;
+      const bundleVarKey = bundle.type;
       if (bundleV[bundleVarKey]) {
         const compositionSummary = bundle.belts.map(function(b, idx) {
           const s = STRAPS[b.strap] || {};
@@ -1386,10 +1357,6 @@
           properties: { 'Composizione': compositionSummary } });
       }
 
-      /* 2. Infinity extra belts product */
-      if (bundle.type === 'infinity' && bundle.belts.length > 4 && bundleV.infinity_extra) {
-        items.push({ id: bundleV.infinity_extra, quantity: (bundle.belts.length - 4) * qty });
-      }
 
       /* 3. Component SKUs per cintura (€0, picking list logistica) +
             logistica per cintura: 1 box, 1 garanzia, 1 NFC card ognuna */
@@ -1596,17 +1563,6 @@
     /* Review — back */
     const reviewBack = wrap.querySelector('[data-action="review-back"]');
     if (reviewBack) reviewBack.addEventListener('click', () => {
-      state.currentBelt = state.totalBelts;
-      renderComposer();
-      showScreen('composer');
-    });
-
-    /* Infinity — add extra belt */
-    const infinityAddBtn = wrap.querySelector('[data-action="infinity-add-belt"]');
-    if (infinityAddBtn) infinityAddBtn.addEventListener('click', () => {
-      if (state.bundleType !== 'infinity') return;
-      state.totalBelts += 1;
-      state.belts.push(newBeltConfig());
       state.currentBelt = state.totalBelts;
       renderComposer();
       showScreen('composer');

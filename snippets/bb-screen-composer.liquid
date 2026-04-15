@@ -12,7 +12,9 @@
     <canvas id="bb-belt-canvas" width="340" height="100" style="display:none;max-width:100%;"></canvas>
     <img
       id="bb-belt-preview-img"
-      src=""
+      src="{{ 'blank.svg' | asset_url }}"
+      width="340"
+      height="100"
       alt="Anteprima cintura"
       class="bb-composer-hero__bg"
       style="display:none;"
@@ -127,14 +129,4 @@
     </div>
   </div>
 
-  {%- comment -%} Infinity — extra belt controls (shown only for infinity bundle type) {%- endcomment -%}
-  <div id="bb-infinity-controls" style="display:none;" class="bb-infinity-bar">
-    <div class="bb-infinity-bar__total" id="bb-infinity-total">Totale: € 119,99 · 4 cinture</div>
-    <button class="bb-infinity-bar__add" data-action="infinity-add-belt">
-      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5">
-        <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
-      </svg>
-      Aggiungi cintura — € 19,99
-    </button>
-  </div>
 </section>
