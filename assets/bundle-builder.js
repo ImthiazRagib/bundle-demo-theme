@@ -58,7 +58,7 @@
     single:   { name: 'Single Set Belt',   belts: 1, price: 49.99, extra: null },
     double:   { name: 'Double Set Belt',   belts: 2, price: 79.99, extra: null },
     triple:   { name: 'Triple Set Belt',   belts: 3, price: 99.99, extra: null },
-    infinity: { name: 'Infinity Set Belt', belts: 4, price: 199.99, extra: 19.99 },
+    infinity: { name: 'Infinity Set Belt', belts: 4, price: 119.99, extra: 19.99 },
   };
 
   /* ── Bundle type selection ──────────────────────────────── */
