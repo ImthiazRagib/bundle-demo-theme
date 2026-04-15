@@ -18,6 +18,7 @@
     pendingBundles: [],    // Bundles saved before starting the next (max 3 total)
     cartBundles: [],       // Array of completed bundles added to cart
     currentScreen: 'selector',
+    _editMode: null,       // { bundleIdx, beltInBundle, savedType, savedTotalBelts, savedCurrentBelt, savedBelts }
   };
 
   const MAX_BUNDLES = 3;
@@ -1019,6 +1020,17 @@
       if (state.currentBelt < state.totalBelts) {
         state.currentBelt += 1;
         renderComposer();
+      } else if (state._editMode) {
+        // Save edited belt back into the pending bundle it came from
+        const em = state._editMode;
+        state.pendingBundles[em.bundleIdx].belts[em.beltInBundle] = JSON.parse(JSON.stringify(state.belts[0]));
+        // Restore the active bundle state that was saved before edit started
+        state.bundleType  = em.savedType;
+        state.totalBelts  = em.savedTotalBelts;
+        state.currentBelt = em.savedCurrentBelt;
+        state.belts       = em.savedBelts;
+        state._editMode   = null;
+        showReview();
       } else {
         showReview();
       }
@@ -1134,7 +1146,7 @@
       type:  state.bundleType,
       belts: state.belts,
     }]);
-    // Flatten ALL belts first so we can base the tier on total belt count
+    // Flatten ALL belts — all rows carry bundle/belt indices for individual editing
     let globalBeltNum = 0;
     const allBeltRows = [];
     allBundles.forEach(function(bundle, bundleIdx) {
@@ -1144,8 +1156,10 @@
         allBeltRows.push({
           belt:            belt,
           globalNum:       globalBeltNum,
-          beltIdxInBundle: beltIdxInBundle + 1,
-          isEditable:      isCurrentBundle,
+          bundleIdx:       bundleIdx,
+          beltIdxInBundle: beltIdxInBundle,       // 0-based index within its bundle
+          beltNumInBundle: beltIdxInBundle + 1,   // 1-based (used by composer)
+          isCurrentBundle: isCurrentBundle,
         });
       });
     });
@@ -1175,7 +1189,7 @@
       + '<div class="bb-review__bundle-sub">' + beltWord + '</div>'
       + '</div></div>';
 
-    // ── All belt cards listed together ────────────────────────
+    // ── All belt cards — all have Modifica button ─────────────
     allBeltRows.forEach(function(row) {
       const strap      = STRAPS[row.belt.strap]   || {};
       const buckle     = BUCKLES[row.belt.buckle] || {};
@@ -1193,11 +1207,14 @@
         + '<span class="bb-spec-val"><span class="bb-swatch" style="background:' + (strap.hex || '#ccc') + '"></span>' + (strap.name || '—') + '</span></div>'
         + '<div class="bb-spec-row"><span class="bb-spec-key">Lunghezza</span>'
         + '<span class="bb-spec-val">' + (row.belt.length || '—') + '</span></div>'
-        + '</div>';
-      if (row.isEditable) {
-        html += '<button class="bb-review__card-edit" data-edit="' + row.beltIdxInBundle + '">✏ Modifica</button>';
-      }
-      html += '</div></div>';
+        + '</div>'
+        + '<button class="bb-review__card-edit"'
+        + ' data-bundle-idx="' + row.bundleIdx + '"'
+        + ' data-belt-in-bundle="' + row.beltIdxInBundle + '"'
+        + ' data-is-current="' + (row.isCurrentBundle ? '1' : '0') + '"'
+        + ' data-belt-num="' + row.beltNumInBundle + '"'
+        + '>✏ Modifica</button>'
+        + '</div></div>';
     });
 
     // ── "Add another" button — names the next tier + its price ─
@@ -1212,12 +1229,38 @@
 
     container.innerHTML = html;
 
-    // Edit buttons → back to composer for that belt in the current bundle
-    container.querySelectorAll('[data-edit]').forEach(function(el) {
+    // Edit buttons — current bundle belts go straight to composer,
+    //               pending bundle belts enter edit mode (state saved/restored)
+    container.querySelectorAll('[data-bundle-idx]').forEach(function(el) {
       el.addEventListener('click', function() {
-        state.currentBelt = parseInt(el.dataset.edit, 10);
-        renderComposer();
-        showScreen('composer');
+        const bundleIdx    = parseInt(el.dataset.bundleIdx, 10);
+        const beltInBundle = parseInt(el.dataset.beltInBundle, 10);
+        const isCurrent    = el.dataset.isCurrent === '1';
+        const beltNum      = parseInt(el.dataset.beltNum, 10);
+
+        if (isCurrent) {
+          // Belt belongs to the active bundle — just navigate the composer
+          state.currentBelt = beltNum;
+          renderComposer();
+          showScreen('composer');
+        } else {
+          // Belt belongs to a pending bundle — save state, enter edit mode
+          const pendingBundle = state.pendingBundles[bundleIdx];
+          const beltToEdit    = JSON.parse(JSON.stringify(pendingBundle.belts[beltInBundle]));
+          state._editMode = {
+            bundleIdx:        bundleIdx,
+            beltInBundle:     beltInBundle,
+            savedType:        state.bundleType,
+            savedTotalBelts:  state.totalBelts,
+            savedCurrentBelt: state.currentBelt,
+            savedBelts:       JSON.parse(JSON.stringify(state.belts)),
+          };
+          state.belts       = [beltToEdit];
+          state.totalBelts  = 1;
+          state.currentBelt = 1;
+          renderComposer();
+          showScreen('composer');
+        }
       });
     });
 
@@ -1634,7 +1677,16 @@
     const composerBack = wrap.querySelector('[data-action="composer-back"]');
     if (composerBack) {
       composerBack.addEventListener('click', () => {
-        if (state.currentBelt > 1) {
+        if (state._editMode) {
+          // Cancel the individual belt edit — restore saved bundle state and go to review
+          const em = state._editMode;
+          state.bundleType  = em.savedType;
+          state.totalBelts  = em.savedTotalBelts;
+          state.currentBelt = em.savedCurrentBelt;
+          state.belts       = em.savedBelts;
+          state._editMode   = null;
+          showReview();
+        } else if (state.currentBelt > 1) {
           // Go back to previous belt within the same bundle
           state.currentBelt -= 1;
           renderComposer();
@@ -1684,6 +1736,7 @@
       state.bundleType     = null;
       state.currentBelt    = 1;
       state.pendingBundles = [];
+      state._editMode      = null;
       showScreen('selector');
     });
 
