@@ -174,3 +174,123 @@
   font-size: 16px;
   font-weight: 700;
 }
+
+/* ── 3-step bundle progress strip ─────────────────────────── */
+.bb-bundle-steps {
+  display: flex;
+  align-items: flex-start;
+  padding: 16px 16px 12px;
+}
+.bb-bundle-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  flex: 1;
+}
+.bb-bundle-step__dot {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid var(--bb-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--bb-mid);
+  background: var(--bb-white);
+  transition: all .2s;
+}
+.bb-bundle-step.is-done .bb-bundle-step__dot {
+  background: var(--bb-accent);
+  border-color: var(--bb-accent);
+  color: #fff;
+}
+.bb-bundle-step.is-active .bb-bundle-step__dot {
+  border-color: var(--bb-accent);
+  color: var(--bb-accent);
+}
+.bb-bundle-step__lbl {
+  font-size: 9px;
+  color: var(--bb-mid);
+  text-align: center;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+.bb-bundle-step.is-active .bb-bundle-step__lbl { color: var(--bb-accent); font-weight: 600; }
+.bb-bundle-step.is-done  .bb-bundle-step__lbl  { color: var(--bb-dark); }
+.bb-bundle-step__line {
+  flex: 1;
+  height: 2px;
+  background: var(--bb-border);
+  margin-top: 14px;
+  transition: background .2s;
+}
+.bb-bundle-step__line.is-done { background: var(--bb-accent); }
+
+/* ── Bundle badge header inside review cards ──────────────── */
+.bb-review__bundle-badge {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px;
+  background: linear-gradient(90deg, #111 0%, #1a1400 100%);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+.bb-review__bundle-price-pill {
+  color: var(--bb-accent);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+/* ── Belt rows inside each bundle card ────────────────────── */
+.bb-review__belt-row {
+  display: flex;
+  gap: 10px;
+  padding: 10px 14px;
+  border-top: 1px solid var(--bb-border);
+}
+.bb-review__belt-mockup {
+  flex-shrink: 0;
+  width: 70px;
+  height: 50px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--bb-light);
+}
+.bb-review__belt-mockup img { width: 100%; height: 100%; object-fit: cover; }
+.bb-review__belt-info { flex: 1; min-width: 0; }
+.bb-review__belt-idx {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--bb-mid);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+
+/* ── "Add another bundle" button ─────────────────────────── */
+.bb-review__add-bundle-btn {
+  display: block;
+  width: 100%;
+  margin-top: 14px;
+  padding: 13px 16px;
+  border: 2px solid var(--bb-accent);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--bb-accent);
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  transition: background .15s, color .15s;
+}
+.bb-review__add-bundle-btn:hover {
+  background: var(--bb-accent);
+  color: #fff;
+}
