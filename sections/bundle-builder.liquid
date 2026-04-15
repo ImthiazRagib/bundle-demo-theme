@@ -103,21 +103,22 @@
           data-select-bundle="triple"
           role="button"
           tabindex="0"
-          aria-label="Infinity Set Belt"
+          aria-label="Triple Set Belt"
         >
           <div class="bb-bundle-card__icon">
             {%- if section.settings.img_triple -%}
-              <img src="{{ section.settings.img_triple | img_url: '200x200' }}" alt="Infinity Set Belt" loading="lazy">
+              <img src="{{ section.settings.img_triple | img_url: '200x200' }}" alt="Triple Set Belt" loading="lazy">
             {%- else -%}
               <svg viewBox="0 0 40 40" width="36" height="36" fill="none">
-                <path d="M8 20c0-3.3 2.7-6 6-6s6 3 8 6-2.7 6-8 6-6-2.7-6-6z" fill="#b8860b" opacity=".6"/>
-                <path d="M20 20c0-3 2.7-6 6-6s6 2.7 6 6-2.7 6-6 6-6-3-8-6z" fill="#b8860b" opacity=".9"/>
+                <circle cx="10" cy="20" r="5" fill="#b8860b" opacity=".5"/>
+                <circle cx="20" cy="20" r="5" fill="#b8860b" opacity=".75"/>
+                <circle cx="30" cy="20" r="5" fill="#b8860b" opacity=".9"/>
               </svg>
             {%- endif -%}
           </div>
           <div class="bb-bundle-card__body">
-            <div class="bb-bundle-card__name">Infinity Set Belt</div>
-            <div class="bb-bundle-card__includes">Include 3 cinture — Il set completo per ogni occasione.</div>
+            <div class="bb-bundle-card__name">Triple Set Belt</div>
+            <div class="bb-bundle-card__includes">Include 3 cinture — Configura tutte e tre insieme.</div>
             <div>
               <span class="bb-bundle-card__price">{{ section.settings.price_triple | default: '€ 99,99' }}</span>
               <span class="bb-bundle-card__badge">Risparmi €49,98</span>
@@ -127,6 +128,42 @@
               data-action="start"
               data-select-bundle="triple"
               onclick="BundleBuilder.selectBundleType('triple')"
+            >
+              Inizia a comporre →
+            </button>
+          </div>
+        </article>
+
+        <article
+          class="bb-bundle-card"
+          data-type="infinity"
+          data-select-bundle="infinity"
+          role="button"
+          tabindex="0"
+          aria-label="Infinity Set Belt"
+        >
+          <div class="bb-bundle-card__icon">
+            {%- if section.settings.img_infinity -%}
+              <img src="{{ section.settings.img_infinity | img_url: '200x200' }}" alt="Infinity Set Belt" loading="lazy">
+            {%- else -%}
+              <svg viewBox="0 0 40 40" width="36" height="36" fill="none">
+                <path d="M8 20c0-3.3 2.7-6 6-6s6 3 8 6-2.7 6-8 6-6-2.7-6-6z" fill="#b8860b" opacity=".7"/>
+                <path d="M20 20c0-3 2.7-6 6-6s6 2.7 6 6-2.7 6-6 6-6-3-8-6z" fill="#b8860b"/>
+              </svg>
+            {%- endif -%}
+          </div>
+          <div class="bb-bundle-card__body">
+            <div class="bb-bundle-card__name">Infinity Set Belt</div>
+            <div class="bb-bundle-card__includes">Include 3 cinture — Il set definitivo, aggiungi una alla volta.</div>
+            <div>
+              <span class="bb-bundle-card__price">{{ section.settings.price_infinity | default: '€ 99,99' }}</span>
+              <span class="bb-bundle-card__badge">Best Value</span>
+            </div>
+            <button
+              class="bb-bundle-card__cta"
+              data-action="start"
+              data-select-bundle="infinity"
+              onclick="BundleBuilder.selectBundleType('infinity')"
             >
               Inizia a comporre →
             </button>

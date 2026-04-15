@@ -57,7 +57,8 @@
   const BUNDLES = {
     single:   { name: 'Single Set Belt',   belts: 1, price: 49.99, extra: null },
     double:   { name: 'Double Set Belt',   belts: 2, price: 79.99, extra: null },
-    triple:   { name: 'Infinity Set Belt', belts: 3, price: 99.99, extra: null },
+    triple:   { name: 'Triple Set Belt',   belts: 3, price: 99.99, extra: null },
+    infinity: { name: 'Infinity Set Belt', belts: 4, price: 199.99, extra: 19.99 },
   };
 
   /* ── Bundle type selection ──────────────────────────────── */
@@ -1167,12 +1168,18 @@
     const totalBelts = allBeltRows.length;
     const beltWord   = totalBelts === 1 ? 'cintura inclusa' : (totalBelts + ' cinture incluse');
 
-    // Tier based on TOTAL BELT COUNT: 1→single, 2→double, 3→triple
-    const tierKeys   = ['single', 'double', 'triple'];
-    const tierBundle = BUNDLES[tierKeys[Math.min(totalBelts, 3) - 1]] || BUNDLES.triple;
-    const tierPrice  = parseFloat(tierBundle.price.toFixed(2));
-    const tierName   = tierBundle.name;
-    const canAddMore = totalBelts < 3;
+    // Tier: 1→single, 2→double, 3→triple, 4→infinity base, 5+→infinity+extra
+    const tierKeys = ['single', 'double', 'triple', 'infinity'];
+    let tierPrice, tierName;
+    if (totalBelts <= 4) {
+      const tierBundle = BUNDLES[tierKeys[totalBelts - 1]] || BUNDLES.infinity;
+      tierPrice = parseFloat(tierBundle.price.toFixed(2));
+      tierName  = tierBundle.name;
+    } else {
+      tierPrice = parseFloat((BUNDLES.infinity.price + (totalBelts - 4) * BUNDLES.infinity.extra).toFixed(2));
+      tierName  = BUNDLES.infinity.name;
+    }
+    const canAddMore = true; // always — infinity tier is unlimited
 
     // Header title
     const bundleTitle = document.getElementById('bb-review-title');
@@ -1217,13 +1224,21 @@
         + '</div></div>';
     });
 
-    // ── "Add another" button — names the next tier + its price ─
+    // ── "Add another" button — shows next tier name OR extra cost ─
     if (canAddMore) {
-      const nextTier      = BUNDLES[tierKeys[totalBelts]] || BUNDLES.triple;
-      const nextTierPrice = nextTier.price.toFixed(2).replace('.', ',');
-      const nextTierName  = nextTier.name;
+      let addBtnLabel;
+      if (totalBelts < 4) {
+        // Approaching infinity — show the next tier name and its price
+        const nextTierBundle = BUNDLES[tierKeys[totalBelts]];
+        addBtnLabel = '+ Aggiungi 1 altro — ' + nextTierBundle.name
+          + ' a €' + nextTierBundle.price.toFixed(2).replace('.', ',');
+      } else {
+        // Already in infinity tier — show extra-per-belt cost
+        addBtnLabel = '+ Aggiungi 1 altro (+€'
+          + BUNDLES.infinity.extra.toFixed(2).replace('.', ',') + ' · Infinity)';
+      }
       html += '<button class="bb-review__add-bundle-btn" id="bb-add-another-bundle">'
-        + '+ Aggiungi 1 altro — ' + nextTierName + ' a €' + nextTierPrice
+        + addBtnLabel
         + '</button>';
     }
 
@@ -1294,8 +1309,10 @@
     // Tier price based on TOTAL BELT COUNT across all bundles
     const allBeltSets  = state.pendingBundles.concat([{ type: state.bundleType, belts: state.belts }]);
     const totalBelts   = allBeltSets.reduce(function(sum, b) { return sum + b.belts.length; }, 0);
-    const tierKeys     = ['single', 'double', 'triple'];
-    const tierPrice    = parseFloat(((BUNDLES[tierKeys[Math.min(totalBelts, 3) - 1]] || BUNDLES.triple).price).toFixed(2));
+    const tierKeys  = ['single', 'double', 'triple', 'infinity'];
+    const tierPrice = totalBelts <= 4
+      ? parseFloat(((BUNDLES[tierKeys[totalBelts - 1]] || BUNDLES.infinity).price).toFixed(2))
+      : parseFloat((BUNDLES.infinity.price + (totalBelts - 4) * BUNDLES.infinity.extra).toFixed(2));
 
     // Push pending bundles with price = 0 (tier price is on the final entry)
     state.pendingBundles.forEach(function(bundle, i) {
