@@ -1198,10 +1198,12 @@
 
     // ── "Add another bundle" button (no empty slots) ──────────
     if (canAddMore) {
-      const nextNum  = totalConfigured + 1;
-      const btnLabel = nextNum === 3 ? 'Aggiungi Infinity Belt' : 'Aggiungi 2° Set Belt';
+      const nextTierKey   = tierKeys[totalConfigured]; // e.g. 'double' when 1 configured
+      const nextTierBundle = BUNDLES[nextTierKey] || BUNDLES.triple;
+      const nextTierPrice = nextTierBundle.price.toFixed(2).replace('.', ',');
+      const nextTierName  = nextTierBundle.name; // e.g. "Double Set Belt"
       html += '<button class="bb-review__add-bundle-btn" id="bb-add-another-bundle">'
-        + '+ ' + btnLabel
+        + '+ Aggiungi 1 altro — ' + nextTierName + ' a €' + nextTierPrice
         + '</button>';
     }
 
