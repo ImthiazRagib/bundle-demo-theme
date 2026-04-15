@@ -19,47 +19,47 @@
   },
   "straps": {
     "strap-nero": {
-      "130": "",
-      "150": ""
+      "130": "https://cdn.shopify.com/s/files/1/0677/2083/9299/files/48c.png?v=1776238580",
+      "150": "https://cdn.shopify.com/s/files/1/0677/2083/9299/files/48c_a440e17f-d52c-4926-b51e-821700e1940b.png?v=1776238581"
     },
     "strap-marrone": {
-      "130": "",
-      "150": ""
+      "130": "https://cdn.shopify.com/s/files/1/0677/2083/9299/files/40c.png?v=1776238578",
+      "150": "https://cdn.shopify.com/s/files/1/0677/2083/9299/files/40c_476023b9-23a4-44f7-a6aa-f7f0042c9119.png?v=1776238579"
     },
     "strap-cognac": {
-      "130": "",
-      "150": ""
+      "130": "https://cdn.shopify.com/s/files/1/0677/2083/9299/files/41c.png?v=1776238571",
+      "150": "https://cdn.shopify.com/s/files/1/0677/2083/9299/files/41c_359350d3-67df-44b7-8f8b-cfa3e7bb1369.png?v=1776238572"
     },
     "strap-cuoio": {
-      "130": "",
-      "150": ""
+      "130": "https://cdn.shopify.com/s/files/1/0677/2083/9299/files/47c.png?v=1776238567",
+      "150": "https://cdn.shopify.com/s/files/1/0677/2083/9299/files/47c_4edb7146-c15c-4a37-8481-6b0178556baf.png?v=1776238568"
     },
     "strap-beige": {
-      "130": "",
-      "150": ""
+      "130": "https://cdn.shopify.com/s/files/1/0677/2083/9299/files/42c.png?v=1776238565",
+      "150": "https://cdn.shopify.com/s/files/1/0677/2083/9299/files/42c_cac0cd20-6418-40fb-9802-ea851792c45a.png?v=1776238566"
     },
     "strap-rosso": {
-      "130": "",
-      "150": ""
+      "130": "https://cdn.shopify.com/s/files/1/0677/2083/9299/files/44c.png?v=1776238573",
+      "150": "https://cdn.shopify.com/s/files/1/0677/2083/9299/files/44c_f2e04338-95be-40df-bb19-83cac1ae8996.png?v=1776238574"
     },
     "strap-verde": {
-      "130": "",
-      "150": ""
+      "130": "https://cdn.shopify.com/s/files/1/0677/2083/9299/files/45c.png?v=1776238574",
+      "150": "https://cdn.shopify.com/s/files/1/0677/2083/9299/files/45c_340ff791-3eae-435e-987f-3940ea661cf5.png?v=1776238575"
     },
     "strap-blu": {
-      "130": "",
-      "150": ""
+      "130": "https://cdn.shopify.com/s/files/1/0677/2083/9299/files/43c.png?v=1776238569",
+      "150": "https://cdn.shopify.com/s/files/1/0677/2083/9299/files/43c_b7057e0f-8994-46ab-aaf2-b9c3f4cbd50e.png?v=1776238570"
     },
     "strap-grigio": {
-      "130": "",
-      "150": ""
+      "130": "https://cdn.shopify.com/s/files/1/0677/2083/9299/files/46c.png?v=1776238576",
+      "150": "https://cdn.shopify.com/s/files/1/0677/2083/9299/files/46c_74e83f35-df1a-4e7b-8f5c-27e55926255c.png?v=1776238577"
     }
   },
   "buckles": {
-    "buckle-1": "",
-    "buckle-2": "",
-    "buckle-3": "",
-    "buckle-4": ""
+    "buckle-1": "https://cdn.shopify.com/s/files/1/0677/2083/9299/files/52_2c.png?v=1776238582",
+    "buckle-2": "https://cdn.shopify.com/s/files/1/0677/2083/9299/files/50c.png?v=1776238585",
+    "buckle-3": "https://cdn.shopify.com/s/files/1/0677/2083/9299/files/51c.png?v=1776238584",
+    "buckle-4": "https://cdn.shopify.com/s/files/1/0677/2083/9299/files/49c.png?v=1776238584"
   },
   "combinations": {
     "strap-nero__130__buckle-1": {
