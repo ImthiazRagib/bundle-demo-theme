@@ -1134,16 +1134,7 @@
       type:  state.bundleType,
       belts: state.belts,
     }]);
-    const totalConfigured = allBundles.length;
-    const canAddMore = totalConfigured < MAX_BUNDLES;
-
-    // Tier based on how many bundles: 1→single, 2→double, 3→triple
-    const tierKeys    = ['single', 'double', 'triple'];
-    const tierBundle  = BUNDLES[tierKeys[totalConfigured - 1]] || BUNDLES.triple;
-    const tierPrice   = parseFloat(tierBundle.price.toFixed(2));
-    const tierName    = tierBundle.name;
-
-    // Flatten ALL belts across all bundles into one list
+    // Flatten ALL belts first so we can base the tier on total belt count
     let globalBeltNum = 0;
     const allBeltRows = [];
     allBundles.forEach(function(bundle, bundleIdx) {
@@ -1161,6 +1152,13 @@
 
     const totalBelts = allBeltRows.length;
     const beltWord   = totalBelts === 1 ? 'cintura inclusa' : (totalBelts + ' cinture incluse');
+
+    // Tier based on TOTAL BELT COUNT: 1→single, 2→double, 3→triple
+    const tierKeys   = ['single', 'double', 'triple'];
+    const tierBundle = BUNDLES[tierKeys[Math.min(totalBelts, 3) - 1]] || BUNDLES.triple;
+    const tierPrice  = parseFloat(tierBundle.price.toFixed(2));
+    const tierName   = tierBundle.name;
+    const canAddMore = totalBelts < 3;
 
     // Header title
     const bundleTitle = document.getElementById('bb-review-title');
@@ -1204,7 +1202,7 @@
 
     // ── "Add another" button — names the next tier + its price ─
     if (canAddMore) {
-      const nextTier      = BUNDLES[tierKeys[totalConfigured]] || BUNDLES.triple;
+      const nextTier      = BUNDLES[tierKeys[totalBelts]] || BUNDLES.triple;
       const nextTierPrice = nextTier.price.toFixed(2).replace('.', ',');
       const nextTierName  = nextTier.name;
       html += '<button class="bb-review__add-bundle-btn" id="bb-add-another-bundle">'
@@ -1223,19 +1221,18 @@
       });
     });
 
-    // "Add another" → save current bundle, go to composer for next belt
+    // "Add another" → save current bundle, always add exactly 1 new belt
     const addBtn = container.querySelector('#bb-add-another-bundle');
     if (addBtn) {
       addBtn.addEventListener('click', function() {
-        const nextType = state.bundleType;
         state.pendingBundles.push({
           type:  state.bundleType,
           belts: JSON.parse(JSON.stringify(state.belts)),
         });
-        state.bundleType  = nextType;
-        state.totalBelts  = (BUNDLES[nextType] || BUNDLES.single).belts;
+        state.bundleType  = 'single'; // always 1 belt at a time
+        state.totalBelts  = 1;
         state.currentBelt = 1;
-        state.belts       = Array.from({ length: state.totalBelts }, newBeltConfig);
+        state.belts       = [newBeltConfig()];
         renderComposer();
         showScreen('composer');
       });
@@ -1251,10 +1248,11 @@
 
   /* ── Add bundle to cart ─────────────────────────────────── */
   function addBundleToCart() {
-    // Tier price for the whole order: 1 bundle = single, 2 = double, 3 = triple
+    // Tier price based on TOTAL BELT COUNT across all bundles
     const allBeltSets  = state.pendingBundles.concat([{ type: state.bundleType, belts: state.belts }]);
+    const totalBelts   = allBeltSets.reduce(function(sum, b) { return sum + b.belts.length; }, 0);
     const tierKeys     = ['single', 'double', 'triple'];
-    const tierPrice    = parseFloat(((BUNDLES[tierKeys[allBeltSets.length - 1]] || BUNDLES.triple).price).toFixed(2));
+    const tierPrice    = parseFloat(((BUNDLES[tierKeys[Math.min(totalBelts, 3) - 1]] || BUNDLES.triple).price).toFixed(2));
 
     // Push pending bundles with price = 0 (tier price is on the final entry)
     state.pendingBundles.forEach(function(bundle, i) {
