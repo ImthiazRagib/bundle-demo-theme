@@ -1129,7 +1129,7 @@
     const container = document.getElementById('bb-review-belts');
     if (!container) return;
 
-    // All bundles: pending ones + current
+    // All bundles: pending + current
     const allBundles = state.pendingBundles.concat([{
       type:  state.bundleType,
       belts: state.belts,
@@ -1137,71 +1137,76 @@
     const totalConfigured = allBundles.length;
     const canAddMore = totalConfigured < MAX_BUNDLES;
 
-    // Tier price: 1 bundle → single, 2 → double, 3 → triple
-    const tierKeys  = ['single', 'double', 'triple'];
-    const tierPrice = parseFloat(((BUNDLES[tierKeys[totalConfigured - 1]] || BUNDLES.triple).price).toFixed(2));
+    // Tier based on how many bundles: 1→single, 2→double, 3→triple
+    const tierKeys    = ['single', 'double', 'triple'];
+    const tierBundle  = BUNDLES[tierKeys[totalConfigured - 1]] || BUNDLES.triple;
+    const tierPrice   = parseFloat(tierBundle.price.toFixed(2));
+    const tierName    = tierBundle.name;
 
-    // Header title
-    const bundleTitle = document.getElementById('bb-review-title');
-    if (bundleTitle) bundleTitle.textContent = totalConfigured > 1 ? 'Riepilogo ordine' : 'Riepilogo bundle';
-
-    let html = '';
-
-    // ── One hero + belt cards per bundle ──────────────────────
+    // Flatten ALL belts across all bundles into one list
+    let globalBeltNum = 0;
+    const allBeltRows = [];
     allBundles.forEach(function(bundle, bundleIdx) {
-      const bLabel        = (BUNDLES[bundle.type] || BUNDLES.single).name;
       const isCurrentBundle = bundleIdx === allBundles.length - 1;
-      const beltWord      = bundle.belts.length === 1 ? 'cintura inclusa' : (bundle.belts.length + ' cinture incluse');
-      const heroName      = totalConfigured > 1
-        ? 'Bundle ' + (bundleIdx + 1) + ' — ' + bLabel
-        : bLabel;
-
-      // Bundle hero (show tier price only on the last/current bundle)
-      html += '<div class="bb-review__bundle-hero">'
-        + '<div class="bb-review__bundle-visual">'
-        + bundleHeroHTML(bundle.type, bundle.belts, { width: '80px', height: '80px' })
-        + '</div>'
-        + '<div class="bb-review__bundle-info">'
-        + '<div class="bb-review__bundle-name">' + heroName + '</div>'
-        + (isCurrentBundle
-            ? '<div class="bb-review__bundle-price">€ ' + tierPrice.toFixed(2).replace('.', ',') + '</div>'
-            : '')
-        + '<div class="bb-review__bundle-sub">' + beltWord + '</div>'
-        + '</div></div>';
-
-      // Belt cards for this bundle
-      bundle.belts.forEach(function(belt, i) {
-        const strap      = STRAPS[belt.strap]   || {};
-        const buckle     = BUCKLES[belt.buckle] || {};
-        const mockupHTML = beltVisualHTML(belt, 'Cintura ' + (i + 1));
-        html += '<div class="bb-review__card">'
-          + '<div class="bb-review__card-mockup">' + mockupHTML + '</div>'
-          + '<div class="bb-review__card-body">'
-          + '<div class="bb-review__card-num">Cintura #' + (i + 1) + '</div>'
-          + '<div class="bb-spec-grid">'
-          + '<div class="bb-spec-row"><span class="bb-spec-key">Colore pelle</span>'
-          + '<span class="bb-spec-val"><span class="bb-swatch" style="background:' + (strap.hex || '#ccc') + '"></span>' + (strap.name || '—') + '</span></div>'
-          + '<div class="bb-spec-row"><span class="bb-spec-key">Fibbia</span>'
-          + '<span class="bb-spec-val">' + (buckle.name || '—') + '</span></div>'
-          + '<div class="bb-spec-row"><span class="bb-spec-key">Passante</span>'
-          + '<span class="bb-spec-val"><span class="bb-swatch" style="background:' + (strap.hex || '#ccc') + '"></span>' + (strap.name || '—') + '</span></div>'
-          + '<div class="bb-spec-row"><span class="bb-spec-key">Lunghezza</span>'
-          + '<span class="bb-spec-val">' + (belt.length || '—') + '</span></div>'
-          + '</div>';
-        // Edit only on the current bundle's belts
-        if (isCurrentBundle) {
-          html += '<button class="bb-review__card-edit" data-edit="' + (i + 1) + '">✏ Modifica</button>';
-        }
-        html += '</div></div>';
+      bundle.belts.forEach(function(belt, beltIdxInBundle) {
+        globalBeltNum++;
+        allBeltRows.push({
+          belt:            belt,
+          globalNum:       globalBeltNum,
+          beltIdxInBundle: beltIdxInBundle + 1,
+          isEditable:      isCurrentBundle,
+        });
       });
     });
 
-    // ── "Add another bundle" button (no empty slots) ──────────
+    const totalBelts = allBeltRows.length;
+    const beltWord   = totalBelts === 1 ? 'cintura inclusa' : (totalBelts + ' cinture incluse');
+
+    // Header title
+    const bundleTitle = document.getElementById('bb-review-title');
+    if (bundleTitle) bundleTitle.textContent = 'Riepilogo bundle';
+
+    // ── Single unified hero — upgrades as belts are added ─────
+    let html = '<div class="bb-review__bundle-hero">'
+      + '<div class="bb-review__bundle-visual">'
+      + bundleHeroHTML(state.bundleType, state.belts, { width: '80px', height: '80px' })
+      + '</div>'
+      + '<div class="bb-review__bundle-info">'
+      + '<div class="bb-review__bundle-name">' + tierName + '</div>'
+      + '<div class="bb-review__bundle-price">€ ' + tierPrice.toFixed(2).replace('.', ',') + '</div>'
+      + '<div class="bb-review__bundle-sub">' + beltWord + '</div>'
+      + '</div></div>';
+
+    // ── All belt cards listed together ────────────────────────
+    allBeltRows.forEach(function(row) {
+      const strap      = STRAPS[row.belt.strap]   || {};
+      const buckle     = BUCKLES[row.belt.buckle] || {};
+      const mockupHTML = beltVisualHTML(row.belt, 'Cintura ' + row.globalNum);
+      html += '<div class="bb-review__card">'
+        + '<div class="bb-review__card-mockup">' + mockupHTML + '</div>'
+        + '<div class="bb-review__card-body">'
+        + '<div class="bb-review__card-num">Cintura #' + row.globalNum + '</div>'
+        + '<div class="bb-spec-grid">'
+        + '<div class="bb-spec-row"><span class="bb-spec-key">Colore pelle</span>'
+        + '<span class="bb-spec-val"><span class="bb-swatch" style="background:' + (strap.hex || '#ccc') + '"></span>' + (strap.name || '—') + '</span></div>'
+        + '<div class="bb-spec-row"><span class="bb-spec-key">Fibbia</span>'
+        + '<span class="bb-spec-val">' + (buckle.name || '—') + '</span></div>'
+        + '<div class="bb-spec-row"><span class="bb-spec-key">Passante</span>'
+        + '<span class="bb-spec-val"><span class="bb-swatch" style="background:' + (strap.hex || '#ccc') + '"></span>' + (strap.name || '—') + '</span></div>'
+        + '<div class="bb-spec-row"><span class="bb-spec-key">Lunghezza</span>'
+        + '<span class="bb-spec-val">' + (row.belt.length || '—') + '</span></div>'
+        + '</div>';
+      if (row.isEditable) {
+        html += '<button class="bb-review__card-edit" data-edit="' + row.beltIdxInBundle + '">✏ Modifica</button>';
+      }
+      html += '</div></div>';
+    });
+
+    // ── "Add another" button — names the next tier + its price ─
     if (canAddMore) {
-      const nextTierKey   = tierKeys[totalConfigured]; // e.g. 'double' when 1 configured
-      const nextTierBundle = BUNDLES[nextTierKey] || BUNDLES.triple;
-      const nextTierPrice = nextTierBundle.price.toFixed(2).replace('.', ',');
-      const nextTierName  = nextTierBundle.name; // e.g. "Double Set Belt"
+      const nextTier      = BUNDLES[tierKeys[totalConfigured]] || BUNDLES.triple;
+      const nextTierPrice = nextTier.price.toFixed(2).replace('.', ',');
+      const nextTierName  = nextTier.name;
       html += '<button class="bb-review__add-bundle-btn" id="bb-add-another-bundle">'
         + '+ Aggiungi 1 altro — ' + nextTierName + ' a €' + nextTierPrice
         + '</button>';
@@ -1209,7 +1214,7 @@
 
     container.innerHTML = html;
 
-    // Edit buttons → go to composer for that belt in the current bundle
+    // Edit buttons → back to composer for that belt in the current bundle
     container.querySelectorAll('[data-edit]').forEach(function(el) {
       el.addEventListener('click', function() {
         state.currentBelt = parseInt(el.dataset.edit, 10);
@@ -1218,7 +1223,7 @@
       });
     });
 
-    // "Add another bundle" → save current, go directly to composer (same type)
+    // "Add another" → save current bundle, go to composer for next belt
     const addBtn = container.querySelector('#bb-add-another-bundle');
     if (addBtn) {
       addBtn.addEventListener('click', function() {
@@ -1236,7 +1241,7 @@
       });
     }
 
-    // Tier price in the total element
+    // Tier price in the bottom total
     const totalEl = document.getElementById('bb-review-total');
     if (totalEl) totalEl.textContent = '€ ' + tierPrice.toFixed(2).replace('.', ',');
 
