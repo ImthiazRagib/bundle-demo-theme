@@ -8,9 +8,6 @@
     id="bb-composer-hero"
     data-belt-preview-base="{{ section.settings.belt_preview_base_url }}"
   >
-    {%- comment -%} Belt wizard tab bar overlaid at TOP of the hero photo {%- endcomment -%}
-    <div id="bb-belt-wizard"></div>
-
     {%- comment -%} Background: belt combo photo fills entire hero area {%- endcomment -%}
     <canvas id="bb-belt-canvas" width="340" height="100" style="display:none;max-width:100%;"></canvas>
     <img
@@ -84,7 +81,7 @@
   <div class="bb-section bb-section--buckle">
     <div class="bb-section-header">
       <div class="bb-section__label">
-        2. Fibbia: <span id="bb-buckle-name-inline" class="bb-selection-inline-name"></span>
+        1. Fibbia: <span id="bb-buckle-name-inline" class="bb-selection-inline-name"></span>
       </div>
       {% comment %} <span class="bb-section__counter" id="bb-buckle-nav-label"></span> {% endcomment %}
     </div>
@@ -101,7 +98,7 @@
   <div class="bb-section bb-section--strap">
     <div class="bb-section-header">
       <div class="bb-section__label">
-        3. Cintura: <span id="bb-strap-name-inline" class="bb-selection-inline-name"></span>
+        2. Cintura: <span id="bb-strap-name-inline" class="bb-selection-inline-name"></span>
       </div>
       {% comment %} <span class="bb-section__counter" id="bb-strap-nav-label"></span> {% endcomment %}
       <div class="bb-length-selector" id="bb-length-selector">
@@ -118,12 +115,16 @@
     </div>
   </div>
 
-  {%- comment -%} Bottom CTA — two buttons: back + seleziona stile fibbia {%- endcomment -%}
-  <div class="bb-cta-bar bb-cta-bar--double">
-    <button class="bb-btn-composer-back" data-action="composer-back">← Indietro</button>
-    <button class="bb-btn-primary is-accent" data-action="add-to-set" id="bb-composer-cta">
-      Seleziona uno stile di fibbia →
-    </button>
+  {%- comment -%} Bottom combo summary bar — belt label + combo text + two action buttons {%- endcomment -%}
+  <div class="bb-combo-bar">
+    <div class="bb-combo-bar__info">
+      <div class="bb-combo-bar__title" id="bb-combo-belt-label">CINTURA 1 DI 1</div>
+      <div class="bb-combo-bar__sub" id="bb-combo-text">Combinazione: — + —</div>
+    </div>
+    <div class="bb-combo-bar__actions">
+      <button class="bb-combo-bar__back" data-action="composer-back">← Torna indietro</button>
+      <button class="bb-btn-primary is-accent" data-action="add-to-set" id="bb-composer-cta">Aggiungi combinazione</button>
+    </div>
   </div>
 
   {%- comment -%} Infinity — extra belt controls (shown only for infinity bundle type) {%- endcomment -%}

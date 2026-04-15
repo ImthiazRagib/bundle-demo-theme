@@ -618,21 +618,41 @@
   flex-shrink: 0;
 }
 
-/* ── Double-button CTA bar (Indietro + Seleziona fibbia) ─── */
-.bb-cta-bar--double {
-  flex-direction: row;
-  align-items: stretch;
+/* ── Combo summary bar (replaces double-CTA bar) ─────────── */
+.bb-combo-bar {
+  padding: 12px 16px 16px;
+  background: var(--bb-white);
+  border-top: 1px solid var(--bb-border);
+}
+.bb-combo-bar__info {
+  margin-bottom: 10px;
+}
+.bb-combo-bar__title {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--bb-mid);
+  margin-bottom: 3px;
+}
+.bb-combo-bar__sub {
+  font-size: 13px;
+  color: var(--bb-dark);
+  line-height: 1.4;
+}
+.bb-combo-bar__sub strong {
+  font-weight: 700;
+  color: #111;
+}
+.bb-combo-bar__actions {
+  display: flex;
   gap: 10px;
-  margin-top: 0;
+  align-items: stretch;
 }
-.bb-cta-bar--double .bb-btn-primary {
-  width: auto;
-  flex: 2;
-}
-/* Composer back button */
-.bb-btn-composer-back {
+/* Back button — outlined */
+.bb-combo-bar__back {
   flex: 1;
-  padding: 15px 10px;
+  padding: 13px 10px;
   border-radius: var(--bb-radius);
   border: 1.5px solid var(--bb-border);
   background: var(--bb-white);
@@ -643,9 +663,15 @@
   transition: background .2s, border-color .2s;
   white-space: nowrap;
 }
-.bb-btn-composer-back:hover {
+.bb-combo-bar__back:hover {
   background: var(--bb-light);
   border-color: var(--bb-mid);
+}
+/* Primary action — gold, fills remaining space */
+.bb-combo-bar__actions .bb-btn-primary {
+  flex: 2;
+  width: auto;
+  padding: 13px 16px;
 }
 
 /* ── Infinity extra-belt bar ─────────────────────────────── */

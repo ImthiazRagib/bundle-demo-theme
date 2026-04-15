@@ -97,6 +97,27 @@
     showScreen('composer');
   }
 
+  /* ── Combo summary bar update ───────────────────────────── */
+  function updateComboBar() {
+    const belt = state.belts[state.currentBelt - 1];
+    if (!belt) return;
+    const labelEl = document.getElementById('bb-combo-belt-label');
+    const comboEl = document.getElementById('bb-combo-text');
+    if (labelEl) {
+      if (state.totalBelts > 1) {
+        labelEl.style.display = '';
+        labelEl.textContent = 'CINTURA ' + state.currentBelt + ' DI ' + state.totalBelts;
+      } else {
+        labelEl.style.display = 'none';
+      }
+    }
+    if (comboEl) {
+      const buckleName = (BUCKLES[belt.buckle] || {}).name || '—';
+      const strapName  = (STRAPS[belt.strap]   || {}).name || '—';
+      comboEl.innerHTML = 'Combinazione: <strong>' + buckleName + '</strong> + <strong>' + strapName + '</strong>';
+    }
+  }
+
   /* ── Composer rendering ─────────────────────────────────── */
   function renderComposer() {
     const belt = state.belts[state.currentBelt - 1];
@@ -116,14 +137,8 @@
     /* --- Strap carousel --- */
     renderStrapCarousel(belt);
 
-    /* --- CTA label --- */
-    const cta = document.getElementById('bb-composer-cta');
-    if (cta) {
-      const isLast = state.currentBelt === state.totalBelts;
-      cta.textContent = isLast
-        ? 'Seleziona uno stile di fibbia →'
-        : 'Cintura ' + state.currentBelt + ' — Avanti →';
-    }
+    /* --- Combo summary bar --- */
+    updateComboBar();
 
     /* --- Belt preview image --- */
     updateBeltPreview();
@@ -592,6 +607,7 @@
       /* Update inline label in section header */
       var nameEl = document.getElementById('bb-buckle-name-inline');
       if (nameEl) nameEl.textContent = BUCKLES[key] ? BUCKLES[key].name : '';
+      updateComboBar();
     }
 
     container.innerHTML = keys.map((key) => {
@@ -740,6 +756,7 @@
       if (b2.buckle) updateModalMedia(keys[selIdx], b2.buckle);
       /* Preload buckle-combo photos for this strap in background */
       preloadComboPhotos(keys[selIdx], b2.length);
+      updateComboBar();
     }
 
     /* Set initial state */
