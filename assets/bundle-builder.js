@@ -120,7 +120,9 @@
     const cta = document.getElementById('bb-composer-cta');
     if (cta) {
       const isLast = state.currentBelt === state.totalBelts;
-      cta.textContent = 'Aggiungi Cintura al Set →';
+      cta.textContent = isLast
+        ? 'Seleziona uno stile di fibbia →'
+        : 'Cintura ' + state.currentBelt + ' — Avanti →';
     }
 
     /* --- Belt preview image --- */
