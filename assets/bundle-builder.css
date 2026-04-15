@@ -39,13 +39,13 @@ announcement-bar-section {
   --bb-light:     #f5f5f5;
   --bb-border:    #e0e0e0;
   --bb-white:     #ffffff;
-  --bb-radius:    12px;
+  --bb-radius:    24px;
   --bb-shadow:    0 2px 16px rgba(0,0,0,.10);
+  --bb-combo-bg: rgb(241 241 241);
   font-family: 'Helvetica Neue', Arial, sans-serif;
   color: var(--bb-dark);
   max-width: 480px;
   margin: 0 auto;
-  padding: 0 0 80px;
   background: var(--bb-white);
   min-height: 100vh;
   position: relative;
