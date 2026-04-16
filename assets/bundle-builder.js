@@ -1211,27 +1211,32 @@
       const buckle = BUCKLES[row.belt.buckle] || {};
       const mockupHTML = beltVisualHTML(row.belt, 'Cintura ' + row.globalNum, 'box');
       html += '<div class="bb-review__card">'
+        // Part 1 — image
         + '<div class="bb-review__card-mockup">' + mockupHTML + '</div>'
-        + '<div class="bb-review__card-body">'
+        // Part 2 — specs
+        + '<div class="bb-review__card-specs">'
         + '<div class="bb-review__card-header">'
         + '<span class="bb-review__card-num">Cintura #' + row.globalNum + '</span>'
         + '<span class="bb-review__card-length">' + (row.belt.length || '—') + '</span>'
         + '</div>'
         + '<div class="bb-spec-flex">'
-        + '<div class="bb-spec-row" style="grid-column:1/-1"><span class="bb-spec-key">Colore pelle</span>'
+        + '<div class="bb-spec-row"><span class="bb-spec-key">Colore pelle</span>'
         + '<span class="bb-spec-val"><span class="bb-swatch" style="background:' + (strap.hex || '#ccc') + '"></span>' + (strap.name || '—') + '</span></div>'
         + '<div class="bb-spec-row"><span class="bb-spec-key">Fibbia</span>'
         + '<span class="bb-spec-val">' + (buckle.name || '—') + '</span></div>'
         + '<div class="bb-spec-row"><span class="bb-spec-key">Passante</span>'
         + '<span class="bb-spec-val"><span class="bb-swatch" style="background:' + (strap.hex || '#ccc') + '"></span>' + (strap.name || '—') + '</span></div>'
         + '</div>'
+        + '<div style="display:flex;justify-content:flex-end;">'
         + '<button class="bb-review__card-edit"'
         + ' data-bundle-idx="' + row.bundleIdx + '"'
         + ' data-belt-in-bundle="' + row.beltIdxInBundle + '"'
         + ' data-is-current="' + (row.isCurrentBundle ? '1' : '0') + '"'
         + ' data-belt-num="' + row.beltNumInBundle + '"'
         + '><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:4px;"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Modifica</button>'
-        + '</div></div>';
+        + '</div>'
+        + '</div>'
+        + '</div>';
     });
     //   html += '<div class="bb-review__card">'
     //     + '<div class="bb-review__card-mockup">' + mockupHTML + '</div>'
@@ -1267,13 +1272,17 @@
           const curTierBundle = BUNDLES[tierKeys[totalBelts - 1]] || BUNDLES.single;
           const nextTierBundle = BUNDLES[tierKeys[totalBelts]];
           const diff = nextTierBundle.price - curTierBundle.price;
-          addBtnLabel = '+ Aggiungi 1 Cintura - solo +€ ' + diff.toFixed(2).replace('.', ',');
+          addBtnLabel = 'Aggiungi 1 Cintura per €' + diff.toFixed(2).replace('.', ',');
         } else {
-          addBtnLabel = '+ Aggiungi 1 Cintura - solo (+€ '
-            + BUNDLES.infinity.extra.toFixed(2).replace('.', ',') + ' · Infinity)';
+          addBtnLabel = 'Aggiungi 1 Cintura per (+€ '
+            + BUNDLES.infinity.extra.toFixed(2).replace('.', ',') + ')';
         }
-        addBtnSlot.innerHTML = '<button class="bb-review__add-bundle-btn" id="bb-add-another-bundle">'
-          + addBtnLabel + '</button>';
+        addBtnSlot.innerHTML = '<div class="bb-review__add-wrap">'
+          + '<div class="bb-review__add-line"></div>'
+          + '<button class="bb-review__add-bundle-btn" id="bb-add-another-bundle">'
+          + '<span class="bb-review__add-plus"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>'
+          + addBtnLabel
+          + '</button></div>';
       } else {
         addBtnSlot.innerHTML = '';
       }

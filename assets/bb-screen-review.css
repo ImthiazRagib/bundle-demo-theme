@@ -133,7 +133,13 @@
   /* border-bottom: 1px solid var(--bb-border); */
 }
 .bb-review__card-mockup img { width: 100%; height: 100%; object-fit: cover; }
-.bb-review__card-body { width: 100%; padding: 12px 14px; }
+
+/* Part 2 — specs */
+.bb-review__card-specs {
+  flex: 1;
+  padding: 12px 12px;
+}
+
 
 /* Header row: card number (left) + length pill (right) */
 .bb-review__card-header {
@@ -308,16 +314,27 @@
   margin-bottom: 5px;
 }
 
-/* ── "Add another bundle" button ─────────────────────────── */
+/* ── "Add another bundle" connector + button ─────────────── */
+.bb-review__add-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.bb-review__add-line {
+  width: 2px;
+  height: 30px;
+  background: var(--bb-border);
+}
 .bb-review__add-bundle-btn {
+  max-width: 287px !important;
+  position: relative;
   display: block;
   width: 100%;
-  margin-top: 14px;
-  padding: 13px 16px;
-  border: 2px solid var(--bb-accent);
+  padding: 16px 16px 13px;
+  border: 1.5px solid var(--bb-accent);
   border-radius: 10px;
   background: transparent;
-  color: var(--bb-accent);
+  color: var(--bb-accent) !important;
   font-size: 14px;
   font-weight: 700;
   text-align: center;
@@ -326,5 +343,26 @@
 }
 .bb-review__add-bundle-btn:hover {
   background: var(--bb-accent);
+  color: #fff !important;
+}
+/* Plus circle — centred on the top border of the button */
+.bb-review__add-plus {
+  position: absolute;
+  top: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #c9970a 0%, #e8b923 60%, #b8800b 100%);
+  border: 2px solid var(--bb-white);
+  box-shadow: 0 2px 8px rgba(184,134,11,.40);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: #fff;
+  pointer-events: none;
+}
+.bb-review__add-bundle-btn:hover .bb-review__add-plus {
+  border-color: var(--bb-accent);
 }
