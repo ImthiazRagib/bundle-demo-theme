@@ -107,8 +107,9 @@
   line-height: 1;
 }
 .bb-review__bundle-sub {
-  font-size: 14px;
-  color: #fff;
+  font-size: 12px;
+  color: #c5c7ca;
+  white-space: pre-line;
   margin-top: 4px;
 }
 
@@ -153,7 +154,7 @@
   padding: 3px 10px;
   border-radius: 20px;
   /* background: linear-gradient(135deg, #c9970a 0%, #e8b923 60%, #b8800b 100%); */
-  border: 1px solid #0000;
+  border: 1px solid #000;
   /* box-shadow: 0 2px 8px rgba(184,134,11,.35); */
   font-size: 10px;
   font-weight: 700;

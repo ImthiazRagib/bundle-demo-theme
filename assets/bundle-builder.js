@@ -55,10 +55,10 @@
 
   /* ── Bundle config ──────────────────────────────────────── */
   const BUNDLES = {
-    single:   { name: 'Single Set Belt',   belts: 1, price: 49.99, extra: null },
-    double:   { name: 'Double Set Belt',   belts: 2, price: 79.99, extra: null },
-    triple:   { name: 'Triple Set Belt',   belts: 3, price: 99.99, extra: null },
-    infinity: { name: 'Infinity Set Belt', belts: 4, price: 119.99, extra: 19.99 },
+    single: { name: 'Set Singolo', belts: 1, price: 49.99, extra: null },
+    double: { name: 'Set Doppio', belts: 2, price: 79.99, extra: null },
+    triple: { name: 'Set Triplo', belts: 3, price: 99.99, extra: null },
+    infinity: { name: 'Set Infinity', belts: 4, price: 119.99, extra: 19.99 },
   };
 
   /* ── Bundle type selection ──────────────────────────────── */
@@ -97,7 +97,7 @@
     }
     if (comboEl) {
       const buckleName = (BUCKLES[belt.buckle] || {}).name || '—';
-      const strapName  = (STRAPS[belt.strap]   || {}).name || '—';
+      const strapName = (STRAPS[belt.strap] || {}).name || '—';
       comboEl.innerHTML = 'Combinazione: <strong>' + buckleName + '</strong> + <strong>' + strapName + '</strong>';
     }
   }
@@ -112,7 +112,7 @@
      * doing it here first prevents any edge-case null slipping through. */
     if (!belt.length) belt.length = LENGTHS[0];
     if (!belt.buckle) belt.buckle = getDefaultBuckle();
-    if (!belt.strap)  belt.strap  = getDefaultStrap();
+    if (!belt.strap) belt.strap = getDefaultStrap();
 
     /* --- Progress --- */
     renderProgress();
@@ -154,20 +154,20 @@
 
     /* Labels — number already shown in the dot, just the word "Cintura" */
     const labels = Array(12).fill('Cintura');
-    const total   = state.totalBelts;
+    const total = state.totalBelts;
     const current = state.currentBelt;
 
     const tickSvg = `<svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="3,8 7,12 13,4"/></svg>`;
 
     let html = '<div class="bb-wizard">';
     for (let i = 1; i <= total; i++) {
-      const belt    = state.belts[i - 1] || {};
-      const isDone  = !!belt.done;
+      const belt = state.belts[i - 1] || {};
+      const isDone = !!belt.done;
       const isActive = i === current;
       const isPending = !isDone && !isActive;
-      const status  = isDone ? 'is-done' : isActive ? 'is-active' : 'is-pending';
-      const num     = isDone ? tickSvg : i;
-      const lbl     = labels[i - 1] || (i + '° Cintura');
+      const status = isDone ? 'is-done' : isActive ? 'is-active' : 'is-pending';
+      const num = isDone ? tickSvg : i;
+      const lbl = labels[i - 1] || (i + '° Cintura');
 
       html += `<div class="bb-wizard__step ${status}" data-belt="${i}" role="button" aria-label="${lbl}">
         <div class="bb-wizard__pill">
@@ -292,22 +292,22 @@
   }
 
   const BUCKLES = {
-    'buckle-1': { name: 'Classic',  image: '' },
-    'buckle-2': { name: 'Silver',   image: '' },
-    'buckle-3': { name: 'Gold',     image: '' },
-    'buckle-4': { name: 'Luxury',   image: '' },
+    'buckle-1': { name: 'Classic', image: '' },
+    'buckle-2': { name: 'Silver', image: '' },
+    'buckle-3': { name: 'Gold', image: '' },
+    'buckle-4': { name: 'Luxury', image: '' },
   };
 
   const STRAPS = {
-    'strap-nero':    { name: 'Nero',                hex: '#1a1a1a' },
-    'strap-marrone': { name: 'Marrone',             hex: '#6b3a2a' },
-    'strap-cognac':  { name: 'Cammello',            hex: '#c07840' },
-    'strap-cuoio':   { name: 'Bianco',              hex: '#f0ede8' },
-    'strap-beige':   { name: 'Beige',               hex: '#d4bc94' },
-    'strap-rosso':   { name: 'Coccodrillo Marrone', hex: '#8b1a1a' },
-    'strap-verde':   { name: 'Coccodrillo Nera',    hex: '#2d5a1b' },
-    'strap-blu':     { name: 'Blu',                 hex: '#1a3a6b' },
-    'strap-grigio':  { name: 'Grigio',              hex: '#888' },
+    'strap-nero': { name: 'Nero', hex: '#1a1a1a' },
+    'strap-marrone': { name: 'Marrone', hex: '#6b3a2a' },
+    'strap-cognac': { name: 'Cammello', hex: '#c07840' },
+    'strap-cuoio': { name: 'Bianco', hex: '#f0ede8' },
+    'strap-beige': { name: 'Beige', hex: '#d4bc94' },
+    'strap-rosso': { name: 'Coccodrillo Marrone', hex: '#8b1a1a' },
+    'strap-verde': { name: 'Coccodrillo Nera', hex: '#2d5a1b' },
+    'strap-blu': { name: 'Blu', hex: '#1a3a6b' },
+    'strap-grigio': { name: 'Grigio', hex: '#888' },
   };
 
   /* ── Carousel order config (from Shopify Theme Editor) ──── */
@@ -345,20 +345,20 @@
   /* Returns shortest signed distance from center idx to item i in a list of length n */
   function wrapRel(i, idx, n) {
     let rel = i - idx;
-    if (rel >  Math.floor(n / 2)) rel -= n;
+    if (rel > Math.floor(n / 2)) rel -= n;
     if (rel < -Math.floor(n / 2)) rel += n;
     return rel;
   }
 
   /* ── Media config (loaded from bundle-builder-media.json) ── */
-  let _bbMedia        = null;
-  let _previewLoadId  = 0;   /* incremented on each preview change — used to cancel stale loads */
+  let _bbMedia = null;
+  let _previewLoadId = 0;   /* incremented on each preview change — used to cancel stale loads */
 
   /* Preload all combo photos for a given strap so buckle-swipe preview is instant */
   function preloadComboPhotos(strapKey, length) {
     if (!_bbMedia || !_bbMedia.combinations) return;
     const len = (length || '130cm').replace('cm', '');
-    Object.keys(BUCKLES).forEach(function(buckleKey) {
+    Object.keys(BUCKLES).forEach(function (buckleKey) {
       const combo = _bbMedia.combinations[strapKey + '__' + len + '__' + buckleKey];
       if (combo && combo.photo) {
         const img = new Image();
@@ -371,7 +371,7 @@
   function preloadComboPhotosForBuckle(buckleKey, length) {
     if (!_bbMedia || !_bbMedia.combinations) return;
     const len = (length || '130cm').replace('cm', '');
-    Object.keys(STRAPS).forEach(function(strapKey) {
+    Object.keys(STRAPS).forEach(function (strapKey) {
       const combo = _bbMedia.combinations[strapKey + '__' + len + '__' + buckleKey];
       if (combo && combo.photo) {
         const img = new Image();
@@ -382,7 +382,7 @@
 
   async function fetchMedia() {
     const root = document.getElementById('bb-root');
-    const url  = root && root.dataset.mediaUrl;
+    const url = root && root.dataset.mediaUrl;
     if (!url) return;
     try {
       const res = await fetch(url);
@@ -399,7 +399,7 @@
     if (typeof BB_BUNDLE_IMAGES === 'undefined') window.BB_BUNDLE_IMAGES = {};
     const V = (typeof BB_VARIANTS !== 'undefined') ? BB_VARIANTS : {};
     const types = ['single', 'double', 'triple'];
-    await Promise.all(types.map(async function(type) {
+    await Promise.all(types.map(async function (type) {
       if (BB_BUNDLE_IMAGES[type]) return;           /* già impostata dal Theme Editor */
       const variantId = V.bundles && V.bundles[type];
       if (!variantId) return;
@@ -409,7 +409,7 @@
         const data = await res.json();
         /* featured_image sul variant, oppure fallback al product.featured_image */
         const img = (data.featured_image && data.featured_image.src)
-                 || (data.product && data.product.featured_image && data.product.featured_image.src);
+          || (data.product && data.product.featured_image && data.product.featured_image.src);
         if (img) BB_BUNDLE_IMAGES[type] = img.startsWith('//') ? 'https:' + img : img;
       } catch (e) { /* silente */ }
     }));
@@ -417,20 +417,20 @@
 
   function updateModalMedia(strapKey, buckleKey) {
     if (!_bbMedia) return;
-    const belt     = state.belts[state.currentBelt - 1];
-    const length   = (belt && belt.length) ? belt.length.replace('cm', '') : '130';
+    const belt = state.belts[state.currentBelt - 1];
+    const length = (belt && belt.length) ? belt.length.replace('cm', '') : '130';
     const comboKey = strapKey + '__' + length + '__' + buckleKey;
-    const combo    = (_bbMedia.combinations && _bbMedia.combinations[comboKey]) || {};
-    const strap    = STRAPS[strapKey]  || {};
-    const buckle   = BUCKLES[buckleKey] || {};
+    const combo = (_bbMedia.combinations && _bbMedia.combinations[comboKey]) || {};
+    const strap = STRAPS[strapKey] || {};
+    const buckle = BUCKLES[buckleKey] || {};
 
     /* Worn photo */
-    const wornImg    = document.getElementById('bb-worn-img');
+    const wornImg = document.getElementById('bb-worn-img');
     const wornHolder = document.getElementById('bb-worn-placeholder');
     if (wornImg) {
       const src = combo.worn || (wornImg.dataset.fallback !== 'undefined' ? wornImg.dataset.fallback : '') || '';
       if (src) {
-        wornImg.src          = src;
+        wornImg.src = src;
         wornImg.style.display = '';
         if (wornHolder) wornHolder.style.display = 'none';
       } else {
@@ -440,7 +440,7 @@
     }
 
     /* Video 360° */
-    const video       = document.getElementById('bb-video-360');
+    const video = document.getElementById('bb-video-360');
     const videoHolder = document.getElementById('bb-video-placeholder');
     if (video) {
       const src = combo.video || (video.dataset.fallback !== 'undefined' ? video.dataset.fallback : '') || '';
@@ -543,27 +543,27 @@
   function renderBuckleCarousel(belt) {
     const container = document.getElementById('bb-buckle-carousel');
     if (!container) return;
-    let keys      = getBuckleKeys();
+    let keys = getBuckleKeys();
     if (window.BB_AVAIL_MODE === 'hide') keys = keys.filter(k => isBuckleAvailable(k));
-    const defKey  = belt.buckle || getDefaultBuckle();
-    let selIdx    = keys.indexOf(defKey);
+    const defKey = belt.buckle || getDefaultBuckle();
+    let selIdx = keys.indexOf(defKey);
     if (selIdx < 0) selIdx = 0;
     if (!belt.buckle) { state.belts[state.currentBelt - 1].buckle = keys[selIdx]; }
 
-    const STEP    = 162;   /* px between item centres */
+    const STEP = 162;   /* px between item centres */
     const MAX_VIS = 2;     /* items shown each side */
-    const N       = keys.length;
+    const N = keys.length;
 
     /* Infinite layout: use shortest-path wrap for each item's rel position */
     function applyBuckleLayout(idx) {
       container.querySelectorAll('.bb-carousel__item').forEach((el, i) => {
         const rel = wrapRel(i, idx, N);
         const abs = Math.abs(rel);
-        const sc  = abs === 0 ? 1.00 : abs === 1 ? 0.72 : abs === 2 ? 0.56 : 0.44;
-        const op  = abs > MAX_VIS ? 0 : 1;   /* fully opaque when visible */
-        el.style.transform     = `translateX(calc(-50% + ${rel * STEP}px)) scale(${sc})`;
-        el.style.opacity       = String(op);
-        el.style.zIndex        = String(10 - abs);
+        const sc = abs === 0 ? 1.00 : abs === 1 ? 0.72 : abs === 2 ? 0.56 : 0.44;
+        const op = abs > MAX_VIS ? 0 : 1;   /* fully opaque when visible */
+        el.style.transform = `translateX(calc(-50% + ${rel * STEP}px)) scale(${sc})`;
+        el.style.opacity = String(op);
+        el.style.zIndex = String(10 - abs);
         el.style.pointerEvents = abs > MAX_VIS ? 'none' : 'auto';
         el.classList.toggle('is-selected', rel === 0);
       });
@@ -576,7 +576,7 @@
       const next = document.getElementById('bb-buckle-next');
       if (prev) prev.disabled = false;
       if (next) next.disabled = false;
-      if (lbl)  lbl.textContent = `${idx + 1} / ${N}`;
+      if (lbl) lbl.textContent = `${idx + 1} / ${N}`;
     }
 
     function selectBuckle(newIdx) {
@@ -597,14 +597,14 @@
     }
 
     container.innerHTML = keys.map((key) => {
-      const b      = BUCKLES[key];
-      const avail  = isBuckleAvailable(key);
+      const b = BUCKLES[key];
+      const avail = isBuckleAvailable(key);
       const imgUrl = _bbMedia && _bbMedia.buckles && _bbMedia.buckles[key];
-      const thumb  = imgUrl
+      const thumb = imgUrl
         ? `<img src="${imgUrl}" alt="${b.name}">`
         : (BUCKLE_SVGS[key] || BUCKLE_SVGS['buckle-1']);
-      const badge  = (!avail && window.BB_AVAIL_MODE === 'grey') ? '<div class="bb-unavail-badge">Non<br>Disponibile</div>' : '';
-      const cls    = !avail ? ' bb-carousel__item--unavailable' : '';
+      const badge = (!avail && window.BB_AVAIL_MODE === 'grey') ? '<div class="bb-unavail-badge">Non<br>Disponibile</div>' : '';
+      const cls = !avail ? ' bb-carousel__item--unavailable' : '';
       return `<div class="bb-carousel__item${cls}" data-buckle="${key}">
         <div class="bb-carousel__thumb">
           ${thumb}
@@ -616,7 +616,7 @@
     applyBuckleLayout(selIdx);
     updateBuckleNavButtons(selIdx);
     /* ── Set initial buckle name in section label ── */
-    (function() { var el = document.getElementById('bb-buckle-name-inline'); if (el) el.textContent = BUCKLES[keys[selIdx]] ? BUCKLES[keys[selIdx]].name : ''; })();
+    (function () { var el = document.getElementById('bb-buckle-name-inline'); if (el) el.textContent = BUCKLES[keys[selIdx]] ? BUCKLES[keys[selIdx]].name : ''; })();
 
     /* AbortController — cleans up all listeners when carousel is re-rendered */
     if (_carouselCtrl.buckle.ctrl) _carouselCtrl.buckle.ctrl.abort();
@@ -665,28 +665,28 @@
     const container = document.getElementById('bb-strap-carousel');
     if (!container) return;
     const strapLength = belt.length ? belt.length.replace('cm', '') : '130';
-    let keys       = getStrapKeys();
+    let keys = getStrapKeys();
     if (window.BB_AVAIL_MODE === 'hide') keys = keys.filter(k => isStrapAvailable(k, strapLength));
-    const defKey     = belt.strap || getDefaultStrap();
-    let selIdx       = keys.indexOf(defKey);
+    const defKey = belt.strap || getDefaultStrap();
+    let selIdx = keys.indexOf(defKey);
     if (selIdx < 0) selIdx = 0;
     if (!belt.strap) { state.belts[state.currentBelt - 1].strap = keys[selIdx]; }
 
     const MAX_VIS = 2;
-    const N       = keys.length;
+    const N = keys.length;
 
     /* STEP is computed from container width so it scales across devices */
     function getStep() { return Math.round((container.offsetWidth || 320) * 0.55); }
 
     container.innerHTML = keys.map(key => {
-      const s     = STRAPS[key];
+      const s = STRAPS[key];
       const avail = isStrapAvailable(key, strapLength);
       const photo = _bbMedia && _bbMedia.straps && _bbMedia.straps[key] && _bbMedia.straps[key][strapLength];
-      const vis   = photo
+      const vis = photo
         ? `<img class="bb-strap-item__thumb" src="${photo}" alt="${s.name}">`
         : `<div class="bb-strap-item__bar" style="background:${s.hex};"></div>`;
       const badge = (!avail && window.BB_AVAIL_MODE === 'grey') ? '<div class="bb-unavail-badge">Non<br>Disponibile</div>' : '';
-      const cls   = !avail ? ' bb-strap-item--unavailable' : '';
+      const cls = !avail ? ' bb-strap-item--unavailable' : '';
       return `<div class="bb-strap-item${cls}" data-strap="${key}">${vis}${badge}<span class="bb-strap-item__name">${s.name}</span></div>`;
     }).join('');
 
@@ -696,12 +696,12 @@
       container.querySelectorAll('.bb-strap-item').forEach((item, i) => {
         const rel = wrapRel(i, idx, N);
         const abs = Math.abs(rel);
-        const sc  = abs === 0 ? 1.00 : abs === 1 ? 0.72 : abs === 2 ? 0.54 : 0.42;
-        const op  = abs > MAX_VIS ? 0 : 1;   /* fully opaque when visible */
+        const sc = abs === 0 ? 1.00 : abs === 1 ? 0.72 : abs === 2 ? 0.54 : 0.42;
+        const op = abs > MAX_VIS ? 0 : 1;   /* fully opaque when visible */
         item.classList.toggle('is-selected', rel === 0);
-        item.style.transform     = `translateX(calc(-50% + ${rel * STEP}px)) scale(${sc})`;
-        item.style.opacity       = String(op);
-        item.style.zIndex        = String(10 - abs);
+        item.style.transform = `translateX(calc(-50% + ${rel * STEP}px)) scale(${sc})`;
+        item.style.opacity = String(op);
+        item.style.zIndex = String(10 - abs);
         item.style.pointerEvents = abs > MAX_VIS ? 'none' : 'auto';
       });
     }
@@ -724,11 +724,11 @@
     function updateNavButtons(idx) {
       const prev = document.getElementById('bb-strap-prev');
       const next = document.getElementById('bb-strap-next');
-      const lbl  = document.getElementById('bb-strap-nav-label');
+      const lbl = document.getElementById('bb-strap-nav-label');
       /* Never disabled — infinite loop */
       if (prev) prev.disabled = false;
       if (next) next.disabled = false;
-      if (lbl)  lbl.textContent = `${idx + 1} / ${N}`;
+      if (lbl) lbl.textContent = `${idx + 1} / ${N}`;
     }
 
     function selectStrap(newIdx) {
@@ -805,7 +805,7 @@
       preview.style.display = '';
       /* Step 1: fade out (paint frame committed after 50ms) */
       preview.style.transition = 'opacity 0.12s ease-out';
-      preview.style.opacity    = '0.15';
+      preview.style.opacity = '0.15';
       setTimeout(() => {
         if (_previewLoadId !== _loadId) return; /* cancelled by newer call */
         /* Step 2: load new image (may be from cache — that is fine) */
@@ -815,10 +815,10 @@
           preview.src = url;
           requestAnimationFrame(() => {
             preview.style.transition = 'opacity 0.3s ease-in';
-            preview.style.opacity    = '1';
+            preview.style.opacity = '1';
           });
         };
-        img.onload  = apply;
+        img.onload = apply;
         img.onerror = apply;   /* show even if load fails */
         img.src = url;
         /* If already cached, onload may not fire — force apply via rAF */
@@ -831,8 +831,8 @@
      *     SKU format confirmed by merchant: COLORE-LUNGHEZZA-NOMEFIBBIA (es. NERO-130-CLASSIC).
      *     We build the same canonical key from the current belt state and look it up directly. */
     if (window.BB_SKU_IMAGES && belt.strap && belt.buckle) {
-      const strapLen   = belt.length ? belt.length.replace('cm', '') : '130';
-      const strapName  = belt.strap.replace('strap-', '').toUpperCase();   /* NERO, MARRONE … */
+      const strapLen = belt.length ? belt.length.replace('cm', '') : '130';
+      const strapName = belt.strap.replace('strap-', '').toUpperCase();   /* NERO, MARRONE … */
       const buckleData = BUCKLES[belt.buckle];
       const buckleName = buckleData ? buckleData.name.toUpperCase() : '';  /* CLASSIC, SILVER … */
       /* Canonical key matches the Shopify SKU format: COLORE-LUNGHEZZA-NOMEFIBBIA */
@@ -875,7 +875,7 @@
 
     /* 2 — Strap-only photo (no buckle-specific) */
     if (_bbMedia && belt.strap) {
-      const strapLen   = belt.length ? belt.length.replace('cm', '') : '130';
+      const strapLen = belt.length ? belt.length.replace('cm', '') : '130';
       const strapPhoto = _bbMedia.straps && _bbMedia.straps[belt.strap] && _bbMedia.straps[belt.strap][strapLen];
       if (strapPhoto) {
         showPreviewPhoto(strapPhoto);
@@ -924,21 +924,21 @@
     /* Auto-apply defaults instead of blocking the user if values are somehow still null */
     if (!belt.length) belt.length = LENGTHS[0];
     if (!belt.buckle) belt.buckle = getDefaultBuckle();
-    if (!belt.strap)  belt.strap  = getDefaultStrap();
+    if (!belt.strap) belt.strap = getDefaultStrap();
     return true;
   }
 
   /* ── Advance from composer ──────────────────────────────── */
   /* ── Confetti + success overlay ──────────────────────────── */
   function showBeltSuccess(onComplete) {
-    var beltNum   = state.currentBelt;
-    var total     = state.totalBelts;
-    var isLast    = beltNum >= total;
+    var beltNum = state.currentBelt;
+    var total = state.totalBelts;
+    var isLast = beltNum >= total;
 
     var title = isLast
       ? (total === 1
-          ? 'Cintura configurata con successo!'
-          : 'Perfetto! Tutte le ' + total + ' cinture sono pronte.')
+        ? 'Cintura configurata con successo!'
+        : 'Perfetto! Tutte le ' + total + ' cinture sono pronte.')
       : 'Cintura ' + beltNum + ' aggiunta al set!';
     var sub = isLast
       ? 'Ora puoi procedere al riepilogo e aggiungere il bundle al carrello.'
@@ -950,30 +950,30 @@
     ov.innerHTML =
       '<canvas class="bb-confetti-canvas"></canvas>' +
       '<div class="bb-success-card">' +
-        '<div class="bb-success-icon">🎉</div>' +
-        '<div class="bb-success-title">' + title + '</div>' +
-        '<div class="bb-success-sub">'   + sub   + '</div>' +
+      '<div class="bb-success-icon">🎉</div>' +
+      '<div class="bb-success-title">' + title + '</div>' +
+      '<div class="bb-success-sub">' + sub + '</div>' +
       '</div>';
     document.body.appendChild(ov);
 
     /* confetti canvas */
     var cv = ov.querySelector('.bb-confetti-canvas');
-    cv.width  = window.innerWidth;
+    cv.width = window.innerWidth;
     cv.height = window.innerHeight;
     var ctx = cv.getContext('2d');
 
-    var colors = ['#c9970a','#e8b923','#f5d26e','#ffffff','#111111','#b8800b','#d4bc94'];
+    var colors = ['#c9970a', '#e8b923', '#f5d26e', '#ffffff', '#111111', '#b8800b', '#d4bc94'];
     var particles = [];
     for (var i = 0; i < 90; i++) {
       particles.push({
-        x:     Math.random() * cv.width,
-        y:     -20 - Math.random() * 120,
-        w:     5  + Math.random() * 7,
-        h:     3  + Math.random() * 4,
+        x: Math.random() * cv.width,
+        y: -20 - Math.random() * 120,
+        w: 5 + Math.random() * 7,
+        h: 3 + Math.random() * 4,
         color: colors[Math.floor(Math.random() * colors.length)],
         speed: 3.5 + Math.random() * 5,
         angle: Math.random() * Math.PI * 2,
-        spin:  (Math.random() - 0.5) * 0.18,
+        spin: (Math.random() - 0.5) * 0.18,
         drift: (Math.random() - 0.5) * 2.4
       });
     }
@@ -984,9 +984,9 @@
       var elapsed = Date.now() - start;
       ctx.clearRect(0, 0, cv.width, cv.height);
 
-      particles.forEach(function(p) {
-        p.y     += p.speed;
-        p.x     += p.drift;
+      particles.forEach(function (p) {
+        p.y += p.speed;
+        p.x += p.drift;
         p.angle += p.spin;
         ctx.save();
         ctx.translate(p.x, p.y);
@@ -1017,7 +1017,7 @@
     if (!validateCurrentBelt()) return;
     state.belts[state.currentBelt - 1].done = true;
 
-    showBeltSuccess(function() {
+    showBeltSuccess(function () {
       if (state.currentBelt < state.totalBelts) {
         state.currentBelt += 1;
         renderComposer();
@@ -1026,11 +1026,11 @@
         const em = state._editMode;
         state.pendingBundles[em.bundleIdx].belts[em.beltInBundle] = JSON.parse(JSON.stringify(state.belts[0]));
         // Restore the active bundle state that was saved before edit started
-        state.bundleType  = em.savedType;
-        state.totalBelts  = em.savedTotalBelts;
+        state.bundleType = em.savedType;
+        state.totalBelts = em.savedTotalBelts;
         state.currentBelt = em.savedCurrentBelt;
-        state.belts       = em.savedBelts;
-        state._editMode   = null;
+        state.belts = em.savedBelts;
+        state._editMode = null;
         showReview();
       } else {
         showReview();
@@ -1063,19 +1063,19 @@
     var bh = 18; var gap = 22;
     var svgH = n * gap + bh + 8;
     var bands = '';
-    belts.forEach(function(b, i) {
+    belts.forEach(function (b, i) {
       var hex = (STRAPS[b.strap] || {}).hex || '#888';
       var y = 4 + i * gap;
       bands += '<rect x="4" y="' + y + '" width="82" height="' + bh + '" rx="4" fill="' + hex + '" filter="url(#' + uid + ')"/>'
-             + '<rect x="4" y="' + y + '" width="82" height="6" rx="4" fill="rgba(255,255,255,.16)"/>'
-             + '<rect x="20" y="' + (y + 4) + '" width="8" height="' + (bh - 8) + '" rx="2" fill="rgba(0,0,0,.15)"/>';
+        + '<rect x="4" y="' + y + '" width="82" height="6" rx="4" fill="rgba(255,255,255,.16)"/>'
+        + '<rect x="20" y="' + (y + 4) + '" width="8" height="' + (bh - 8) + '" rx="2" fill="rgba(0,0,0,.15)"/>';
     });
     return '<svg viewBox="0 0 90 ' + svgH + '" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:' + svgH + 'px;">'
-         + '<defs><filter id="' + uid + '" x="-10%" y="-20%" width="120%" height="160%">'
-         + '<feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000" flood-opacity=".3"/>'
-         + '</filter></defs>'
-         + bands
-         + '</svg>';
+      + '<defs><filter id="' + uid + '" x="-10%" y="-20%" width="120%" height="160%">'
+      + '<feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000" flood-opacity=".3"/>'
+      + '</filter></defs>'
+      + bands
+      + '</svg>';
   }
 
   function getBeltImgURL(belt) {
@@ -1119,7 +1119,7 @@
     const photo = getBeltPhotoURL(belt, imageKey);
     if (photo) {
       return '<img src="' + photo + '" alt="' + (alt || 'Cintura') + '"'
-           + ' style="width:100%;height:100%;object-fit:cover;border-radius:6px;">';
+        + ' style="width:100%;height:100%;object-fit:cover;border-radius:6px;">';
     }
     return beltMockupSVG(strap.hex);
   }
@@ -1127,17 +1127,17 @@
   /* Markup per l'immagine del bundle (foto prodotto da Shopify o SVG stack) */
   function bundleHeroHTML(bundleType, belts, opts) {
     opts = opts || {};
-    const w   = opts.width  || '80px';
-    const h   = opts.height || '80px';
+    const w = opts.width || '80px';
+    const h = opts.height || '80px';
     // 1st: JSON file via _bbMedia (loaded at startup, reliable by review time)
     // 2nd: BB_BUNDLE_IMAGES injected by Liquid/Theme Editor
     console.log('bundleHeroHTML: looking for image for bundle type', bundleType);
     const src = (_bbMedia && _bbMedia.bundle_images && _bbMedia.bundle_images[bundleType])
-             || ((typeof BB_BUNDLE_IMAGES !== 'undefined') && BB_BUNDLE_IMAGES[bundleType]);
+      || ((typeof BB_BUNDLE_IMAGES !== 'undefined') && BB_BUNDLE_IMAGES[bundleType]);
     if (src) {
       return '<img src="' + src + '" alt="' + bundleType + '"'
-           + ' style="width:' + w + ';height:' + h + ';object-fit:cover;border-radius:8px;"'
-           + ' onerror="this.style.display=\'none\'">';
+        + ' style="width:' + w + ';height:' + h + ';object-fit:cover;border-radius:8px;"'
+        + ' onerror="this.style.display=\'none\'">';
     }
     return bundleVisualSVG(belts);
   }
@@ -1149,20 +1149,20 @@
 
     // All bundles: pending + current
     const allBundles = state.pendingBundles.concat([{
-      type:  state.bundleType,
+      type: state.bundleType,
       belts: state.belts,
     }]);
     // Flatten ALL belts — all rows carry bundle/belt indices for individual editing
     let globalBeltNum = 0;
     const allBeltRows = [];
-    allBundles.forEach(function(bundle, bundleIdx) {
+    allBundles.forEach(function (bundle, bundleIdx) {
       const isCurrentBundle = bundleIdx === allBundles.length - 1;
-      bundle.belts.forEach(function(belt, beltIdxInBundle) {
+      bundle.belts.forEach(function (belt, beltIdxInBundle) {
         globalBeltNum++;
         allBeltRows.push({
-          belt:            belt,
-          globalNum:       globalBeltNum,
-          bundleIdx:       bundleIdx,
+          belt: belt,
+          globalNum: globalBeltNum,
+          bundleIdx: bundleIdx,
           beltIdxInBundle: beltIdxInBundle,       // 0-based index within its bundle
           beltNumInBundle: beltIdxInBundle + 1,   // 1-based (used by composer)
           isCurrentBundle: isCurrentBundle,
@@ -1171,7 +1171,8 @@
     });
 
     const totalBelts = allBeltRows.length;
-    const beltWord   = totalBelts === 1 ? 'cintura inclusa' : (totalBelts + ' cinture incluse');
+    // const beltWord   = totalBelts === 1 ? 'cintura inclusa' : (totalBelts + ' cinture incluse');
+    const beltWord = 'Inclusi nel set:\n2 anni di Garanzia + 1 Privilege Card per ogni Cintura';
 
     // Tier: 1→single, 2→double, 3→triple, 4→infinity base, 5+→infinity+extra
     const tierKeys = ['single', 'double', 'triple', 'infinity'];
@@ -1179,10 +1180,10 @@
     if (totalBelts <= 4) {
       const tierBundle = BUNDLES[tierKeys[totalBelts - 1]] || BUNDLES.infinity;
       tierPrice = parseFloat(tierBundle.price.toFixed(2));
-      tierName  = tierBundle.name;
+      tierName = tierBundle.name;
     } else {
       tierPrice = parseFloat((BUNDLES.infinity.price + (totalBelts - 4) * BUNDLES.infinity.extra).toFixed(2));
-      tierName  = BUNDLES.infinity.name;
+      tierName = BUNDLES.infinity.name;
     }
     const canAddMore = true; // always — infinity tier is unlimited
     const effectiveTierType = totalBelts <= 4 ? tierKeys[totalBelts - 1] : 'infinity';
@@ -1197,15 +1198,17 @@
       + bundleHeroHTML(effectiveTierType, state.belts, { width: '80px', height: '80px' })
       + '</div>'
       + '<div class="bb-review__bundle-info">'
+      + '<div style="display:flex;justify-content:space-between;align-items:center;">'
       + '<div class="bb-review__bundle-name">' + tierName + '</div>'
       + '<div class="bb-review__bundle-price">€ ' + tierPrice.toFixed(2).replace('.', ',') + '</div>'
+      + '</div>'
       + '<div class="bb-review__bundle-sub">' + beltWord + '</div>'
       + '</div></div>';
 
     // ── All belt cards — all have Modifica button ─────────────
-    allBeltRows.forEach(function(row) {
-      const strap      = STRAPS[row.belt.strap]   || {};
-      const buckle     = BUCKLES[row.belt.buckle] || {};
+    allBeltRows.forEach(function (row) {
+      const strap = STRAPS[row.belt.strap] || {};
+      const buckle = BUCKLES[row.belt.buckle] || {};
       const mockupHTML = beltVisualHTML(row.belt, 'Cintura ' + row.globalNum, 'box');
       html += '<div class="bb-review__card">'
         + '<div class="bb-review__card-mockup">' + mockupHTML + '</div>'
@@ -1261,7 +1264,7 @@
       if (canAddMore) {
         let addBtnLabel;
         if (totalBelts < 4) {
-          const curTierBundle  = BUNDLES[tierKeys[totalBelts - 1]] || BUNDLES.single;
+          const curTierBundle = BUNDLES[tierKeys[totalBelts - 1]] || BUNDLES.single;
           const nextTierBundle = BUNDLES[tierKeys[totalBelts]];
           const diff = nextTierBundle.price - curTierBundle.price;
           addBtnLabel = '+ Aggiungi 1 Cintura - solo +€ ' + diff.toFixed(2).replace('.', ',');
@@ -1278,12 +1281,12 @@
 
     // Edit buttons — current bundle belts go straight to composer,
     //               pending bundle belts enter edit mode (state saved/restored)
-    container.querySelectorAll('[data-bundle-idx]').forEach(function(el) {
-      el.addEventListener('click', function() {
-        const bundleIdx    = parseInt(el.dataset.bundleIdx, 10);
+    container.querySelectorAll('[data-bundle-idx]').forEach(function (el) {
+      el.addEventListener('click', function () {
+        const bundleIdx = parseInt(el.dataset.bundleIdx, 10);
         const beltInBundle = parseInt(el.dataset.beltInBundle, 10);
-        const isCurrent    = el.dataset.isCurrent === '1';
-        const beltNum      = parseInt(el.dataset.beltNum, 10);
+        const isCurrent = el.dataset.isCurrent === '1';
+        const beltNum = parseInt(el.dataset.beltNum, 10);
 
         if (isCurrent) {
           // Belt belongs to the active bundle — just navigate the composer
@@ -1293,17 +1296,17 @@
         } else {
           // Belt belongs to a pending bundle — save state, enter edit mode
           const pendingBundle = state.pendingBundles[bundleIdx];
-          const beltToEdit    = JSON.parse(JSON.stringify(pendingBundle.belts[beltInBundle]));
+          const beltToEdit = JSON.parse(JSON.stringify(pendingBundle.belts[beltInBundle]));
           state._editMode = {
-            bundleIdx:        bundleIdx,
-            beltInBundle:     beltInBundle,
-            savedType:        state.bundleType,
-            savedTotalBelts:  state.totalBelts,
+            bundleIdx: bundleIdx,
+            beltInBundle: beltInBundle,
+            savedType: state.bundleType,
+            savedTotalBelts: state.totalBelts,
             savedCurrentBelt: state.currentBelt,
-            savedBelts:       JSON.parse(JSON.stringify(state.belts)),
+            savedBelts: JSON.parse(JSON.stringify(state.belts)),
           };
-          state.belts       = [beltToEdit];
-          state.totalBelts  = 1;
+          state.belts = [beltToEdit];
+          state.totalBelts = 1;
           state.currentBelt = 1;
           renderComposer();
           showScreen('composer');
@@ -1314,15 +1317,15 @@
     // "Add another" → save current bundle, always add exactly 1 new belt
     const addBtn = document.getElementById('bb-add-another-bundle');
     if (addBtn) {
-      addBtn.addEventListener('click', function() {
+      addBtn.addEventListener('click', function () {
         state.pendingBundles.push({
-          type:  state.bundleType,
+          type: state.bundleType,
           belts: JSON.parse(JSON.stringify(state.belts)),
         });
-        state.bundleType  = 'single'; // always 1 belt at a time
-        state.totalBelts  = 1;
+        state.bundleType = 'single'; // always 1 belt at a time
+        state.totalBelts = 1;
         state.currentBelt = 1;
-        state.belts       = [newBeltConfig()];
+        state.belts = [newBeltConfig()];
         renderComposer();
         showScreen('composer');
       });
@@ -1339,31 +1342,31 @@
   /* ── Add bundle to cart ─────────────────────────────────── */
   function addBundleToCart() {
     // Tier price based on TOTAL BELT COUNT across all bundles
-    const allBeltSets  = state.pendingBundles.concat([{ type: state.bundleType, belts: state.belts }]);
-    const totalBelts   = allBeltSets.reduce(function(sum, b) { return sum + b.belts.length; }, 0);
-    const tierKeys  = ['single', 'double', 'triple', 'infinity'];
+    const allBeltSets = state.pendingBundles.concat([{ type: state.bundleType, belts: state.belts }]);
+    const totalBelts = allBeltSets.reduce(function (sum, b) { return sum + b.belts.length; }, 0);
+    const tierKeys = ['single', 'double', 'triple', 'infinity'];
     const tierPrice = totalBelts <= 4
       ? parseFloat(((BUNDLES[tierKeys[totalBelts - 1]] || BUNDLES.infinity).price).toFixed(2))
       : parseFloat((BUNDLES.infinity.price + (totalBelts - 4) * BUNDLES.infinity.extra).toFixed(2));
 
     // Push pending bundles with price = 0 (tier price is on the final entry)
-    state.pendingBundles.forEach(function(bundle, i) {
+    state.pendingBundles.forEach(function (bundle, i) {
       state.cartBundles.push({
-        id:    Date.now() + i,
-        type:  bundle.type,
+        id: Date.now() + i,
+        type: bundle.type,
         belts: JSON.parse(JSON.stringify(bundle.belts)),
         price: 0,
-        qty:   1,
+        qty: 1,
       });
     });
 
     // Push current bundle — carries the full tier price for the order
     state.cartBundles.push({
-      id:    Date.now() + state.pendingBundles.length,
-      type:  state.bundleType,
+      id: Date.now() + state.pendingBundles.length,
+      type: state.bundleType,
       belts: JSON.parse(JSON.stringify(state.belts)),
       price: tierPrice,
-      qty:   1,
+      qty: 1,
     });
 
     state.pendingBundles = [];
@@ -1387,9 +1390,9 @@
       return;
     }
 
-    
+
     let html = '';
-    state.cartBundles.forEach(function(bundle) {
+    state.cartBundles.forEach(function (bundle) {
       const label = (BUNDLES[bundle.type] || BUNDLES.single).name;
       const beltWord = bundle.belts.length === 1 ? '1 cintura' : (bundle.belts.length + ' cinture');
       html += '<div class="bb-cart__bundle" data-bundle-id="' + bundle.id + '">'
@@ -1405,21 +1408,21 @@
         + (bundle.price * bundle.qty).toFixed(2).replace('.', ',') + '</span>'
         + '</div>'
         + '<div class="bb-cart__bundle-body">'
-        + bundle.belts.map(function(belt, i) {
-            const strap = STRAPS[belt.strap] || {};
-            const buckle = BUCKLES[belt.buckle] || {};
-            const mockupHTML = beltVisualHTML(belt, 'Cintura ' + (i + 1));
-            return '<div class="bb-cart__belt-card">'
-              + '<div class="bb-cart__belt-mockup">' + mockupHTML + '</div>'
-              + '<div class="bb-cart__belt-info">'
-              + '<div class="bb-cart__belt-num">Cintura #' + (i + 1) + '</div>'
-              + '<div class="bb-cart__belt-specs">'
-              + '<span class="bb-cart__belt-spec"><span class="bb-swatch" style="background:' + (strap.hex||'#ccc') + '"></span><strong>' + (strap.name||'—') + '</strong></span>'
-              + '<span class="bb-cart__belt-spec">Fibbia: <strong>' + (buckle.name||'—') + '</strong></span>'
-              + '<span class="bb-cart__belt-spec">Passante: <strong>' + (strap.name||'—') + '</strong></span>'
-              + '<span class="bb-cart__belt-spec">Taglia: <strong>' + (belt.length||'—') + '</strong></span>'
-              + '</div></div></div>';
-          }).join('')
+        + bundle.belts.map(function (belt, i) {
+          const strap = STRAPS[belt.strap] || {};
+          const buckle = BUCKLES[belt.buckle] || {};
+          const mockupHTML = beltVisualHTML(belt, 'Cintura ' + (i + 1));
+          return '<div class="bb-cart__belt-card">'
+            + '<div class="bb-cart__belt-mockup">' + mockupHTML + '</div>'
+            + '<div class="bb-cart__belt-info">'
+            + '<div class="bb-cart__belt-num">Cintura #' + (i + 1) + '</div>'
+            + '<div class="bb-cart__belt-specs">'
+            + '<span class="bb-cart__belt-spec"><span class="bb-swatch" style="background:' + (strap.hex || '#ccc') + '"></span><strong>' + (strap.name || '—') + '</strong></span>'
+            + '<span class="bb-cart__belt-spec">Fibbia: <strong>' + (buckle.name || '—') + '</strong></span>'
+            + '<span class="bb-cart__belt-spec">Passante: <strong>' + (strap.name || '—') + '</strong></span>'
+            + '<span class="bb-cart__belt-spec">Taglia: <strong>' + (belt.length || '—') + '</strong></span>'
+            + '</div></div></div>';
+        }).join('')
         + '<div class="bb-cart__qty" style="margin-top:12px;">'
         + '<button class="bb-cart__qty-btn" data-action="dec" data-id="' + bundle.id + '">−</button>'
         + '<span class="bb-cart__qty-num" id="qty-' + bundle.id + '">' + bundle.qty + '</span>'
@@ -1465,13 +1468,13 @@
     const container = document.getElementById('bb-confirm-bundles');
     if (!container) return;
 
-    const total = state.cartBundles.reduce(function(sum, b) { return sum + b.price * b.qty; }, 0);
+    const total = state.cartBundles.reduce(function (sum, b) { return sum + b.price * b.qty; }, 0);
 
     let html = '';
-    state.cartBundles.forEach(function(bundle) {
-      const label  = (BUNDLES[bundle.type] || BUNDLES.single).name;
-      const beltsHTML = bundle.belts.map(function(belt, i) {
-        const strap  = STRAPS[belt.strap]  || {};
+    state.cartBundles.forEach(function (bundle) {
+      const label = (BUNDLES[bundle.type] || BUNDLES.single).name;
+      const beltsHTML = bundle.belts.map(function (belt, i) {
+        const strap = STRAPS[belt.strap] || {};
         const buckle = BUCKLES[belt.buckle] || {};
         return '<div class="bb-confirm__belt-line">'
           + '<span class="bb-swatch" style="background:' + (strap.hex || '#ccc') + '"></span>'
@@ -1509,10 +1512,10 @@
      *
      * Set all variant IDs via window.BB_VARIANTS (injected by Liquid section).
      */
-    const V         = window.BB_VARIANTS || {};
-    const bundleV   = V.bundles   || {};
-    const strapV    = V.straps    || {};
-    const buckleV   = V.buckles   || {};
+    const V = window.BB_VARIANTS || {};
+    const bundleV = V.bundles || {};
+    const strapV = V.straps || {};
+    const buckleV = V.buckles || {};
     const logisticV = V.logistics || {};
 
     const items = [];
@@ -1523,23 +1526,25 @@
       /* 1. Bundle product (visible line item, priced) */
       const bundleVarKey = bundle.type;
       if (bundleV[bundleVarKey]) {
-        const compositionSummary = bundle.belts.map(function(b, idx) {
+        const compositionSummary = bundle.belts.map(function (b, idx) {
           const s = STRAPS[b.strap] || {};
           const k = BUCKLES[b.buckle] || {};
           return 'Cintura ' + (idx + 1) + ': ' + (b.length || '') + ' · Fibbia ' + (k.name || '') + ' · Pelle ' + (s.name || '');
         }).join(' | ');
-        items.push({ id: bundleV[bundleVarKey], quantity: qty,
-          properties: { 'Composizione': compositionSummary } });
+        items.push({
+          id: bundleV[bundleVarKey], quantity: qty,
+          properties: { 'Composizione': compositionSummary }
+        });
       }
 
 
       /* 3. Component SKUs per cintura (€0, picking list logistica) +
             logistica per cintura: 1 box, 1 garanzia, 1 NFC card ognuna */
-      bundle.belts.forEach(function(belt, i) {
-        const beltLabel  = 'Cintura ' + (i + 1);
-        const lengthNum  = (belt.length || '130cm').replace('cm', '').trim();
+      bundle.belts.forEach(function (belt, i) {
+        const beltLabel = 'Cintura ' + (i + 1);
+        const lengthNum = (belt.length || '130cm').replace('cm', '').trim();
         const strapV_key = lengthNum;   /* all same-length straps share one variant ID */
-        const strapInfo  = STRAPS[belt.strap]  || {};
+        const strapInfo = STRAPS[belt.strap] || {};
         const buckleInfo = BUCKLES[belt.buckle] || {};
 
         /* Cintura SKU — pelle + lunghezza */
@@ -1548,11 +1553,11 @@
             id: strapV[strapV_key],
             quantity: qty,
             properties: {
-              '_cintura':   beltLabel,
-              '_pos':       String(i + 1),   /* unique key prevents Shopify from merging same-variant belts */
-              'Pelle':      strapInfo.name || '',
-              'Lunghezza':  belt.length || '',
-              '_bundle':    bundle.type,
+              '_cintura': beltLabel,
+              '_pos': String(i + 1),   /* unique key prevents Shopify from merging same-variant belts */
+              'Pelle': strapInfo.name || '',
+              'Lunghezza': belt.length || '',
+              '_bundle': bundle.type,
             },
           });
         }
@@ -1563,11 +1568,11 @@
             id: buckleV[belt.buckle],
             quantity: qty,
             properties: {
-              '_cintura':    beltLabel,
-              '_pos':        String(i + 1),   /* unique key prevents merge */
-              'Modello':     buckleInfo.name || '',
-              '_sku':        belt.buckle,
-              '_bundle':     bundle.type,
+              '_cintura': beltLabel,
+              '_pos': String(i + 1),   /* unique key prevents merge */
+              'Modello': buckleInfo.name || '',
+              '_sku': belt.buckle,
+              '_bundle': bundle.type,
             },
           });
         }
@@ -1578,18 +1583,18 @@
            Shopify Admin e nelle app di picking/logistica.       */
         [
           { key: 'warranty', label: 'Garanzia Card', sku: 'warranty-card' },
-          { key: 'nfc',      label: 'NFC Card',      sku: 'nfc-card'      },
-          { key: 'box',      label: 'Belt Box',       sku: 'belt-box'      },
-        ].forEach(function(item) {
+          { key: 'nfc', label: 'NFC Card', sku: 'nfc-card' },
+          { key: 'box', label: 'Belt Box', sku: 'belt-box' },
+        ].forEach(function (item) {
           if (logisticV[item.key]) {
             items.push({
               id: logisticV[item.key],
               quantity: qty,
               properties: {
-                '_cintura':   beltLabel,
+                '_cintura': beltLabel,
                 '_logistics': item.label,
-                '_sku':       item.sku,
-                '_bundle':    bundle.type,
+                '_sku': item.sku,
+                '_bundle': bundle.type,
               },
             });
           }
@@ -1600,7 +1605,7 @@
     /* Rimuovi item con variant ID non configurati (0 o falsy) — Shopify rifiuta l'intera
        richiesta con 422 se anche un solo ID è 0. Questo succede finché il merchant non
        ha configurato i variant ID nel Theme Editor. */
-    const validItems = items.filter(function(item) { return item.id && item.id !== 0; });
+    const validItems = items.filter(function (item) { return item.id && item.id !== 0; });
 
     /* Se nessun variant ID è configurato, vai direttamente alla conferma */
     if (!validItems.length) { showConfirmed(); return; }
@@ -1614,7 +1619,7 @@
       if (resp.ok) {
         showConfirmed();
       } else {
-        const errData = await resp.json().catch(function() { return {}; });
+        const errData = await resp.json().catch(function () { return {}; });
         console.error('[BundleBuilder] Cart error:', errData);
         showToast('Errore nell\'aggiunta al carrello. Riprova.');
       }
@@ -1628,12 +1633,12 @@
     const container = document.getElementById('bb-confirmed-summary');
     if (!container) return;
 
-        let html = '';
+    let html = '';
     state.cartBundles.forEach(bundle => {
       const label = (BUNDLES[bundle.type] || BUNDLES.single).name;
       html += `<div style="margin-bottom:6px;"><strong>${label} × ${bundle.qty}</strong><br>`;
       bundle.belts.forEach((belt, i) => {
-        const strap  = STRAPS[belt.strap] || {};
+        const strap = STRAPS[belt.strap] || {};
         const buckle = BUCKLES[belt.buckle] || {};
         html += `<span style="font-size:12px;color:#555;">Cintura #${i + 1}: ${belt.length || '—'} · ${buckle.name || '—'} · ${strap.name || '—'}</span><br>`;
       });
@@ -1698,7 +1703,7 @@
     /* Warm up combo-photo cache for all 4 buckles on the default strap so
      * the preview flips instantly even before the user enters the composer.
      * Uses the first strap key as the default (nero). */
-    const _initStrapKeys  = Object.keys(STRAPS);
+    const _initStrapKeys = Object.keys(STRAPS);
     const _initBuckleKeys = Object.keys(BUCKLES);
     if (_initStrapKeys.length && _initBuckleKeys.length) {
       /* Preload all combos for the first strap (9 buckles × 2 lengths = 18 imgs) */
@@ -1729,11 +1734,11 @@
         if (state._editMode) {
           // Cancel the individual belt edit — restore saved bundle state and go to review
           const em = state._editMode;
-          state.bundleType  = em.savedType;
-          state.totalBelts  = em.savedTotalBelts;
+          state.bundleType = em.savedType;
+          state.totalBelts = em.savedTotalBelts;
           state.currentBelt = em.savedCurrentBelt;
-          state.belts       = em.savedBelts;
-          state._editMode   = null;
+          state.belts = em.savedBelts;
+          state._editMode = null;
           showReview();
         } else if (state.currentBelt > 1) {
           // Go back to previous belt within the same bundle
@@ -1742,10 +1747,10 @@
         } else if (state.pendingBundles.length > 0) {
           // Composing 2nd/3rd bundle — restore previous bundle and return to review
           const prev = state.pendingBundles.pop();
-          state.bundleType  = prev.type;
-          state.totalBelts  = (BUNDLES[prev.type] || BUNDLES.single).belts;
+          state.bundleType = prev.type;
+          state.totalBelts = (BUNDLES[prev.type] || BUNDLES.single).belts;
           state.currentBelt = state.totalBelts;
-          state.belts       = JSON.parse(JSON.stringify(prev.belts));
+          state.belts = JSON.parse(JSON.stringify(prev.belts));
           showReview();
         } else {
           showScreen('selector');
@@ -1780,12 +1785,12 @@
     /* Confirmed — continue shopping */
     const continueShopping = wrap.querySelector('[data-action="continue"]');
     if (continueShopping) continueShopping.addEventListener('click', () => {
-      state.cartBundles    = [];
-      state.belts          = [];
-      state.bundleType     = null;
-      state.currentBelt    = 1;
+      state.cartBundles = [];
+      state.belts = [];
+      state.bundleType = null;
+      state.currentBelt = 1;
       state.pendingBundles = [];
-      state._editMode      = null;
+      state._editMode = null;
       showScreen('selector');
     });
 
@@ -1832,7 +1837,7 @@
     if (!window.BB_VARIANTS) return;
     const ids = [];
     Object.values(window.BB_VARIANTS.buckles || {}).forEach(id => { if (id && id !== 0) ids.push(id); });
-    Object.values(window.BB_VARIANTS.straps  || {}).forEach(id => { if (id && id !== 0) ids.push(id); });
+    Object.values(window.BB_VARIANTS.straps || {}).forEach(id => { if (id && id !== 0) ids.push(id); });
     if (!ids.length) return;
     try {
       const results = await Promise.all(
