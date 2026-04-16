@@ -123,25 +123,45 @@
   background: var(--bb-white);
 }
 .bb-review__card-mockup {
-  height: 160px;
+  height: 126px;
   width: 160px;
   background: var(--bb-light);
   overflow: hidden;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid var(--bb-border);
+  /* border-bottom: 1px solid var(--bb-border); */
 }
 .bb-review__card-mockup img { width: 100%; height: 100%; object-fit: cover; }
-.bb-review__card-body { padding: 12px 14px; }
+.bb-review__card-body { width: 100%; padding: 12px 14px; }
+
+/* Header row: card number (left) + length pill (right) */
+.bb-review__card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
 .bb-review__card-num {
   font-size: 10px;
   font-weight: 700;
   color: var(--bb-mid);
   letter-spacing: .7px;
   text-transform: uppercase;
-  margin-bottom: 10px;
 }
-.bb-spec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; }
+.bb-review__card-length {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #c9970a 0%, #e8b923 60%, #b8800b 100%);
+  border: 1.5px solid #b8800b;
+  box-shadow: 0 2px 8px rgba(184,134,11,.35);
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: .7px;
+  text-transform: uppercase;
+}
+.bb-spec-flex { display: flex; gap: 6px 12px; }
 .bb-spec-row { display: flex; flex-direction: column; gap: 1px; }
 .bb-spec-key {
   font-size: 10px;
