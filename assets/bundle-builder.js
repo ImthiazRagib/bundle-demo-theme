@@ -1090,14 +1090,15 @@
      2. strap photo da _bbMedia  (solo pelle)
      3. URL base configurato nel tema
      4. null → SVG colorato di fallback */
-  function getBeltPhotoURL(belt) {
+  function getBeltPhotoURL(belt, imageKey) {
+    const key = imageKey || 'photo';
     const lengthNum = (belt.length || '130cm').replace('cm', '').trim();
     if (_bbMedia) {
       /* 1 — combinazione specifica fibbia + pelle */
       if (belt.strap && belt.buckle) {
         const comboKey = belt.strap + '__' + lengthNum + '__' + belt.buckle;
         const combo = _bbMedia.combinations && _bbMedia.combinations[comboKey];
-        if (combo && combo.photo) return combo.photo;
+        if (combo && combo[key]) return combo[key];
       }
       /* 2 — foto pelle (qualsiasi fibbia) */
       if (belt.strap) {
@@ -1113,9 +1114,9 @@
   }
 
   /* Ritorna il markup dell'immagine/mockup cintura (img tag oppure SVG) */
-  function beltVisualHTML(belt, alt) {
+  function beltVisualHTML(belt, alt, imageKey) {
     const strap = STRAPS[belt.strap] || {};
-    const photo = getBeltPhotoURL(belt);
+    const photo = getBeltPhotoURL(belt, imageKey);
     if (photo) {
       return '<img src="' + photo + '" alt="' + (alt || 'Cintura') + '"'
            + ' style="width:100%;height:100%;object-fit:cover;border-radius:6px;">';
@@ -1205,7 +1206,7 @@
     allBeltRows.forEach(function(row) {
       const strap      = STRAPS[row.belt.strap]   || {};
       const buckle     = BUCKLES[row.belt.buckle] || {};
-      const mockupHTML = beltVisualHTML(row.belt, 'Cintura ' + row.globalNum);
+      const mockupHTML = beltVisualHTML(row.belt, 'Cintura ' + row.globalNum, 'box');
       html += '<div class="bb-review__card">'
         + '<div class="bb-review__card-mockup">' + mockupHTML + '</div>'
         + '<div class="bb-review__card-body">'
@@ -1226,7 +1227,7 @@
         + ' data-belt-in-bundle="' + row.beltIdxInBundle + '"'
         + ' data-is-current="' + (row.isCurrentBundle ? '1' : '0') + '"'
         + ' data-belt-num="' + row.beltNumInBundle + '"'
-        + '>✏ Modifica</button>'
+        + '><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:4px;"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Modifica</button>'
         + '</div></div>';
     });
     //   html += '<div class="bb-review__card">'
