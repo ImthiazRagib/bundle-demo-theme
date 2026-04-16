@@ -132,7 +132,7 @@
   align-items: center;
   /* border-bottom: 1px solid var(--bb-border); */
 }
-.bb-review__card-mockup img { width: 100%; height: 100%; object-fit: cover; }
+.bb-review__card-mockup img { width: 100%; height: 100%; object-fit: cover; transform: scale(0.8); }
 
 /* Part 2 — specs */
 .bb-review__card-specs {
