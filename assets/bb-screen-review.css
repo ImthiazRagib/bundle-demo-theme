@@ -65,14 +65,46 @@
 /* Extra bottom padding so belt cards don't hide behind the sticky footer */
 .bb-review { padding: 0 16px 16px; }
 
-/* ── Sticky bottom footer (add-btn + total + CTA) ─────────── */
+/* ── Scroll area (cards + add-btn) ───────────────────────── */
+/* > 4 belts: screen becomes a flex column, scroll area grows to fill */
+#bb-screen-review.has-scroll {
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+#bb-screen-review.has-scroll .bb-header,
+#bb-screen-review.has-scroll #bb-progress-review {
+  flex-shrink: 0;
+}
+#bb-screen-review.has-scroll .bb-review__scroll-area {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+#bb-screen-review.has-scroll .bb-review__scroll-area::-webkit-scrollbar {
+  display: none;
+}
+#bb-screen-review.has-scroll .bb-review__sticky-footer {
+  flex-shrink: 0;
+}
+
+/* ── Sticky bottom footer — floats over the card list ────── */
 .bb-review__sticky-footer {
   position: sticky;
   bottom: 0;
   z-index: 20;
   background: var(--bb-white);
-  border-top: 1px solid var(--bb-border);
-  box-shadow: 0 -4px 16px rgba(0,0,0,.06);
+  box-shadow: 0 -12px 32px -4px rgba(0,0,0,.14);
+}
+.bb-review__sticky-footer::before {
+  content: '';
+  position: absolute;
+  inset: -44px 0 auto;
+  height: 44px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,.95) 100%);
+  pointer-events: none;
 }
 
 /* Bundle hero banner */

@@ -1345,7 +1345,15 @@
     if (totalEl) totalEl.textContent = '€ ' + tierPrice.toFixed(2).replace('.', ',');
 
     renderProgress();
+    setupReviewScroll(totalBelts);
     showScreen('review');
+  }
+
+  /* > 4 belts: constrain screen height and make card list scroll ── */
+  function setupReviewScroll(totalBelts) {
+    var screen = document.getElementById('bb-screen-review');
+    if (!screen) return;
+    screen.classList.toggle('has-scroll', totalBelts > 4);
   }
 
   /* ── Add bundle to cart ─────────────────────────────────── */
