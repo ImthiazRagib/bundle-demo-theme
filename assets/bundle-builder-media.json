@@ -494,5 +494,11 @@
       "worn": "",
       "video": ""
     }
+  },
+  "bundle_images": {
+    "single":   "https://cdn.shopify.com/s/files/1/0677/2083/9299/files/single_set_1.jpg?v=1776238594",
+    "double":   "https://cdn.shopify.com/s/files/1/0677/2083/9299/files/double_set.jpg?v=1776238592",
+    "triple":   "https://cdn.shopify.com/s/files/1/0677/2083/9299/files/triple_set_a555edc6-b5e9-4c42-84c9-b9ca4bb12b4d.jpg?v=1776238595",
+    "infinity": "https://cdn.shopify.com/s/files/1/0677/2083/9299/files/triple_set_a555edc6-b5e9-4c42-84c9-b9ca4bb12b4d.jpg?v=1776238595"
   }
 }

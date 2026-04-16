@@ -61,7 +61,19 @@
 .bb-progress__line.is-done { background: var(--bb-accent); }
 
 /* ── SCREEN: Review ───────────────────────────────────────── */
+
+/* Extra bottom padding so belt cards don't hide behind the sticky footer */
 .bb-review { padding: 0 16px 16px; }
+
+/* ── Sticky bottom footer (add-btn + total + CTA) ─────────── */
+.bb-review__sticky-footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 20;
+  background: var(--bb-white);
+  border-top: 1px solid var(--bb-border);
+  box-shadow: 0 -4px 16px rgba(0,0,0,.06);
+}
 
 /* Bundle hero banner */
 .bb-review__bundle-hero {
@@ -102,6 +114,8 @@
 
 /* Per-belt rich card */
 .bb-review__card {
+  display: flex;
+  gap: 4px;
   border: 1px solid var(--bb-border);
   border-radius: 14px;
   overflow: hidden;
@@ -109,10 +123,10 @@
   background: var(--bb-white);
 }
 .bb-review__card-mockup {
-  width: 100%;
+  height: 160px;
+  width: 160px;
   background: var(--bb-light);
   overflow: hidden;
-  height: 160px;
   display: flex;
   align-items: center;
   border-bottom: 1px solid var(--bb-border);

@@ -1128,7 +1128,11 @@
     opts = opts || {};
     const w   = opts.width  || '80px';
     const h   = opts.height || '80px';
-    const src = (typeof BB_BUNDLE_IMAGES !== 'undefined') && BB_BUNDLE_IMAGES && BB_BUNDLE_IMAGES[bundleType];
+    // 1st: JSON file via _bbMedia (loaded at startup, reliable by review time)
+    // 2nd: BB_BUNDLE_IMAGES injected by Liquid/Theme Editor
+    console.log('bundleHeroHTML: looking for image for bundle type', bundleType);
+    const src = (_bbMedia && _bbMedia.bundle_images && _bbMedia.bundle_images[bundleType])
+             || ((typeof BB_BUNDLE_IMAGES !== 'undefined') && BB_BUNDLE_IMAGES[bundleType]);
     if (src) {
       return '<img src="' + src + '" alt="' + bundleType + '"'
            + ' style="width:' + w + ';height:' + h + ';object-fit:cover;border-radius:8px;"'
@@ -1180,6 +1184,7 @@
       tierName  = BUNDLES.infinity.name;
     }
     const canAddMore = true; // always — infinity tier is unlimited
+    const effectiveTierType = totalBelts <= 4 ? tierKeys[totalBelts - 1] : 'infinity';
 
     // Header title
     const bundleTitle = document.getElementById('bb-review-title');
@@ -1188,7 +1193,7 @@
     // ── Single unified hero — upgrades as belts are added ─────
     let html = '<div class="bb-review__bundle-hero">'
       + '<div class="bb-review__bundle-visual">'
-      + bundleHeroHTML(state.bundleType, state.belts, { width: '80px', height: '80px' })
+      + bundleHeroHTML(effectiveTierType, state.belts, { width: '80px', height: '80px' })
       + '</div>'
       + '<div class="bb-review__bundle-info">'
       + '<div class="bb-review__bundle-name">' + tierName + '</div>'
@@ -1224,25 +1229,28 @@
         + '</div></div>';
     });
 
-    // ── "Add another" button — shows next tier name OR extra cost ─
-    if (canAddMore) {
-      let addBtnLabel;
-      if (totalBelts < 4) {
-        // Approaching infinity — show the next tier name and its price
-        const nextTierBundle = BUNDLES[tierKeys[totalBelts]];
-        addBtnLabel = '+ Aggiungi 1 altro — ' + nextTierBundle.name
-          + ' a €' + nextTierBundle.price.toFixed(2).replace('.', ',');
-      } else {
-        // Already in infinity tier — show extra-per-belt cost
-        addBtnLabel = '+ Aggiungi 1 altro (+€'
-          + BUNDLES.infinity.extra.toFixed(2).replace('.', ',') + ' · Infinity)';
-      }
-      html += '<button class="bb-review__add-bundle-btn" id="bb-add-another-bundle">'
-        + addBtnLabel
-        + '</button>';
-    }
-
     container.innerHTML = html;
+
+    // ── "Add another" button → sticky footer placeholder ─────────
+    const addBtnSlot = document.getElementById('bb-review-add-btn');
+    if (addBtnSlot) {
+      if (canAddMore) {
+        let addBtnLabel;
+        if (totalBelts < 4) {
+          const curTierBundle  = BUNDLES[tierKeys[totalBelts - 1]] || BUNDLES.single;
+          const nextTierBundle = BUNDLES[tierKeys[totalBelts]];
+          const diff = nextTierBundle.price - curTierBundle.price;
+          addBtnLabel = '+ Aggiungi 1 Cintura - solo +€ ' + diff.toFixed(2).replace('.', ',');
+        } else {
+          addBtnLabel = '+ Aggiungi 1 Cintura - solo (+€ '
+            + BUNDLES.infinity.extra.toFixed(2).replace('.', ',') + ' · Infinity)';
+        }
+        addBtnSlot.innerHTML = '<button class="bb-review__add-bundle-btn" id="bb-add-another-bundle">'
+          + addBtnLabel + '</button>';
+      } else {
+        addBtnSlot.innerHTML = '';
+      }
+    }
 
     // Edit buttons — current bundle belts go straight to composer,
     //               pending bundle belts enter edit mode (state saved/restored)
@@ -1280,7 +1288,7 @@
     });
 
     // "Add another" → save current bundle, always add exactly 1 new belt
-    const addBtn = container.querySelector('#bb-add-another-bundle');
+    const addBtn = document.getElementById('bb-add-another-bundle');
     if (addBtn) {
       addBtn.addEventListener('click', function() {
         state.pendingBundles.push({
