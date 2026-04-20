@@ -439,21 +439,6 @@
       }
     }
 
-    /* Video 360° */
-    const video = document.getElementById('bb-video-360');
-    const videoHolder = document.getElementById('bb-video-placeholder');
-    if (video) {
-      const src = combo.video || (video.dataset.fallback !== 'undefined' ? video.dataset.fallback : '') || '';
-      if (src) {
-        if (video.getAttribute('src') !== src) { video.setAttribute('src', src); video.load(); }
-        video.style.display = '';
-        if (videoHolder) videoHolder.style.display = 'none';
-      } else {
-        video.style.display = 'none';
-        if (videoHolder) videoHolder.style.display = '';
-      }
-    }
-
     /* Captions */
     const cap = document.getElementById('bb-modal-caption-text');
     if (cap) cap.textContent = length + 'cm · ' + (buckle.name || '—') + ' · ' + (strap.name || '—');
@@ -1670,13 +1655,36 @@
   }
 
   /* ── Modals ─────────────────────────────────────────────── */
+  let _sirvReady = false;
   function openModal(id) {
     const modal = document.getElementById(id);
-    if (modal) modal.classList.add('is-open');
+    if (!modal) return;
+    modal.classList.add('is-open');
+    document.body.classList.add('bb-modal-open');   /* lock background scroll */
+    if (id === 'bb-modal-360') {
+      if (!_sirvReady) {
+        /* Inject Sirv script now — element is visible so Sirv measures correctly */
+        _sirvReady = true;
+        const s = document.createElement('script');
+        s.src = 'https://scripts.sirv.com/sirvjs/v3/sirv.js';
+        document.head.appendChild(s);
+      } else if (window.Sirv) {
+        /* Subsequent opens: re-init any un-initialised Sirv viewers */
+        requestAnimationFrame(() => Sirv.start());
+      }
+      /* Reset swipe hint visibility on each open */
+      const hint = document.getElementById('bb-360-hint');
+      if (hint) hint.classList.remove('is-hidden');
+    }
   }
   function closeModal(id) {
     const modal = document.getElementById(id);
-    if (modal) modal.classList.remove('is-open');
+    if (!modal) return;
+    modal.classList.remove('is-open');
+    /* Only unlock scroll when no other modals remain open */
+    if (!document.querySelector('.bb-modal.is-open')) {
+      document.body.classList.remove('bb-modal-open');
+    }
   }
 
   /* ── Toast notification ─────────────────────────────────── */

@@ -468,6 +468,9 @@ announcement-bar-section {
 }
 .bb-confirmed__order-title { font-weight: 700; margin-bottom: 8px; }
 
+/* Prevent page scroll while any modal is open */
+body.bb-modal-open { overflow: hidden; }
+
 /* ── Modal overlay ────────────────────────────────────────── */
 .bb-modal {
   display: none;
@@ -531,11 +534,142 @@ announcement-bar-section {
 }
 .bb-modal__caption strong { display: block; margin-bottom: 4px; font-size: 16px; }
 
-.bb-modal--video .bb-modal__content { background: #000; }
-.bb-modal--video video {
-  width: 100%;
-  border-radius: 16px 16px 0 0;
+/* 360° modal — full-screen, no scroll */
+.bb-modal--360 .bb-modal__content {
+  position: fixed;
+  inset: 0;
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
+.bb-modal--360 .bb-modal__video-info { flex-shrink: 0; }
+
+/* ── 360° Sirv viewer wrapper ─────────────────────────── */
+.bb-360-viewer {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  background: #000;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.bb-360-viewer .Sirv {
+  width: 100%;
+  height: 100%;
+}
+
+/* ── 360° swipe hint overlay (centred, fades on first drag) ── */
+@keyframes bb-swipe-hint {
+  0%   { transform: translateX(-7px); }
+  50%  { transform: translateX(7px); }
+  100% { transform: translateX(-7px); }
+}
+.bb-360-hint {
+  position: absolute;
+  inset: 0;
+  z-index: 15;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  transition: opacity .5s ease;
+}
+.bb-360-hint.is-hidden { opacity: 0; }
+.bb-360-swipe-icon {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  transform: translateY(-80px);
+}
+.bb-360-swipe-icon svg {
+  animation: bb-swipe-hint 2.5s ease-in-out infinite;
+  /* filter: drop-shadow(0 2px 10px rgba(0, 0, 0, .7)); */
+}
+.bb-360-swipe-icon svg path { fill: #777; }
+.bb-360-hint-label {
+  font-size: 13px;
+  color: #777;
+  white-space: nowrap;
+  font-family: sans-serif;
+  font-weight: 500;
+  text-align: center;
+  line-height: 1.3;
+  letter-spacing: .02em;
+}
+
+/* Close button overlaid inside the viewer (top-right) */
+.bb-360-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 20;
+  width: 36px;
+  height: 36px;
+  background: rgba(255, 255, 255, .18);
+  border: none;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .2s;
+}
+.bb-360-close:hover { background: rgba(255, 255, 255, .35); }
+
+/* Hide any Sirv-rendered fullscreen button as a belt-and-suspenders measure */
+/* Hide Sirv fullscreen button — multiple selectors to cover all Sirv versions */
+[class*="sirv-fullscreen"],
+[class*="sirv"][class*="fullscreen"],
+[class*="sirv"][class*="full-screen"],
+.sirv-viewer [title="Fullscreen"],
+.sirv-viewer [title="fullscreen"],
+.sirv-viewer [aria-label="Fullscreen"],
+.sirv-viewer [aria-label="fullscreen"],
+.bb-360-viewer [title*="ullscreen"],
+.bb-360-viewer [aria-label*="ullscreen"] {
+  display: none !important;
+}
+
+/* Centre Sirv's hint badge vertically */
+.bb-360-viewer .sirv-hint {
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+}
+.bb-360-viewer .sirv-hint.spin-hint-horizontal-animation .sirv-hint-message::before,
+.bb-360-viewer .sirv-hint.spin-hint-horizontal-animation .sirv-hint-message::after {
+  content: '';
+  width: 15px;
+  height: 10px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 8px;
+  background-image: url(https://scripts.sirv.com/sirvjs/v3/graphics/hint/hint.arrow.03.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  display: block;
+}
+.bb-360-viewer .sirv-hint.spin-hint-horizontal-animation .sirv-hint-message::after {
+  left: auto;
+  right: 8px;
+  transform: translateY(-50%) rotate(180deg);
+}
+.bb-360-viewer .sirv-hint.spin-hint-horizontal-animation .sirv-hint-message {
+  padding-left: 2em;
+  padding-right: 2em;
+}
+
 .bb-modal__video-info {
   padding: 12px 16px 20px;
   background: #111;
