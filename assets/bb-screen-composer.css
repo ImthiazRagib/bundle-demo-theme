@@ -9,7 +9,7 @@
   display: inline-block;
   background: var(--bb-accent);
   color: #fff;
-  font-size: 13px;
+  font-size: var(--bb-fs-base);
   font-weight: 700;
   letter-spacing: .3px;
   padding: 7px 18px;
@@ -40,7 +40,7 @@
   border-radius: 7px;
   background: transparent;
   color: #fff;
-  font-size: 10px;
+  font-size: var(--bb-fs-2xs);
   font-weight: 500;
   cursor: pointer;
   white-space: nowrap;
@@ -85,7 +85,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   color: #bbb;
-  font-size: 13px;
+  font-size: var(--bb-fs-base);
   text-align: center;
   pointer-events: none;
   z-index: 1;
@@ -176,7 +176,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
+  font-size: var(--bb-fs-sm);
   font-weight: 700;
   flex-shrink: 0;
   transition: background .35s, border-color .35s, color .35s;
@@ -199,7 +199,7 @@
 
 /* ── Label text */
 .bb-wizard__lbl {
-  font-size: 12px;
+  font-size: var(--bb-fs-sm);
   font-weight: 600;
   line-height: 1;
   transition: color .35s;
@@ -228,7 +228,7 @@
   border: none;
   background: linear-gradient(135deg, #c9970a 0%, #e8b923 60%, #b8800b 100%);
   color: #fff;
-  font-size: 18px;
+  font-size: var(--bb-fs-xl);
   font-weight: 700;
   display: flex;
   align-items: center;
@@ -261,7 +261,7 @@
   margin-bottom: 0px;
 }
 .bb-section__label {
-  font-size: 13px;
+  font-size: var(--bb-fs-base);
   font-weight: 600;
   color: #111;
   margin-bottom: 10px;
@@ -270,7 +270,7 @@
   margin: 11px 0 0 0px;
 }
 .bb-section__counter {
-  font-size: 11px;
+  font-size: var(--bb-fs-xs);
   color: var(--bb-mid);
   font-weight: 500;
   white-space: nowrap;
@@ -310,7 +310,7 @@
   border: 1.5px solid var(--bb-border);
   background: var(--bb-white);
   color: #111;
-  font-size: 11px;
+  font-size: var(--bb-fs-xs);
   cursor: pointer;
   transition: all .2s;
   text-decoration: none;
@@ -412,7 +412,7 @@
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   text-align: center;
-  font-size: 10px;
+  font-size: var(--bb-fs-2xs);
   font-weight: 600;
   color: #444;
   line-height: 1.4;
@@ -561,7 +561,7 @@
   border-radius: 50%;
   background: #fff;
   color: #555;
-  font-size: 14px;
+  font-size: var(--bb-fs-md);
   cursor: pointer;
   transition: border-color .18s, color .18s;
   user-select: none;
@@ -577,7 +577,7 @@
   cursor: default;
 }
 .bb-strap-nav__label {
-  font-size: 11px;
+  font-size: var(--bb-fs-xs);
   color: #aaa;
 }
 .bb-strap-hint { display: none; }
@@ -590,7 +590,7 @@
   padding: 10px 14px;
   background: var(--bb-light);
   border-radius: 24px;
-  font-size: 12px;
+  font-size: var(--bb-fs-sm);
   color: var(--bb-dark);
   margin: 14px 16px 0;
   flex-wrap: wrap;
@@ -601,7 +601,7 @@
   font-weight: 600;
   cursor: pointer;
   text-decoration: underline;
-  font-size: 11px;
+  font-size: var(--bb-fs-xs);
   white-space: nowrap;
 }
 .bb-summary-pill__item {
@@ -629,14 +629,14 @@
   margin-bottom: 10px;
 }
 .bb-combo-bar__title {
-  font-size: 18px;
+  font-size: var(--bb-fs-xl);
   font-weight: 800;
   letter-spacing: .08em;
   text-transform: uppercase;
   margin-bottom: 3px;
 }
 .bb-combo-bar__sub {
-  font-size: 16px;
+  font-size: var(--bb-fs-lg);
   color: var(--bb-dark);
   line-height: 1.4;
 }
@@ -660,7 +660,7 @@
   border: 1.5px solid var(--bb-border);
   background: var(--bb-white);
   color: var(--bb-dark);
-  font-size: 14px;
+  font-size: var(--bb-fs-md);
   font-weight: 600;
   cursor: pointer;
   transition: background .2s, border-color .2s;
@@ -687,7 +687,7 @@
   gap: 10px;
 }
 .bb-infinity-bar__total {
-  font-size: 13px;
+  font-size: var(--bb-fs-base);
   color: var(--bb-accent);
   font-weight: 600;
   text-align: center;
@@ -703,7 +703,7 @@
   border: 1.5px dashed var(--bb-accent);
   background: transparent;
   color: var(--bb-accent);
-  font-size: 13px;
+  font-size: var(--bb-fs-base);
   font-weight: 600;
   cursor: pointer;
   transition: background .2s;
@@ -761,7 +761,7 @@
 }
 
 .bb-success-title {
-  font-size: 16px;
+  font-size: var(--bb-fs-lg);
   font-weight: 700;
   color: #111;
   line-height: 1.35;
@@ -769,7 +769,7 @@
 }
 
 .bb-success-sub {
-  font-size: 12px;
+  font-size: var(--bb-fs-sm);
   color: #666;
   line-height: 1.5;
 }
