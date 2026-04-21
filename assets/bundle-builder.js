@@ -1372,8 +1372,7 @@
     });
 
     state.pendingBundles = [];
-    renderCart();
-    showScreen('cart');
+    proceedToCheckout();
   }
 
   /* ── Cart screen ────────────────────────────────────────── */
@@ -1609,8 +1608,8 @@
        ha configurato i variant ID nel Theme Editor. */
     const validItems = items.filter(function (item) { return item.id && item.id !== 0; });
 
-    /* Se nessun variant ID è configurato, vai direttamente alla conferma */
-    if (!validItems.length) { showConfirmed(); return; }
+    /* Se nessun variant ID è configurato, vai al carrello Shopify direttamente */
+    if (!validItems.length) { window.location.href = '/cart'; return; }
 
     try {
       const resp = await fetch('/cart/add.js', {
@@ -1619,15 +1618,15 @@
         body: JSON.stringify({ items: validItems }),
       });
       if (resp.ok) {
-        showConfirmed();
+        window.location.href = '/cart';
       } else {
         const errData = await resp.json().catch(function () { return {}; });
         console.error('[BundleBuilder] Cart error:', errData);
         showToast('Errore nell\'aggiunta al carrello. Riprova.');
       }
     } catch {
-      /* In ambienti non-Shopify, simula il successo */
-      showConfirmed();
+      /* In ambienti non-Shopify, vai al carrello */
+      window.location.href = '/cart';
     }
   }
 

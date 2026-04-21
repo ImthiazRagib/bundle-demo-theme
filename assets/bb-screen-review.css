@@ -12,6 +12,7 @@
   gap: 6px;
   padding: 14px 16px 0;
 }
+
 .bb-progress__step {
   display: flex;
   flex-direction: column;
@@ -20,6 +21,7 @@
   flex: 1;
   max-width: 80px;
 }
+
 .bb-progress__dot {
   width: 28px;
   height: 28px;
@@ -34,22 +36,30 @@
   background: var(--bb-white);
   transition: all .2s;
 }
+
 .bb-progress__step.is-done .bb-progress__dot {
   background: var(--bb-accent);
   border-color: var(--bb-accent);
   color: #fff;
 }
+
 .bb-progress__step.is-active .bb-progress__dot {
   border-color: var(--bb-accent);
   color: var(--bb-accent);
 }
+
 .bb-progress__label {
   font-size: 9px;
   color: var(--bb-mid);
   text-align: center;
   line-height: 1.2;
 }
-.bb-progress__step.is-active .bb-progress__label { color: var(--bb-accent); font-weight: 600; }
+
+.bb-progress__step.is-active .bb-progress__label {
+  color: var(--bb-accent);
+  font-weight: 600;
+}
+
 .bb-progress__line {
   flex: 1;
   height: 2px;
@@ -58,34 +68,48 @@
   margin-bottom: 16px;
   transition: background .2s;
 }
-.bb-progress__line.is-done { background: var(--bb-accent); }
+
+.bb-progress__line.is-done {
+  background: var(--bb-accent);
+}
 
 /* ── SCREEN: Review ───────────────────────────────────────── */
 
 /* Extra bottom padding so belt cards don't hide behind the sticky footer */
-.bb-review { padding: 0 16px 16px; }
+.bb-review {
+  padding: 0 16px 16px;
+}
 
 /* ── Scroll area (cards + add-btn) ───────────────────────── */
 /* > 4 belts: screen becomes a flex column, scroll area grows to fill */
+#bb-screen-review {
+  background: #fff;
+  margin: 10px auto;
+}
+
 #bb-screen-review.has-scroll {
   height: 100dvh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
+
 #bb-screen-review.has-scroll .bb-header,
 #bb-screen-review.has-scroll #bb-progress-review {
   flex-shrink: 0;
 }
+
 #bb-screen-review.has-scroll .bb-review__scroll-area {
   flex: 1;
   overflow-y: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
+
 #bb-screen-review.has-scroll .bb-review__scroll-area::-webkit-scrollbar {
   display: none;
 }
+
 #bb-screen-review.has-scroll .bb-review__sticky-footer {
   flex-shrink: 0;
 }
@@ -96,14 +120,15 @@
   bottom: 0;
   z-index: 20;
   background: var(--bb-white);
-  box-shadow: 0 -12px 32px -4px rgba(0,0,0,.14);
+  box-shadow: 0 -12px 32px -4px rgba(0, 0, 0, .14);
 }
+
 .bb-review__sticky-footer::before {
   content: '';
   position: absolute;
   inset: -44px 0 auto;
   height: 44px;
-  background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,.95) 100%);
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, .95) 100%);
   pointer-events: none;
 }
 
@@ -112,32 +137,39 @@
   display: flex;
   align-items: center;
   gap: 14px;
-  background: linear-gradient(135deg,#111 0%,#1a1400 100%);
+  background: linear-gradient(135deg, #111 0%, #1a1400 100%);
   border-radius: 14px;
   padding: 14px 16px;
   margin-bottom: 18px;
   border: 1px solid #2a2200;
 }
+
 .bb-review__bundle-visual {
   flex-shrink: 0;
   width: 90px;
   border-radius: 10px;
   overflow: hidden;
-  background: rgba(255,255,255,.04);
+  background: rgba(255, 255, 255, .04);
 }
-.bb-review__bundle-info { flex: 1; }
+
+.bb-review__bundle-info {
+  flex: 1;
+}
+
 .bb-review__bundle-name {
   font-size: 15px;
   font-weight: 700;
   color: #fff;
   margin-bottom: 3px;
 }
+
 .bb-review__bundle-price {
   font-size: 20px;
   font-weight: 800;
   color: var(--bb-accent);
   line-height: 1;
 }
+
 .bb-review__bundle-sub {
   font-size: 12px;
   color: #c5c7ca;
@@ -155,6 +187,7 @@
   margin-bottom: 14px;
   background: var(--bb-white);
 }
+
 .bb-review__card-mockup {
   height: 126px;
   width: 160px;
@@ -164,7 +197,13 @@
   align-items: center;
   /* border-bottom: 1px solid var(--bb-border); */
 }
-.bb-review__card-mockup img { width: 100%; height: 100%; object-fit: cover; transform: scale(0.8); }
+
+.bb-review__card-mockup img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(0.8);
+}
 
 /* Part 2 — specs */
 .bb-review__card-specs {
@@ -180,6 +219,7 @@
   justify-content: space-between;
   margin-bottom: 10px;
 }
+
 .bb-review__card-num {
   font-size: 10px;
   font-weight: 700;
@@ -187,6 +227,7 @@
   letter-spacing: .7px;
   text-transform: uppercase;
 }
+
 .bb-review__card-length {
   display: inline-block;
   padding: 3px 10px;
@@ -200,8 +241,18 @@
   letter-spacing: .7px;
   text-transform: uppercase;
 }
-.bb-spec-flex { display: flex; gap: 6px 12px; }
-.bb-spec-row { display: flex; flex-direction: column; gap: 1px; }
+
+.bb-spec-flex {
+  display: flex;
+  gap: 6px 12px;
+}
+
+.bb-spec-row {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
 .bb-spec-key {
   font-size: 10px;
   font-weight: 600;
@@ -209,6 +260,7 @@
   text-transform: uppercase;
   letter-spacing: .4px;
 }
+
 .bb-spec-val {
   font-size: 13px;
   font-weight: 500;
@@ -217,14 +269,16 @@
   align-items: center;
   gap: 5px;
 }
+
 .bb-swatch {
   width: 12px;
   height: 12px;
   border-radius: 50%;
   display: inline-block;
   flex-shrink: 0;
-  border: 1.5px solid rgba(0,0,0,.12);
+  border: 1.5px solid rgba(0, 0, 0, .12);
 }
+
 .bb-review__card-edit {
   display: inline-flex;
   align-items: center;
@@ -238,6 +292,7 @@
   padding: 0;
   font-weight: 500;
 }
+
 .bb-review__total {
   display: flex;
   justify-content: space-between;
@@ -253,6 +308,7 @@
   align-items: flex-start;
   padding: 16px 16px 12px;
 }
+
 .bb-bundle-step {
   display: flex;
   flex-direction: column;
@@ -260,6 +316,7 @@
   gap: 5px;
   flex: 1;
 }
+
 .bb-bundle-step__dot {
   width: 30px;
   height: 30px;
@@ -274,15 +331,18 @@
   background: var(--bb-white);
   transition: all .2s;
 }
+
 .bb-bundle-step.is-done .bb-bundle-step__dot {
   background: var(--bb-accent);
   border-color: var(--bb-accent);
   color: #fff;
 }
+
 .bb-bundle-step.is-active .bb-bundle-step__dot {
   border-color: var(--bb-accent);
   color: var(--bb-accent);
 }
+
 .bb-bundle-step__lbl {
   font-size: 9px;
   color: var(--bb-mid);
@@ -290,8 +350,16 @@
   line-height: 1.2;
   white-space: nowrap;
 }
-.bb-bundle-step.is-active .bb-bundle-step__lbl { color: var(--bb-accent); font-weight: 600; }
-.bb-bundle-step.is-done  .bb-bundle-step__lbl  { color: var(--bb-dark); }
+
+.bb-bundle-step.is-active .bb-bundle-step__lbl {
+  color: var(--bb-accent);
+  font-weight: 600;
+}
+
+.bb-bundle-step.is-done .bb-bundle-step__lbl {
+  color: var(--bb-dark);
+}
+
 .bb-bundle-step__line {
   flex: 1;
   height: 2px;
@@ -299,7 +367,10 @@
   margin-top: 14px;
   transition: background .2s;
 }
-.bb-bundle-step__line.is-done { background: var(--bb-accent); }
+
+.bb-bundle-step__line.is-done {
+  background: var(--bb-accent);
+}
 
 /* ── Bundle badge header inside review cards ──────────────── */
 .bb-review__bundle-badge {
@@ -314,6 +385,7 @@
   letter-spacing: .5px;
   text-transform: uppercase;
 }
+
 .bb-review__bundle-price-pill {
   color: var(--bb-accent);
   font-size: 13px;
@@ -327,6 +399,7 @@
   padding: 10px 14px;
   border-top: 1px solid var(--bb-border);
 }
+
 .bb-review__belt-mockup {
   flex-shrink: 0;
   width: 70px;
@@ -335,8 +408,18 @@
   overflow: hidden;
   background: var(--bb-light);
 }
-.bb-review__belt-mockup img { width: 100%; height: 100%; object-fit: cover; }
-.bb-review__belt-info { flex: 1; min-width: 0; }
+
+.bb-review__belt-mockup img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bb-review__belt-info {
+  flex: 1;
+  min-width: 0;
+}
+
 .bb-review__belt-idx {
   font-size: 10px;
   font-weight: 700;
@@ -352,11 +435,13 @@
   flex-direction: column;
   align-items: center;
 }
+
 .bb-review__add-line {
   width: 2px;
   height: 30px;
   background: var(--bb-border);
 }
+
 .bb-review__add-bundle-btn {
   max-width: 287px !important;
   position: relative;
@@ -373,10 +458,12 @@
   cursor: pointer;
   transition: background .15s, color .15s;
 }
+
 .bb-review__add-bundle-btn:hover {
   background: var(--bb-accent);
   color: #fff !important;
 }
+
 /* Plus circle — centred on the top border of the button */
 .bb-review__add-plus {
   position: absolute;
@@ -388,13 +475,22 @@
   border-radius: 50%;
   background: linear-gradient(135deg, #c9970a 0%, #e8b923 60%, #b8800b 100%);
   border: 2px solid var(--bb-white);
-  box-shadow: 0 2px 8px rgba(184,134,11,.40);
+  box-shadow: 0 2px 8px rgba(184, 134, 11, .40);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
   pointer-events: none;
 }
+
 .bb-review__add-bundle-btn:hover .bb-review__add-plus {
   border-color: var(--bb-accent);
+}
+
+@media (min-width: 768px) {
+  #bb-screen-review {
+    border: 1px solid var(--bb-border);
+    border-radius: 20px;
+    overflow: hidden;
+  }
 }

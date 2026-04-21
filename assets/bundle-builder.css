@@ -81,6 +81,20 @@ announcement-bar-section {
 .bb-screen { display: none; }
 .bb-screen.is-active { display: block; }
 
+/* ── Hide bb-wrap card frame on summary screen ────────────── */
+.bb-wrap:has(#bb-screen-review.is-active) {
+  background: transparent;
+  box-shadow: none;
+  border: none;
+  border-radius: 0;
+  min-height: unset;
+}
+.bb-wrap-outer:has(#bb-screen-review.is-active) {
+  background: transparent;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
 /* ── Navigation bar ───────────────────────────────────────── */
 .bb-nav {
   display: flex;

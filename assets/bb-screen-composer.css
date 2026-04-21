@@ -793,8 +793,10 @@
    ============================================================ */
 @media (min-width: 768px) {
 
-  /* ── Outer: two rows — top row has hero+right, bottom row is combo bar ── */
-  #bb-screen-composer {
+  /* ── Outer: two rows — top row has hero+right, bottom row is combo bar ──
+     Scoped to .is-active so the ID specificity doesn't override
+     .bb-screen { display: none } when this screen is inactive.           */
+  #bb-screen-composer.is-active {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
