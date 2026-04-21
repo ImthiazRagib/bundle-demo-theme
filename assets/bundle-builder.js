@@ -1342,7 +1342,10 @@
   }
 
   /* ── Add bundle to cart ─────────────────────────────────── */
-  function addBundleToCart() {
+  async function addBundleToCart() {
+    // Reset cart bundles fresh each call — prevents duplicates on retry
+    state.cartBundles = [];
+
     // Tier price based on TOTAL BELT COUNT across all bundles
     const allBeltSets = state.pendingBundles.concat([{ type: state.bundleType, belts: state.belts }]);
     const totalBelts = allBeltSets.reduce(function (sum, b) { return sum + b.belts.length; }, 0);
@@ -1372,7 +1375,24 @@
     });
 
     state.pendingBundles = [];
-    proceedToCheckout();
+
+    // Disable CTA and show loading while the request runs
+    const cta = document.querySelector('[data-action="add-to-cart"]');
+    const originalHTML = cta ? cta.innerHTML : null;
+    if (cta) {
+      cta.disabled = true;
+      cta.innerHTML = 'Aggiunta in corso…';
+    }
+
+    try {
+      await proceedToCheckout();
+    } catch {
+      // Restore button — proceedToCheckout only throws on HTTP error (success redirects away)
+      if (cta && originalHTML) {
+        cta.disabled = false;
+        cta.innerHTML = originalHTML;
+      }
+    }
   }
 
   /* ── Cart screen ────────────────────────────────────────── */
@@ -1603,30 +1623,40 @@
       });
     });
 
-    /* Rimuovi item con variant ID non configurati (0 o falsy) — Shopify rifiuta l'intera
-       richiesta con 422 se anche un solo ID è 0. Questo succede finché il merchant non
-       ha configurato i variant ID nel Theme Editor. */
+    /* Remove items with unconfigured variant IDs — Shopify rejects the whole
+       request with 422 if even one ID is 0. */
     const validItems = items.filter(function (item) { return item.id && item.id !== 0; });
 
-    /* Se nessun variant ID è configurato, vai al carrello Shopify direttamente */
-    if (!validItems.length) { window.location.href = '/cart'; return; }
+    console.log('[BundleBuilder] Items to add:', validItems);
 
+    if (!validItems.length) {
+      console.warn('[BundleBuilder] No variant IDs configured — check Theme Editor section settings.');
+      showToast('Varianti prodotto non configurate. Contatta l\'amministratore.');
+      throw new Error('no_variants');
+    }
+
+    /* Separate the network call so fetch errors don't swallow HTTP errors */
+    let resp;
     try {
-      const resp = await fetch('/cart/add.js', {
+      resp = await fetch('/cart/add.js', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ items: validItems }),
       });
-      if (resp.ok) {
-        window.location.href = '/cart';
-      } else {
-        const errData = await resp.json().catch(function () { return {}; });
-        console.error('[BundleBuilder] Cart error:', errData);
-        showToast('Errore nell\'aggiunta al carrello. Riprova.');
-      }
     } catch {
-      /* In ambienti non-Shopify, vai al carrello */
+      /* Network/CORS error — in non-Shopify environments redirect to cart anyway */
+      console.warn('[BundleBuilder] Fetch failed (non-Shopify env?), redirecting to cart.');
       window.location.href = '/cart';
+      return;
+    }
+
+    if (resp.ok) {
+      window.location.href = '/cart';
+    } else {
+      const errData = await resp.json().catch(function () { return {}; });
+      console.error('[BundleBuilder] Cart API error', resp.status, errData);
+      showToast('Errore nell\'aggiunta al carrello (' + resp.status + '). Riprova.');
+      throw new Error('cart_error');   /* propagates to addBundleToCart → re-enables button */
     }
   }
 
