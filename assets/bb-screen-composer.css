@@ -258,16 +258,16 @@
   grid-template-columns: 1fr auto;
   align-items: center;
   gap: 0 8px;
-  margin-bottom: 0px;
+  margin-bottom: 10px;
 }
 .bb-section__label {
   font-size: var(--bb-fs-base);
   font-weight: 600;
   color: #111;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 .bb-section-header .bb-section__label {
-  margin: 11px 0 0 0px;
+  margin: 11px 0 0px;
 }
 .bb-section__counter {
   font-size: var(--bb-fs-xs);
@@ -438,9 +438,9 @@
   padding-top: 0;
   padding-bottom: 14px;
 }
-.bb-section--strap .bb-section-header {
+/* .bb-section--strap .bb-section-header {
   margin-bottom: 5px;
-}
+} */
 
 /* ── Strap carousel — centered cover-flow, full-bleed ──────── */
 .bb-strap-carousel {
@@ -783,4 +783,222 @@
   background: linear-gradient(135deg, #c9970a 0%, #e8b923 60%, #b8800b 100%);
   border-radius: 2px;
   margin: 0 auto 16px;
+}
+
+/* ============================================================
+   DESKTOP LAYOUT  (≥ 768px)
+   Mobile styles above are preserved unchanged.
+   Left: sticky belt preview  |  Right: scrollable selectors.
+   Pure flex — no grid.
+   ============================================================ */
+@media (min-width: 768px) {
+
+  /* ── Outer: two rows — top row has hero+right, bottom row is combo bar ── */
+  #bb-screen-composer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    min-height: 80vh;
+    border-radius: 18px;
+    overflow: hidden;
+  }
+
+  /* ── LEFT: preview fills exactly the same height as the right panel ── */
+  .bb-composer-hero {
+    flex: 0 0 50%;
+    width: 50%;
+    align-self: stretch;
+    height: auto;
+    min-height: 320px;
+    position: relative;
+  }
+
+  /* ── RIGHT: flex column — stacks buckle, strap, combo bar ── */
+  .bb-composer-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  /* ── RIGHT: padding per section ─────────────────────────── */
+  .bb-section--buckle { padding: 20px 20px 14px; }
+  .bb-section--strap  { padding: 14px 20px 14px; }
+
+  /* ── COMBO BAR: full-width bottom row ───────────────────── */
+  .bb-combo-bar {
+    flex: 0 0 100%;
+    padding: 14px 20px 20px;
+    border-top: 1px solid var(--bb-border);
+  }
+  .bb-combo-bar__info {
+    text-align: right;
+    margin-bottom: 0;
+  }
+  .bb-combo-bar__title,
+  .bb-combo-bar__sub {
+    text-align: right;
+  }
+  .bb-combo-bar__actions {
+    border-top: none;
+    padding-top: 0;
+    justify-content: flex-end;
+  }
+  .bb-combo-bar__back,
+  .bb-combo-bar__actions .bb-btn-primary {
+    flex: 0 0 auto;
+    width: auto;
+    padding: 10px 20px;
+  }
+
+  /* ── BUCKLE: single row, all items equal width ──────────── */
+  .bb-carousel {
+    position: static;
+    height: auto;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 10px;
+    overflow: visible;
+    margin: 0;
+    touch-action: auto;
+    cursor: default;
+  }
+
+  .bb-carousel__item {
+    position: static;
+    left: auto;
+    top: auto;
+    flex: 1 0 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transform: none !important;
+    opacity: 1 !important;
+    z-index: auto !important;
+    pointer-events: auto !important;
+  }
+
+  .bb-carousel__thumb {
+    width: 100%;
+    height: 90px;
+    border-radius: 10px;
+    border: 2px solid var(--bb-border);
+    transition: border-color .2s, box-shadow .2s;
+  }
+
+  .bb-carousel__item:hover .bb-carousel__thumb {
+    border-color: rgba(184,134,11,.45);
+  }
+
+  .bb-carousel__item.is-selected .bb-carousel__thumb {
+    border-color: var(--bb-accent);
+    box-shadow: 0 0 0 3px rgba(184,134,11,.20);
+  }
+
+  .bb-carousel__label {
+    display: block !important;
+    position: static;
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    padding: 5px 2px 2px;
+    font-size: var(--bb-fs-xs);
+    font-weight: 600;
+    color: #666;
+    border-radius: 0;
+    text-align: center;
+  }
+
+  .bb-carousel__item.is-selected .bb-carousel__label {
+    color: var(--bb-accent);
+    -webkit-text-fill-color: var(--bb-accent);
+    background: transparent;
+  }
+
+  .bb-carousel__item--unavailable .bb-carousel__thumb {
+    filter: grayscale(100%) opacity(0.42);
+  }
+
+  /* ── STRAP: flex-wrap, 2 per row ────────────────────────── */
+  .bb-strap-carousel {
+    position: static;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    overflow: visible;
+    margin: 0 0 6px;
+    touch-action: auto;
+    cursor: default;
+  }
+
+  .bb-strap-item {
+    position: relative;
+    left: auto;
+    top: auto;
+    flex: 0 0 calc((100% - 8px) / 2);    /* 2 per row, 1×8px gap */
+    height: 64px;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transform: none !important;
+    opacity: 1 !important;
+    z-index: auto !important;
+    pointer-events: auto !important;
+    transition: border-color .2s, box-shadow .2s;
+  }
+
+  .bb-strap-item:hover {
+    border-color: rgba(184,134,11,.45);
+  }
+
+  .bb-strap-item.is-selected {
+    border-color: var(--bb-accent);
+    box-shadow: 0 0 0 3px rgba(184,134,11,.20);
+  }
+
+  .bb-strap-item__name {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 2px 3px 3px;
+    font-size: var(--bb-fs-2xs);
+    font-weight: 600;
+    color: #fff;
+    background: rgba(0,0,0,.50);
+    text-align: center;
+    border-radius: 0 0 8px 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    pointer-events: none;
+    line-height: 1.4;
+  }
+
+  .bb-strap-item--unavailable {
+    filter: grayscale(100%) opacity(0.42);
+  }
+
+  /* ── Hide swipe arrows (all items visible) ───────────────── */
+  .bb-section--buckle .bb-strap-nav,
+  .bb-section--strap  .bb-strap-nav {
+    display: none;
+  }
+
+  /* ── Quick actions: vertically centred on the right edge ─── */
+  .bb-composer-hero__foot {
+    top: 12px;
+    bottom: auto;
+    right: 12px;
+    transform: none;
+  }
+  .bb-quick-actions {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+  }
 }

@@ -79,45 +79,50 @@
     </div>
   </div>
 
-  {%- comment -%} 2. Buckle carousel {%- endcomment -%}
-  <div class="bb-section bb-section--buckle">
-    <div class="bb-section-header">
-      <div class="bb-section__label">
-        1. Fibbia: <span id="bb-buckle-name-inline" class="bb-selection-inline-name"></span>
-      </div>
-      {% comment %} <span class="bb-section__counter" id="bb-buckle-nav-label"></span> {% endcomment %}
-    </div>
-    <div class="bb-carousel" id="bb-buckle-carousel" role="listbox" aria-label="Stile fibbia">
-      {%- comment -%} Rendered by JS {%- endcomment -%}
-    </div>
-    <div class="bb-strap-nav">
-      <button class="bb-strap-nav__btn" id="bb-buckle-prev" aria-label="Fibbia precedente">&#8592;</button>
-      <button class="bb-strap-nav__btn" id="bb-buckle-next" aria-label="Fibbia successiva">&#8594;</button>
-    </div>
-  </div>
+  {%- comment -%} Right panel: buckle + strap selectors + combo bar {%- endcomment -%}
+  <div class="bb-composer-right">
 
-  {%- comment -%} 3. Strap color — vertical stacked fan {%- endcomment -%}
-  <div class="bb-section bb-section--strap">
-    <div class="bb-section-header">
-      <div class="bb-section__label">
-        2. Cintura: <span id="bb-strap-name-inline" class="bb-selection-inline-name"></span>
+    {%- comment -%} 2. Buckle carousel {%- endcomment -%}
+    <div class="bb-section bb-section--buckle">
+      <div class="bb-section-header">
+        <div class="bb-section__label">
+          1. Fibbia: <span id="bb-buckle-name-inline" class="bb-selection-inline-name"></span>
+        </div>
+        {% comment %} <span class="bb-section__counter" id="bb-buckle-nav-label"></span> {% endcomment %}
       </div>
-      {% comment %} <span class="bb-section__counter" id="bb-strap-nav-label"></span> {% endcomment %}
-      <div class="bb-length-selector" id="bb-length-selector">
+      <div class="bb-carousel" id="bb-buckle-carousel" role="listbox" aria-label="Stile fibbia">
         {%- comment -%} Rendered by JS {%- endcomment -%}
       </div>
+      <div class="bb-strap-nav">
+        <button class="bb-strap-nav__btn" id="bb-buckle-prev" aria-label="Fibbia precedente">&#8592;</button>
+        <button class="bb-strap-nav__btn" id="bb-buckle-next" aria-label="Fibbia successiva">&#8594;</button>
+      </div>
     </div>
-    <div class="bb-strap-carousel" id="bb-strap-carousel" role="listbox" aria-label="Colore della cintura">
-      {%- comment -%} Rendered by JS as horizontal fan items {%- endcomment -%}
-    </div>
-    <div class="bb-strap-selected-name" id="bb-strap-color-name"></div>
-    <div class="bb-strap-nav">
-      <button class="bb-strap-nav__btn" id="bb-strap-prev" aria-label="Colore precedente">&#8592;</button>
-      <button class="bb-strap-nav__btn" id="bb-strap-next" aria-label="Colore successivo">&#8594;</button>
-    </div>
-  </div>
 
-  {%- comment -%} Bottom combo summary bar — belt label + combo text + two action buttons {%- endcomment -%}
+    {%- comment -%} 3. Strap color — vertical stacked fan {%- endcomment -%}
+    <div class="bb-section bb-section--strap">
+      <div class="bb-section-header">
+        <div class="bb-section__label">
+          2. Cintura: <span id="bb-strap-name-inline" class="bb-selection-inline-name"></span>
+        </div>
+        {% comment %} <span class="bb-section__counter" id="bb-strap-nav-label"></span> {% endcomment %}
+        <div class="bb-length-selector" id="bb-length-selector">
+          {%- comment -%} Rendered by JS {%- endcomment -%}
+        </div>
+      </div>
+      <div class="bb-strap-carousel" id="bb-strap-carousel" role="listbox" aria-label="Colore della cintura">
+        {%- comment -%} Rendered by JS as horizontal fan items {%- endcomment -%}
+      </div>
+      <div class="bb-strap-selected-name" id="bb-strap-color-name"></div>
+      <div class="bb-strap-nav">
+        <button class="bb-strap-nav__btn" id="bb-strap-prev" aria-label="Colore precedente">&#8592;</button>
+        <button class="bb-strap-nav__btn" id="bb-strap-next" aria-label="Colore successivo">&#8594;</button>
+      </div>
+    </div>
+
+  </div>{%- comment -%} /.bb-composer-right {%- endcomment -%}
+
+  {%- comment -%} Combo bar — outside the two-column flex, spans full width {%- endcomment -%}
   <div class="bb-combo-bar">
     <div class="bb-combo-bar__info">
       <div class="bb-combo-bar__title" id="bb-combo-belt-label">CINTURA 1 DI 1</div>

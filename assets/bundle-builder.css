@@ -730,6 +730,12 @@ body.bb-modal-open { overflow: hidden; }
     box-shadow: var(--bb-shadow);
     min-height: auto;
   }
+  /* Non-composer screens stay centred */
+  #bb-screen-selector, #bb-screen-review, #bb-screen-cart,
+  #bb-screen-confirm, #bb-screen-confirmed {
+    max-width: 460px;
+    margin: 0 auto;
+  }
 }
 
 /* ── Composer screen styles (confetti, carousels, wizard) → bb-screen-composer.css ── */
@@ -1050,6 +1056,19 @@ body.bb-modal-open { overflow: hidden; }
     border-radius: 0;
     box-shadow: none;
     max-width: 100%;
+  }
+}
+
+/* Desktop: expand wrapper for two-column composer; must come after the base
+   .bb-wrap-outer .bb-wrap rule above so cascade order overrides overflow:hidden */
+@media (min-width: 768px) {
+  .bb-wrap-outer {
+    padding: 32px 24px 80px;
+  }
+  .bb-wrap-outer .bb-wrap {
+    max-width: 960px;
+    overflow: visible;
+    border-radius: 20px;
   }
 }
 
