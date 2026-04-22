@@ -23,7 +23,7 @@
       </ol>
 
       {%- if section.settings.cta_label != blank -%}
-        <a href="{{ section.settings.cta_url | default: '/pages/bundle' }}" class="bundle-intro__cta">
+        <a href="{{ section.settings.cta_url | default: '/pages/bundle' }}?type=set-cinture-doppio" class="bundle-intro__cta">
           {{ section.settings.cta_label }}
         </a>
       {%- endif -%}

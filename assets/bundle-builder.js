@@ -1405,7 +1405,7 @@
         <div style="text-align:center;padding:40px 16px;color:#888;">
           <p style="font-size:15px;">Il tuo carrello è vuoto.</p>
           <button class="bb-btn-secondary" style="margin-top:16px;width:auto;padding:10px 24px;"
-                  onclick="BundleBuilder.showScreen('selector')">Inizia a comporre</button>
+                  onclick="window.history.back()">← Torna ai prodotti</button>
         </div>`;
       updateCartTotal();
       return;
@@ -1627,8 +1627,6 @@
        request with 422 if even one ID is 0. */
     const validItems = items.filter(function (item) { return item.id && item.id !== 0; });
 
-    console.log('[BundleBuilder] Items to add:', validItems);
-
     if (!validItems.length) {
       console.warn('[BundleBuilder] No variant IDs configured — check Theme Editor section settings.');
       showToast('Varianti prodotto non configurate. Contatta l\'amministratore.');
@@ -1807,7 +1805,7 @@
           state.belts = JSON.parse(JSON.stringify(prev.belts));
           showReview();
         } else {
-          showScreen('selector');
+          window.history.back();
         }
       });
     }
@@ -1839,13 +1837,7 @@
     /* Confirmed — continue shopping */
     const continueShopping = wrap.querySelector('[data-action="continue"]');
     if (continueShopping) continueShopping.addEventListener('click', () => {
-      state.cartBundles = [];
-      state.belts = [];
-      state.bundleType = null;
-      state.currentBelt = 1;
-      state.pendingBundles = [];
-      state._editMode = null;
-      showScreen('selector');
+      window.history.back();
     });
 
     /* Vedi indossata */
@@ -1871,7 +1863,7 @@
     wrap.querySelectorAll('[data-nav]').forEach(item => {
       item.addEventListener('click', () => {
         const target = item.dataset.nav;
-        if (target === 'selector') showScreen('selector');
+        if (target === 'selector') window.history.back();
         else if (target === 'review') {
           if (state.belts.length > 0 && state.cartBundles.length === 0) showReview();
           else showScreen('review');
@@ -1880,8 +1872,24 @@
       });
     });
 
-    /* Start on selector */
-    showScreen('selector');
+    /* Resolve bundle type from URL param — supports Italian product titles or internal keys.
+     * e.g. /pages/bundle?type=Set%20Cinture%20Triplo  OR  ?type=triple */
+    const _TYPE_MAP = {
+      'set-cinture-triplo': 'triple',
+      'set-cinture-doppio': 'double',
+      'set-cintura-singola': 'single',
+      'set-infinity': 'infinity',
+      'triple': 'triple', 'double': 'double', 'single': 'single', 'infinity': 'infinity',
+    };
+    const _urlParam = new URLSearchParams(window.location.search).get('type');
+    const _resolvedType = _urlParam && _TYPE_MAP[_urlParam.toLowerCase().trim()];
+    if (_resolvedType && BUNDLES[_resolvedType]) {
+      selectBundleType(_resolvedType);
+      startComposing();
+    } else {
+      window.location.href = '/';
+    }
+
     /* Check inventory availability from Shopify — re-renders carousels if needed */
     initAvailability();
   }

@@ -68,7 +68,13 @@
               {%- endfor -%}
             </ul>
 
-            <a href="{{ block.settings.cta_url | default: '/pages/bundle' }}"
+            {%- case block.settings.icon -%}
+              {%- when 'single' -%}{%- assign _bb_type = 'set-cintura-singola' -%}
+              {%- when 'double' -%}{%- assign _bb_type = 'set-cinture-doppio' -%}
+              {%- when 'triple' -%}{%- assign _bb_type = 'set-cinture-triplo' -%}
+              {%- else -%}{%- assign _bb_type = 'set-infinity' -%}
+            {%- endcase -%}
+            <a href="{{ block.settings.cta_url | default: '/pages/bundle' }}?type={{ _bb_type }}"
                class="cs-card__cta{% if block.settings.featured %} cs-card__cta--primary{% endif %}">
               {{ block.settings.cta_label | default: "Componi ora" }}
             </a>

@@ -203,3 +203,16 @@ Each checkout submission sends:
 | Strap colors | `STRAPS` object in `bundle-builder.js` |
 | Bundle pricing | Section settings in Theme Editor |
 | Carousel order | `buckle_order` / `strap_order` text fields in Theme Editor |
+
+
+
+
+
+How to access
+All updated. The full URL → bundle type mapping is now:
+
+URL	Bundle
+/pages/bundle?type=set-cintura-singola	Single (1 cintura)
+/pages/bundle?type=set-cinture-doppio	Double (2 cinture)
+/pages/bundle?type=set-cinture-triplo	Triple (3 cinture)
+/pages/bundle?type=set-infinity	Infinity
